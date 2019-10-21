@@ -57,15 +57,16 @@ class SimulationEnv:
 
     def update_grid(self):
         for i, p_loc in enumerate(self.p_locs):
-            neighbors_p = p_loc - self.neighbors
-            neighbors_p[neighbors_p < 0] = 0
-            neighbors_p[neighbors_p > self.grid_size] = self.grid_size
+            neighbors_p = self.get_neighbors(p_loc)
             dist = np.zeros(shape=neighbors_p.shape[0])
             for j, neighbor_p in enumerate(neighbors_p):
-                dist[j] = np.linalg.norm(neighbor_p - self.t_locs[0])
-
-                # obstacle and pedestrian avoidance
-                # dist[j] += self.calculate_cost(neighbor_p, i)
+                if self.mode == 'normal':
+                    dist[j] = np.linalg.norm(neighbor_p - self.t_locs[0])
+                    dist[j] += self.calculate_cost_obstacles(neighbor_p)
+                    dist[j] += self.calculate_cost_pedestrian(neighbor_p, i)
+                elif self.mode == 'dijkstra':
+                    dist[j] = self.dijkstra_cost[neighbor_p[0], neighbor_p[1]]
+                    dist[j] += self.calculate_cost_pedestrian(neighbor_p, i)
             min_neighbor_p = np.argmin(dist)
             if np.linalg.norm(neighbors_p[min_neighbor_p, :] - self.t_locs[0]) != 0 and not\
                     np. equal(neighbors_p[min_neighbor_p, :], self.o_locs).all(axis=1).any():
@@ -73,15 +74,58 @@ class SimulationEnv:
                 self.p_locs[i] = neighbors_p[min_neighbor_p, :]
                 self.grid[p_loc[0], p_loc[1]] = self.p_code
 
-    def update_grid_dijkstra(self):
-        pass
+    def initialize_grid_dijkstra(self):
+        n_visited = np.zeros(shape=(self.grid_size, self.grid_size))
+        n_cost = np.ones(shape=(int(self.grid_size), int(self.grid_size))) * np.inf
+        c_n = None
 
-    def calculate_cost(self, neighbor_p, i):
+        # set the obstacle nodes as visited
+        for o_loc in self.o_locs:
+            n_visited[o_loc[0], o_loc[1]] = 1
+            n_cost[o_loc[0], o_loc[1]] = np.inf
+            self.dijkstra_cost[o_loc[0], o_loc[1]] = np.inf
+
+        # set the target nodes' distance as zero
+        for t_loc in self.t_locs:
+            n_visited[t_loc[0], t_loc[1]] = 1
+            n_cost[t_loc[0], t_loc[1]] = 0
+            self.dijkstra_cost[t_loc[0], t_loc[1]] = 0
+            c_n = t_loc
+
+        # while all nodes are not visited
+        while not np.all(n_visited):
+            c_neighs = self.get_neighbors(c_n)
+            for c_neigh in c_neighs:
+                # skip the neighbors which are already set to visited
+                if n_visited[c_neigh[0], c_neigh[1]] == 1:
+                    continue
+                if n_cost[c_neigh[0], c_neigh[1]] > n_cost[c_n[0], c_n[1]] + 1:
+                    n_cost[c_neigh[0], c_neigh[1]] = n_cost[c_n[0], c_n[1]] + 1
+
+            # mark current node as visited
+            n_visited[c_n[0], c_n[1]] = 1
+            self.dijkstra_cost[c_n[0], c_n[1]] = n_cost[c_n[0], c_n[1]]
+
+            # get unvisited node with minimum cost
+            c_n = np.unravel_index(np.argmin(np.where(n_visited == 0, n_cost, np.inf)), n_cost.shape)
+
+    def get_neighbors(self, loc):
+        neighbors_p = loc - self.neighbors
+        neighbors_p[neighbors_p < 0] = 0
+        neighbors_p[neighbors_p >= self.grid_size] = self.grid_size - 1
+
+        return neighbors_p
+
+    def calculate_cost_obstacles(self, neighbor_p):
         dist = 0
         for o_loc in self.o_locs:
             r = np.linalg.norm(neighbor_p - o_loc)
             dist += self.r_max / r
 
+        return dist
+
+    def calculate_cost_pedestrian(self, neighbor_p, i):
+        dist = 0
         for j, p_loc in enumerate(self.p_locs):
             r = np.linalg.norm(neighbor_p - p_loc)
             if i == j:
@@ -115,6 +159,9 @@ class SimulationEnv:
         self.dijkstra_cost = np.zeros((self.grid_size, self.grid_size))
         self.dijkstra_cost[self.dijkstra_cost == 0] = np.inf
 
+        if self.mode == 'dijkstra':
+            self.initialize_grid_dijkstra()
+
         if self.p_locs_mode == "custom":
             for p_loc in self.p_locs:
                 self.grid[p_loc[0], p_loc[1]] = self.p_code
@@ -125,7 +172,6 @@ class SimulationEnv:
             self.p_locs = np.array(points)
         for t_loc in self.t_locs:
             self.grid[t_loc[0], t_loc[1]] = self.t_code
-            self.dijkstra_cost[t_loc[0], t_loc[1]] = 0
         for o_loc in self.o_locs:
             self.grid[o_loc[0], o_loc[1]] = self.o_code
 
