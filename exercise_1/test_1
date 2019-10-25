@@ -1,0 +1,1 @@
+python3 tasks.py --grid_size=120 --o_locs="[]" --timesteps=150 --p_locs_mode="custom" --p_locs_radius=20 --p_num=5 --p_locs="[[2, 10]]" --t_locs="[[2, 110]]" --mode="normal" --timestep_jump=3 --grid_size_x=5 --grid_size_y=120 simulate

@@ -3,16 +3,19 @@ import fire
 import sys
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from matplotlib import colors
 import matplotlib
 
 matplotlib.use("TkAgg")
 
 
 class SimulationEnv:
-    def __init__(self, grid_size, p_locs, t_locs, o_locs, timesteps, p_locs_mode="custom", p_locs_radius=0, p_num=0,
-                 mode="normal"):
+    def __init__(self, grid_size, grid_size_x, grid_size_y, p_locs, t_locs, o_locs, timesteps,
+                 p_locs_mode="custom", p_locs_radius=0, p_num=0, mode="normal"):
         # arguments
         self.grid_size = np.array(grid_size)
+        self.grid_size_x = np.array(grid_size_x)
+        self.grid_size_y = np.array(grid_size_y)
         self.grid = None
         self.p_locs = np.array(p_locs)
         self.t_locs = np.array(t_locs)
@@ -25,9 +28,11 @@ class SimulationEnv:
 
         # constants
         self.max_grid_size = 1000000
+        self.colors = colors.ListedColormap(["White", "Blue", "Red", "Black", "lightgray"])
         self.p_code = 1
         self.t_code = 2
         self.o_code = 3
+        self.path_code = 4
         self.eight_neighbors = np.array([[-1, -1], [0, -1], [1, -1],
                                          [-1, 0], [1, 0],
                                          [-1, 1], [0, 1], [1, 1]])
@@ -37,7 +42,7 @@ class SimulationEnv:
         self.neighbors = self.four_neighbors
         self.fig = plt.figure(figsize=(16, 16))
         self.animation = []
-        self.p_locs_modes = ['custom', 'circle']
+        self.p_locs_modes = ['custom', 'circle', 'random']
         self.modes = ['normal', 'dijkstra']
         self.r_max = int(np.sqrt(self.grid_size))
 
@@ -50,12 +55,17 @@ class SimulationEnv:
         self.visualize_grid()
 
     def simulate(self):
+        total_timesteps = 0
         for timestep in range(self.timesteps - 1):
-            self.update_grid()
-            self.visualize_grid()
-        self.show_animation()
+            if self.update_grid():
+                self.visualize_grid()
+                total_timesteps += 1
+            else:
+                break
+        self.show_animation(total_timesteps)
 
     def update_grid(self):
+        target_reached = np.zeros(shape=(1, self.p_locs.shape[0]))
         for i, p_loc in enumerate(self.p_locs):
             neighbors_p = self.get_neighbors(p_loc)
             dist = np.zeros(shape=neighbors_p.shape[0])
@@ -68,15 +78,21 @@ class SimulationEnv:
                     dist[j] = self.dijkstra_cost[neighbor_p[0], neighbor_p[1]]
                     dist[j] += self.calculate_cost_pedestrian(neighbor_p, i)
             min_neighbor_p = np.argmin(dist)
-            if np.linalg.norm(neighbors_p[min_neighbor_p, :] - self.t_locs[0]) != 0 and not\
-                    np. equal(neighbors_p[min_neighbor_p, :], self.o_locs).all(axis=1).any():
-                self.grid[p_loc[0], p_loc[1]] = 0
+            if np.linalg.norm(neighbors_p[min_neighbor_p, :] - self.t_locs[0]) != 0:
+                self.grid[p_loc[0], p_loc[1]] = self.path_code
                 self.p_locs[i] = neighbors_p[min_neighbor_p, :]
                 self.grid[p_loc[0], p_loc[1]] = self.p_code
 
+                target_reached[0, i - 1] = 1
+
+        if np.sum(target_reached) == self.p_locs.shape[1]:
+            return False
+        else:
+            return True
+
     def initialize_grid_dijkstra(self):
-        n_visited = np.zeros(shape=(self.grid_size, self.grid_size))
-        n_cost = np.ones(shape=(int(self.grid_size), int(self.grid_size))) * np.inf
+        n_visited = np.zeros(shape=(self.grid_size_x, self.grid_size_y))
+        n_cost = np.ones(shape=(int(self.grid_size_x), int(self.grid_size_y))) * np.inf
         c_n = None
 
         # set the obstacle nodes as visited
@@ -112,7 +128,8 @@ class SimulationEnv:
     def get_neighbors(self, loc):
         neighbors_p = loc - self.neighbors
         neighbors_p[neighbors_p < 0] = 0
-        neighbors_p[neighbors_p >= self.grid_size] = self.grid_size - 1
+        neighbors_p[neighbors_p[:, 0] >= self.grid_size_x, 0] = self.grid_size_x - 1
+        neighbors_p[neighbors_p[:, 1] >= self.grid_size_y, 1] = self.grid_size_y - 1
 
         return neighbors_p
 
@@ -135,7 +152,8 @@ class SimulationEnv:
         return dist
 
     def validate_arguments(self):
-        if self.grid_size.ndim != 0 or self.grid_size > self.max_grid_size:
+        if self.grid_size_x is None or self.grid_size_y is None or \
+                self.grid_size_x > self.max_grid_size or self.grid_size_y > self.max_grid_size:
             sys.exit("The grid_size should be a single number which is less then 1M")
         if self.p_locs.ndim == 0:
             sys.exit("Pedestrian location is required")
@@ -154,9 +172,9 @@ class SimulationEnv:
             sys.exit("The Path finding modes can only be, one of: " + str(self.p_locs_modes))
 
     def initialize_grid(self):
-        self.grid = np.zeros((self.grid_size, self.grid_size))
+        self.grid = np.zeros((self.grid_size_x, self.grid_size_y))
 
-        self.dijkstra_cost = np.zeros((self.grid_size, self.grid_size))
+        self.dijkstra_cost = np.zeros((self.grid_size_x, self.grid_size_y))
         self.dijkstra_cost[self.dijkstra_cost == 0] = np.inf
 
         if self.mode == 'dijkstra':
@@ -176,10 +194,11 @@ class SimulationEnv:
             self.grid[o_loc[0], o_loc[1]] = self.o_code
 
     def visualize_grid(self):
-        self.animation.append([plt.imshow(self.grid, interpolation='none')])
+        self.animation.append([plt.imshow(self.grid, interpolation='none', cmap=self.colors)])
 
-    def show_animation(self):
-        anim = animation.ArtistAnimation(self.fig, self.animation, interval=200, blit=True, repeat=False)
+    def show_animation(self, total_timesteps):
+        anim = animation.ArtistAnimation(self.fig, self.animation, interval=333, blit=True, repeat=False)
+        plt.title("Total Timesteps: %s" % str(total_timesteps))
         plt.show()
 
 

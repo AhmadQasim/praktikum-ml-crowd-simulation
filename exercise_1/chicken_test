@@ -1,1 +1,1 @@
-[[14, 22], [15, 22], [15, 23], [15, 24], [15, 25], [15, 26], [15, 27], [15, 28], [14, 28]]
+python3 tasks.py --grid_size_x=50 --grid_size_y=50 --grid_size=50 --o_locs="[[14, 22], [15, 22], [15, 23], [15, 24], [15, 25], [15, 26], [15, 27], [15, 28], [14, 28]]" --timesteps=35 --p_locs_mode="custom" --p_locs_radius=20 --p_num=5 --p_locs="[[5, 23], [5, 25], [5, 27]]" --t_locs="[[35, 45]]" --mode="dijkstra" simulate
