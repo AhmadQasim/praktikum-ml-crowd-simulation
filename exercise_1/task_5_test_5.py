@@ -20,18 +20,20 @@ class SimulationTest5(SimulationEnv):
         total_timesteps = 0
         for timestep in range(self.timesteps):
             if self.update_grid():
-                self.visualize_grid()
                 if timestep < 180:
                     self.c_check()
                 total_timesteps += 1
             else:
                 break
-        self.show_animation(total_timesteps)
+
+        print("Average: ", self.c_sum/180)
+        print("Density: ", (self.c_sum/180)/np.square(self.c_size))
+        print("Flow: ", (self.c_sum / 180) / np.square(self.c_size) * 1 * 3)
 
     def c_check(self):
-        for c_loc in self.c_locs:
-            c_sum = np.sum(self.grid[c_loc[0]:c_loc[0] + self.c_size, c_loc[1]:c_loc[1] + self.c_size] == self.p_code)
-            print(c_sum)
+        for i, c_loc in enumerate(self.c_locs):
+            c_sum_i = np.sum(self.grid[c_loc[0]:c_loc[0] + self.c_size, c_loc[1]:c_loc[1] + self.c_size] == self.p_code)
+            self.c_sum[0, i] += c_sum_i
 
     def initialize_pred(self):
         left = self.c_locs[np.argmin(self.c_locs[:, 1]), 1] - 180
@@ -57,8 +59,6 @@ class SimulationTest5(SimulationEnv):
         p_locs = list(p_locs)
 
         self.p_locs = np.array(p_locs)
-
-        print(self.p_locs.shape)
 
         for p_loc in self.p_locs:
             self.grid[p_loc[0], p_loc[1]] = self.p_code
