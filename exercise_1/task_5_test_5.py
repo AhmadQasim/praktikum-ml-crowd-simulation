@@ -31,6 +31,7 @@ class SimulationTest5(SimulationEnv):
     def c_check(self):
         for c_loc in self.c_locs:
             c_sum = np.sum(self.grid[c_loc[0]:c_loc[0] + self.c_size, c_loc[1]:c_loc[1] + self.c_size] == self.p_code)
+            print(c_sum)
 
     def initialize_pred(self):
         left = self.c_locs[np.argmin(self.c_locs[:, 1]), 1] - 180
