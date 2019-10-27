@@ -28,11 +28,12 @@ class SimulationEnv:
 
         # constants
         self.max_grid_size = 1000000
-        self.colors = colors.ListedColormap(["White", "Blue", "Red", "Black", "lightgray"])
+        self.colors = colors.ListedColormap(["White", "Blue", "Red", "Black", "lightgray", "Pink"])
         self.p_code = 1
         self.t_code = 2
         self.o_code = 3
         self.path_code = 4
+        self.reached_code = 5
         self.eight_neighbors = np.array([[-1, -1], [0, -1], [1, -1],
                                          [-1, 0], [1, 0],
                                          [-1, 1], [0, 1], [1, 1]])
@@ -61,6 +62,7 @@ class SimulationEnv:
                 self.visualize_grid()
                 total_timesteps += 1
             else:
+                self.visualize_grid()
                 break
         self.show_animation(total_timesteps)
 
@@ -82,12 +84,14 @@ class SimulationEnv:
                 self.grid[p_loc[0], p_loc[1]] = self.path_code
                 self.p_locs[i] = neighbors_p[min_neighbor_p, :]
                 self.grid[p_loc[0], p_loc[1]] = self.p_code
+            else:
+                self.grid[p_loc[0], p_loc[1]] = self.reached_code
+                target_reached[0, i] = 1
 
-                target_reached[0, i - 1] = 1
-
-        if np.sum(target_reached) == self.p_locs.shape[1]:
+        if np.sum(target_reached) == self.p_locs.shape[0]:
             return False
         else:
+            self.p_locs = self.p_locs[target_reached[0] == 0, :]
             return True
 
     def initialize_grid_dijkstra(self):
@@ -173,6 +177,9 @@ class SimulationEnv:
 
     def initialize_grid(self):
         self.grid = np.zeros((self.grid_size_x, self.grid_size_y))
+
+        self.grid[0, 0] = self.reached_code
+        self.grid[self.grid_size_x - 1, self.grid_size_y - 1] = self.o_code
 
         self.dijkstra_cost = np.zeros((self.grid_size_x, self.grid_size_y))
         self.dijkstra_cost[self.dijkstra_cost == 0] = np.inf
