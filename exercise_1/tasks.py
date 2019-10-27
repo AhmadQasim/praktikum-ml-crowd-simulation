@@ -195,6 +195,8 @@ class SimulationEnv:
                        int((np.sin(2 * np.pi / self.p_num * x) * self.p_locs_radius)) + self.t_locs[0, 1])
                       for x in range(self.p_num)]
             self.p_locs = np.array(points)
+            for p in self.p_locs:
+                self.grid[p[0]][p[1]] = self.p_code
         for t_loc in self.t_locs:
             self.grid[t_loc[0], t_loc[1]] = self.t_code
         for o_loc in self.o_locs:
