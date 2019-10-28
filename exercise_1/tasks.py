@@ -19,9 +19,11 @@ class SimulationEnv:
         self.grid = None
         self.p_locs = np.array(p_locs)
         self.t_locs = np.array(t_locs)
-        self.o_locs = np.array(o_locs)
-        self.timesteps = np.array(timesteps)
         self.p_locs_mode = p_locs_mode
+
+        if self.p_locs_mode != 'uniform':
+            self.o_locs = np.array(o_locs)
+        self.timesteps = np.array(timesteps)
         self.p_locs_radius = p_locs_radius
         self.p_num = p_num
         self.mode = mode
@@ -43,7 +45,7 @@ class SimulationEnv:
         self.neighbors = self.four_neighbors
         self.fig = plt.figure(figsize=(16, 16))
         self.animation = []
-        self.p_locs_modes = ['custom', 'circle', 'random']
+        self.p_locs_modes = ['custom', 'circle', 'random', 'uniform']
         self.modes = ['normal', 'dijkstra']
         self.r_max = int(np.sqrt(self.grid_size))
 
