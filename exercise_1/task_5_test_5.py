@@ -8,6 +8,7 @@ class SimulationTest5(SimulationEnv):
         super().__init__(**kwargs)
         self.c_locs = np.array(c_locs)
         self.p_density = p_density
+        self.p_locs = None
 
         # constants
         self.c_size = 5
