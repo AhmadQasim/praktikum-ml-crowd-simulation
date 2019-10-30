@@ -10,7 +10,7 @@ matplotlib.use("TkAgg")
 
 
 class SimulationEnv:
-    def __init__(self, grid_size, grid_size_x, grid_size_y, p_locs, t_locs, o_locs, timesteps,
+    def __init__(self, grid_size, grid_size_x, grid_size_y, p_locs, t_locs, o_locs, timesteps, disable_pedestrians=0,
                  p_locs_mode="custom", p_locs_radius=0, p_num=0, mode="normal"):
         # arguments
         self.grid_size = np.array(grid_size)
@@ -27,6 +27,7 @@ class SimulationEnv:
         self.p_locs_radius = p_locs_radius
         self.p_num = p_num
         self.mode = mode
+        self.disable_pedestrians = disable_pedestrians
 
         # constants
         self.max_grid_size = 1000000
@@ -86,14 +87,18 @@ class SimulationEnv:
                 self.grid[p_loc[0], p_loc[1]] = self.path_code
                 self.p_locs[i] = neighbors_p[min_neighbor_p, :]
                 self.grid[p_loc[0], p_loc[1]] = self.p_code
-            else:
+            elif not self.disable_pedestrians:
                 self.grid[p_loc[0], p_loc[1]] = self.reached_code
+                target_reached[0, i] = 1
+            else:
                 target_reached[0, i] = 1
 
         if np.sum(target_reached) == self.p_locs.shape[0]:
             return False
-        else:
+        elif not self.disable_pedestrians:
             self.p_locs = self.p_locs[target_reached[0] == 0, :]
+            return True
+        else:
             return True
 
     def initialize_grid_dijkstra(self):
