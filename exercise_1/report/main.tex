@@ -91,32 +91,32 @@ We implemented our cell automaton in the way that pedestrians which already reac
 
 \begin{task}{4, Obstacle avoidance}
 The pedestrians managed to avoid the obstacle in the chicken test, and each other in the bottleneck test using Dijkstra’s algorithm. \\
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{pictures/start_task4_obst.PNG}
     \caption{Initialisation of the chicken test.}
     \label{fig:obst_start}
 \end{figure}
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{pictures/end_task4_obst.PNG}
     \caption{The pedestrian successfully avoids the concave obstacle.}
     \label{fig:obst_end}
 \end{figure}
-As seen in Figure \ref{fig:obst_start}, the target is on the same y axis as the pedestrian. If the obstacles were to be ignored, the shortest path would have been to go straight down. However, as seen in Figure \ref{fig:obst_end}, the pedestrian walks around the obstacle and reaches the target with the shortest path possible, since Dijkstra’s algorithm guarantees completeness and optimality. \\
-\begin{figure}
+As seen in Figure \ref{fig:obst_start}, the target is on the same y axis as the pedestrian. If the obstacles were to be ignored, the shortest path would have been to go straight down, but the pedestrian would have got stuck. However, as seen in Figure \ref{fig:obst_end}, the pedestrian walks around the obstacle and reaches the target with the shortest path possible, since Dijkstra’s algorithm guarantees completeness and optimality. \\
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{pictures/start_task4_cong.PNG}
     \caption{Initialisation of the congestion test.}
     \label{fig:cong_start}
 \end{figure}
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{pictures/mid_task4_cong.PNG}
     \caption{The middle pedestrian goes through first. The right one goes 1 block right and waits for the left one to go through.}
     \label{fig:cong_mid}
 \end{figure}
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{pictures/end_task4_cong.PNG}
     \caption{The pedestrians successfully avoid each other at the tight passage and reach the target.}
