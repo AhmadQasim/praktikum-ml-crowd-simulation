@@ -10,10 +10,9 @@ matplotlib.use("TkAgg")
 
 
 class SimulationEnv:
-    def __init__(self, grid_size, grid_size_x, grid_size_y, p_locs, t_locs, o_locs, timesteps, disable_pedestrians=0,
-                 p_locs_mode="custom", p_locs_radius=0, p_num=0, mode="normal"):
+    def __init__(self, grid_size_x, grid_size_y, p_locs, t_locs, o_locs, timesteps, disable_pedestrians=0,
+                 avoid_obstacles=1, p_locs_mode="custom", p_locs_radius=0, p_num=0, mode="normal"):
         # arguments
-        self.grid_size = np.array(grid_size)
         self.grid_size_x = np.array(grid_size_x)
         self.grid_size_y = np.array(grid_size_y)
         self.grid = None
@@ -28,6 +27,7 @@ class SimulationEnv:
         self.p_num = p_num
         self.mode = mode
         self.disable_pedestrians = disable_pedestrians
+        self.avoid_obstacles = avoid_obstacles
 
         # constants
         self.max_grid_size = 1000000
@@ -48,7 +48,7 @@ class SimulationEnv:
         self.animation = []
         self.p_locs_modes = ['custom', 'circle', 'random', 'uniform']
         self.modes = ['normal', 'dijkstra']
-        self.r_max = int(np.sqrt(self.grid_size))
+        self.r_max = int(np.sqrt(self.grid_size_x))
 
         # variables
         self.dijkstra_cost = None
@@ -77,13 +77,15 @@ class SimulationEnv:
             for j, neighbor_p in enumerate(neighbors_p):
                 if self.mode == 'normal':
                     dist[j] = np.linalg.norm(neighbor_p - self.t_locs[0])
-                    dist[j] += self.calculate_cost_obstacles(neighbor_p)
+                    if self.avoid_obstacles:
+                        dist[j] += self.calculate_cost_obstacles(neighbor_p)
                     dist[j] += self.calculate_cost_pedestrian(neighbor_p, i)
                 elif self.mode == 'dijkstra':
                     dist[j] = self.dijkstra_cost[neighbor_p[0], neighbor_p[1]]
                     dist[j] += self.calculate_cost_pedestrian(neighbor_p, i)
             min_neighbor_p = np.argmin(dist)
             if np.linalg.norm(neighbors_p[min_neighbor_p, :] - self.t_locs[0]) != 0:
+                # if np.sum(np.abs(neighbors_p[min_neighbor_p, :] - self.o_locs), axis=1).all():
                 self.grid[p_loc[0], p_loc[1]] = self.path_code
                 self.p_locs[i] = neighbors_p[min_neighbor_p, :]
                 self.grid[p_loc[0], p_loc[1]] = self.p_code
