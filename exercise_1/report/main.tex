@@ -103,6 +103,13 @@ As seen in Figure \ref{fig:obst_start}, the target is on the same y axis as the 
     \label{fig:cong_end}
 \end{figure}
 Moreover, obstacle avoidance has been tested with a case of possible congestion as well. As seen in Figure \ref{fig:cong_start}, there are 3 pedestrians next to each other in an enclosed area with a 1 block wide exit. As they reach the tight passage, pedestrians avoid hitting each other and wait for the other pedestrians to go through (see Figure \ref{fig:cong_mid}). Every pedestrian reaches the target successfully and they even take different optimal paths as seen in Figure \ref{fig:cong_end}. \\
+If obstacle avoidance were not implemented, only the pedestrian in the middle could have got out and the other two would be stuck as illustrated in Figure \ref{fig:cong_stuck}. \\
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{pictures/task4_cong_stuck.jpeg}
+    \caption{The middle pedestrian manages to get out whilst the others just get stuck.}
+    \label{fig:cong_stuck}
+\end{figure}
 \end{task}
 \begin{task}{5, Tests}
 \begin{enumerate}
