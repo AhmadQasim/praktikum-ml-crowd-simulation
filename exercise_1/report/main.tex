@@ -1,0 +1,152 @@
+\documentclass[10pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MODIFY:
+
+\newcommand{\authorA}{Thomas Mustermann (1234567890)}
+\newcommand{\authorB}{Maria Musterfrau (1234567891)}
+\newcommand{\authorC}{Alexander Musterstudent(1234567892)}
+\newcommand{\groupNumber}{H} % - YOUR GROUP NUMBER
+\newcommand{\exerciseNumber}{1} % - THE NUMBER OF THE EXERCISE
+\newcommand{\sourceCodeLink}{https://www.github.com/link/to/our/github/project}
+
+\newcommand{\workPerAuthor}{
+\authorA&Task 1&0\%\\
+      &Task 2&20\%\\
+      &Task 3&30\%\\
+      \hline
+\authorB&Task 1&100\%\\
+      &Task 2&40\%\\
+      &Task 3&30\%\\
+      \hline
+\authorC&Task 1&0\%\\
+      &Task 2&40\%\\
+      &Task 3&40\%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{imports.tex}
+
+\begin{document}
+
+\frontpage
+
+\begin{task}{1, Setting up the modeling environment}
+We successfully set up the modeling environment, using Python.
+\end{task}
+
+\begin{task}{2, First step of a single pedestrian}
+The task is to "[d]efine a scenario with 50 by 50 cells (2500 in total), a single pedestrian at position (5,25) and a target 20 cells away from them at (25,25)." The pedestrian is supposed to walk in 25 steps to the target and waits there. We set up the scenario successfully. (see \ref{fig:start_2})
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{pictures/2_Start.png}
+    \caption{Start scenario of task 2}
+    \label{fig:start_2}
+\end{figure}
+\newpage
+The pedestrian arrives in our scenario successfully at the target. The counter starts counting at zero, therefore the counter shows 24 steps at the end. The successful arrival after 25 steps can be seen in Figure \ref{fig:end_2}. The pedestrian is marked in blue, while the target is colored red. We implemented the path the pedestrian takes in grey, so that it is possible to see which path the pedestrian took. The cellular automaton uses the Dijkstra algorithm to compute the best path from the pedestrian to the target.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/End.png}
+    \caption{Pedestrian arrived at target successfully}
+    \label{fig:end_2}
+\end{figure}
+\end{task}
+
+\begin{task}{3, Interaction of pedestrians}
+We use the previous defined scenario with 50 by 50 cells and a target at position (25,25). In this scenario five pedestrians are inserted in a circle with radius 10 around the target. The starting scenario can be seen in Figure \ref{fig:start_3}, where the pedestrians are marked in blue, while the target is colored in red.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{pictures/Figure_2.png}
+    \caption{Start of scenario 3}
+    \label{fig:start_3}
+\end{figure}
+We implemented our cell automaton in the way that pedestrians which already reached the target are disappearing so that they are not blocking other pedestrians which want to reach the target too. The paths of the single pedestrians are shown in grey. After 9 steps the first pedestrian arrives at the target, while all the other pedestrians are still on the path. (see Fig. \ref{fig:3_11}) After 11 steps in total the next two pedestrians arrive at the target and the previous arrived pedestrian is not at the target anymore, but you can see by the pink colored cell that a pedestrian arrived there and disappeared afterwards. (see Fig. \ref{fig:3_13}) In our opinion it makes sense to let pedestrians disappear one step after they reached the target, because they would be obstacles otherwise and would block the path to the target for other pedestrians. After another two steps (the steps 12 and 13) the last two pedestrians reach the target and so all pedestrians have reached the target within 13 steps in total (see Fig. \ref{fig:3_15}). The last figure shows that all pedestrians disappeared after reaching the target and the grey paths show the different paths the pedestrians used to reach the target.(see Fig. \ref{fig:3_16}). For the whole task the Dijkstra Algorithm was used to compute the distances and consequently the best path for every pedestrian to the target.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/Figure_11.png}
+    \caption{First pedestrian arrives after 9 steps}
+    \label{fig:3_11}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/Figure_13.png}
+    \caption{The next two pedestrians arrive at the target after 13 steps}
+    \label{fig:3_13}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/Figure_15.png}
+    \caption{The last two pedestrians arrive at the target after 15 steps}
+    \label{fig:3_15}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/Figure_16.png}
+    \caption{After 16 steps every pedestrian reached the target and was removed to not block any further pedestrians}
+    \label{fig:3_16}
+\end{figure}
+\end{task}
+\begin{task}{4, Obstacle avoidance}
+Pedestrians can avoid obstacles, using Dijkstras algorithm. See figure.
+\end{task}
+\begin{task}{5, Tests}
+\begin{enumerate}
+\item[TEST1:] The RiMEA scenario 1 (straight line, ignore premovement time)\\
+- The first test corresponds to the RiMEA scenario one, where one pedestrian which corresponds to 40 centimeters walks down a floor with a length of 40 meters and a width of 2 meters in between 26 and 34 seconds. The pedestrian has to walk with a speed between 4.5 km/h and 5.1 km/h. \\
+- The pedestrian has to be 40 centimeters. The side of one cell is 40 centimeters long, since in our cellular automaton a cell corresponds to a pedestrian. As a consequence of that the floor has a length of 100 cells and a width of 5 cells. The setup can be seen in Figure \ref{fig:setup_test1}. One timestep in our simulation corresponds to $\frac{1}{3}$ of a second. The pedestrian has a walking speed of 1.33 $\frac{m}{s}$. It arrives after roughly 89 timesteps at the target (see Fig. \ref{fig:result_test1}). Consequently it takes 29,67 seconds for the pedestrian to walk down the floor. This is exactly in the given range of 26 to 34 seconds. So the test is passed successfully \\
+- test successful
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/Test1start.png}
+    \caption{Setup of the RiMEA scenario one}
+    \label{fig:setup_test1}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/Test1.png}
+    \caption{Arrival at the end of the floor after roughly 89 timesteps}
+    \label{fig:result_test1}
+\end{figure}
+\item[TEST2:] RiMEA scenario 4 (fundamental diagram, be careful with periodic boundary conditions).\\
+- test successful - 
+\item[TEST3:] RiMEA scenario 6 (movement around a corner).\\
+- The third test corresponds to RiMEA sceanrio 6 which is executed successfully if twenty uniformly distributed people walk around a left corner without passing through any walls. The starting setup can be seen in Figure \ref{fig:corner}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{pictures/corner.png}
+    \caption{Setup of RiMEA scenario 6}
+    \label{fig:corner}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{pictures/Test5.png}
+    \caption{Uniformly distributed pedestrians for setup of RiMEA scenario 6}
+    \label{fig:test5_1}
+\end{figure}
+Figure \ref{fig:test5_1} shows one setup scenario of our simulation where 20 pedestrians are uniformly distributed before the corner.\\
+- All twenty pedestrians walked around the corner successfully without passing the walls. Figure \ref{fig:Test5_2} shows that all the pedestrians walked successfully around the corner and at figure \ref{fig:Test5_End} they all reached the red colored target.
+From Figure \ref{fig:Test5_End} can be seen that almost all cells were used to reach the target (red colored) around the corner.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{pictures/Test5_meanwhile.png}
+    \caption{All 20 pedestrians walked around the corner successfully}
+    \label{fig:Test5_2}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{pictures/Test5_End.png}
+    \caption{All passengers reached the target after the corner successfully}
+    \label{fig:Test5_End}
+\end{figure}\\
+- test successful - 
+\item[TEST4:] RiMEA scenario\\
+- test successful - 
+\end{enumerate}
+\end{task}
+
+\bibliographystyle{plain}
+\bibliography{Literature}
+
+\end{document}
