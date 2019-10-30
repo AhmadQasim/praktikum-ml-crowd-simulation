@@ -33,7 +33,7 @@
 \frontpage
 
 \begin{task}{1, Setting up the modeling environment}
-We successfully set up the modeling environment, using Python.
+The modelling environment was successfully implemented using Python. The targets, the pedestrians, the obstacles, and the path a pedestrian has taken are represented with the colours red, blue, black, and light grey respectively. Once a pedestrian reaches the target, it becomes light pink and other pedestrians become able to enter the position. For some tests in Task 5, inherited classes were implemented for an ease of initialisation. \\
 \end{task}
 
 \begin{task}{2, First step of a single pedestrian}
@@ -88,9 +88,43 @@ We implemented our cell automaton in the way that pedestrians which already reac
     \label{fig:3_16}
 \end{figure}
 \end{task}
+
 \begin{task}{4, Obstacle avoidance}
-Pedestrians can avoid obstacles, using Dijkstras algorithm. See figure.
+The pedestrians managed to avoid the obstacle in the chicken test, and each other in the bottleneck test using Dijkstra’s algorithm. \\
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/start_task4_obst.PNG}
+    \caption{Initialisation of the chicken test.}
+    \label{fig:obst_start}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/end_task4_obst.PNG}
+    \caption{The pedestrian successfully avoids the concave obstacle.}
+    \label{fig:obst_end}
+\end{figure}
+As seen in Figure \ref{fig:obst_start}, the target is on the same y axis as the pedestrian. If the obstacles were to be ignored, the shortest path would have been to go straight down. However, as seen in Figure \ref{fig:obst_end}, the pedestrian walks around the obstacle and reaches the target with the shortest path possible, since Dijkstra’s algorithm guarantees completeness and optimality. \\
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/start_task4_cong.PNG}
+    \caption{Initialisation of the congestion test.}
+    \label{fig:cong_start}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/mid_task4_cong.PNG}
+    \caption{The middle pedestrian goes through first. The right one goes 1 block right and waits for the left one to go through.}
+    \label{fig:cong_mid}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/end_task4_cong.PNG}
+    \caption{The pedestrians successfully avoid each other at the tight passage and reach the target.}
+    \label{fig:cong_end}
+\end{figure}
+Moreover, obstacle avoidance has been tested with a case of possible congestion as well. As seen in Figure \ref{fig:cong_start}, there are 3 pedestrians next to each other in an enclosed area with a 1 block wide exit. As they reach the tight passage, pedestrians avoid hitting each other and wait for the other pedestrians to go through (see Figure \ref{fig:cong_mid}). Every pedestrian reaches the target successfully and they even take different optimal paths as seen in Figure \ref{fig:cong_end}. \\
 \end{task}
+
 \begin{task}{5, Tests}
 \begin{enumerate}
 \item[TEST1:] The RiMEA scenario 1 (straight line, ignore premovement time)\\
@@ -110,9 +144,19 @@ Pedestrians can avoid obstacles, using Dijkstras algorithm. See figure.
     \label{fig:result_test1}
 \end{figure}
 \item[TEST2:] RiMEA scenario 4 (fundamental diagram, be careful with periodic boundary conditions).\\
-- test successful - 
+- The second test corresponds to the RiMEA scenario four, where multiple pedestrians uniformly placed with a density value are going from left to right in a 1000 meter long passage with a width of 10 meters. Again, the width of a pedestrian is set 40 centimeters, thus a side of a cell is 40 centimeters long. The pedestrians walk at a speed of 1,2 $\frac{m}{s}$. There are measuring points of area 2 by 2 meters at 450 and 500 meters. The latter is the main measuring point. \\
+- A single time step is set as a third of a second. So the pedestrians move 1 cell per time step. The length of the corridor is 2500 blocks and its width is 25 blocks. \\
+- At each time step ranging from the 1\textsuperscript{st} to the 180\textsuperscript{th} time step (total of 60 seconds), the number of pedestrians present on the measuring point are added to the sum. After the simulation, the sum is divided by the time passed to get an average number of people per unit time in that area. Then the value is divided by the are of measuring point to get the density in that area. Finally, the density is multiplied by the pedestrian speed to get the flow of the measuring point. As seen in Figure \ref{fig:test2_result}, as the pedestrian density at initialisation increases, the flow increases linearly. \\
+- test successful - \\
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/test2result.png}
+    \caption{The increase of flow per density is linear.}
+    \label{fig:test2_result}
+\end{figure}
+
 \item[TEST3:] RiMEA scenario 6 (movement around a corner).\\
-- The third test corresponds to RiMEA sceanrio 6 which is executed successfully if twenty uniformly distributed people walk around a left corner without passing through any walls. The starting setup can be seen in Figure \ref{fig:corner}.
+- The third test corresponds to RiMEA scenario 6 which is executed successfully if twenty uniformly distributed people walk around a left corner without passing through any walls. The starting setup can be seen in Figure \ref{fig:corner}.
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{pictures/corner.png}
@@ -141,8 +185,8 @@ From Figure \ref{fig:Test5_End} can be seen that almost all cells were used to r
     \label{fig:Test5_End}
 \end{figure}\\
 - test successful - 
-\item[TEST4:] RiMEA scenario\\
-- test successful - 
+\item[TEST4:] RiMEA scenario 7\\
+- not implemented - \\
 \end{enumerate}
 \end{task}
 
