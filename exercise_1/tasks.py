@@ -150,7 +150,7 @@ class SimulationEnv:
         dist = 0
         for o_loc in self.o_locs:
             r = np.linalg.norm(neighbor_p - o_loc)
-            dist += self.r_max / r
+            dist += self.r_max / (r + 1e-5)
 
         return dist
 

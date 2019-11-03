@@ -1,6 +1,7 @@
 from tasks import SimulationEnv
 import numpy as np
 from fire import Fire
+import sys
 
 
 class SimulationTest3(SimulationEnv):
@@ -19,24 +20,25 @@ class SimulationTest3(SimulationEnv):
         self.initialize_obstacles()
         super().__init__(**kwargs)
 
+        self.p_num_per_box = (self.p_region_x*self.p_region_y)/self.p_num
+
+        self.validate_arguments_pred()
         self.initialize_pred()
 
+    def validate_arguments_pred(self):
+        if self.p_num_per_box < 1:
+            sys.exit("The number of pedestrians should be less then the number of boxes in the region")
+
     def initialize_pred(self):
-        p_locs = set()
+        p_locs = list()
+        curr_index = 0
         for i in range(self.p_num):
-            p_loc_x = np.random.randint(self.p_coord[0], self.p_coord[0] + self.p_region_x)
-            p_loc_y = np.random.randint(self.p_coord[1], self.p_coord[1] + self.p_region_y)
-            p_loc = (p_loc_x, p_loc_y)
 
-            while p_loc in p_locs:
-                p_loc_x = np.random.randint(self.p_coord[0], self.p_coord[0] + self.p_region_x)
-                p_loc_y = np.random.randint(self.p_coord[1], self.p_coord[1] + self.p_region_y)
+            p_loc = np.array(np.unravel_index(curr_index, (self.p_region_x, self.p_region_y))) + self.p_coord
+            print(p_loc)
 
-                p_loc = (p_loc_x, p_loc_y)
-
-            p_locs.add(p_loc)
-
-        p_locs = list(p_locs)
+            p_locs.append(p_loc)
+            curr_index += int(self.p_num_per_box)
 
         self.p_locs = np.array(p_locs)
 
