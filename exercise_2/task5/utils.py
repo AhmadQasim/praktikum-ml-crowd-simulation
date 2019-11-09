@@ -48,8 +48,6 @@ def edit_scenario(scenario_path: str, target_path: str, pedestrian_data):
             "idAsTarget": -1,
             "isChild": False,
             "isLikelyInjured": False,
-            "mostImportantEvent": None,
-            "salientBehavior": "TARGET_ORIENTED",
             "groupIds": [],
             "trajectory": {
                 "footSteps": []
@@ -89,7 +87,7 @@ def parse_trajectory(path, delete_output=False):
 
         if velocity_row.empty:
             # print(f'No velocity row for x, y values of {(x, y)} and pedestrian ID of {pedestrian_id}')
-            pedestrian_data[int(row.timeStep) - 1, int(row.pedestrianId) - 1, :2]  = [x, y]
+            pedestrian_data[int(row.timeStep) - 1, int(row.pedestrianId) - 1, :2] = [x, y]
             continue
         elif velocity_row.shape[0] > 1:
             pass
@@ -111,39 +109,16 @@ def parse_trajectory(path, delete_output=False):
     return pedestrian_data
 
 
-def getModelPrediction(trueState, scenario_path: str, target_path: str, output_path: str):
-    vadere_root = '"/Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/vadere/"'
-    edit_scenario(scenario_path, target_path, trueState)
+def model_prediction(true_state, scenario_path: str, target_path: str, output_path: str, vadere_root: str):
+    edit_scenario(scenario_path, target_path, true_state)
 
-    os.system(f'java -jar {vadere_root}vadere-console.jar scenario-run ' + # check vadere_root and play with the quotes
-              f'--scenario-file {target_path} --output-dir="{output_path}"')
+    # check vadere_root and play with the quotes
+    os.system(f'java -jar {vadere_root}vadere-console.jar --loglevel OFF scenario-run ' +
+              f'--scenario-file {target_path} --output-dir="{output_path}" --scenario-checker off')
 
-def predictGNM(pedestrian_count, timestep):
-    path = './bottleneck/scenarios/bottleneck_gnm.json'
-    targetPath = path[:-5] + '_edited.json'
-    output_path = './bottleneck/output/GNM/prediction/'
-    ped_data = parse_trajectory(path=f"./bottleneck/output/OSM/model/bottleneck_OSM_{pedestrian_count}")
-    getModelPrediction(ped_data[timestep], path, targetPath, output_path=output_path)
+
+def predict(x, path_scenario, output_path, dynamic_scenario_path, vadere_root):
+    model_prediction(x, path_scenario, dynamic_scenario_path, output_path=output_path, vadere_root=vadere_root)
     output_dir = os.listdir(output_path)[0]
     ped_predicted_data = parse_trajectory(os.path.join(output_path, output_dir), delete_output=True)
     return ped_predicted_data[1]
-
-def predictOSM(pedestrian_count, timestep):
-    path = './bottleneck/scenarios/bottleneck_osm.json'
-    targetPath = path[:-5] + '_edited.json'
-    output_path = './bottleneck/output/OSM/prediction/'
-    ped_data = parse_trajectory(path=f"./bottleneck/output/GNM/model/bottleneck_OSM_{pedestrian_count}")
-    getModelPrediction(ped_data[timestep], path, targetPath, output_path=output_path)
-    output_dir = os.listdir(output_path)[0]
-    ped_predicted_data = parse_trajectory(os.path.join(output_path, output_dir), delete_output=True)
-    return ped_predicted_data[1]
-
-
-if __name__ == '__main__':
-    # flag = 0 means OSM (ground truth) predict GNM, otherwise (GNM ground truth predict OSM) 1
-    flag = 0
-    if flag == 0:
-        ped_predicted_data = predictGNM(15)
-    else:
-        ped_predicted_data = predictOSM(15)
-    print(ped_predicted_data.shape)

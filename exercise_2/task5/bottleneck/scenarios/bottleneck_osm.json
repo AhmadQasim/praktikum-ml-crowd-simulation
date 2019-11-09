@@ -118,8 +118,7 @@
       "digitsPerCoordinate" : 2,
       "useFixedSeed" : true,
       "fixedSeed" : 8862303966158154952,
-      "simulationSeed" : 8862303966158154952,
-      "useSalientBehavior" : false
+      "simulationSeed" : 8862303966158154952
     },
     "topography" : {
       "attributes" : {
@@ -162,23 +161,6 @@
           "y" : 8.0,
           "width" : 2.0,
           "height" : 4.0,
-          "type" : "RECTANGLE"
-        },
-        "waitingTime" : 0.0,
-        "waitingTimeYellowPhase" : 0.0,
-        "parallelWaiters" : 0,
-        "individualWaiting" : true,
-        "deletionDistance" : 0.1,
-        "startingWithRedLight" : false,
-        "nextSpeed" : -1.0
-      }, {
-        "id" : 3,
-        "absorbing" : true,
-        "shape" : {
-          "x" : 26.3,
-          "y" : 9.6,
-          "width" : 1.0,
-          "height" : 1.0,
           "type" : "RECTANGLE"
         },
         "waitingTime" : 0.0,

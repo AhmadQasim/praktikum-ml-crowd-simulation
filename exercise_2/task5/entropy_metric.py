@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import model_prediction, parse_trajectory
+from utils import predict, parse_trajectory
 
 random_seed = 1  # used throughout the example
 np.random.seed(random_seed)
@@ -22,11 +22,11 @@ class EntropyMetric:
         # Values below 0.05 yield essentially no visible difference to the truth, while values above 0.1
         # make the trajectories almost indistinguishable from noise, and only ensemble runs make it possible to evaluate
         # the error and estimate the true state.
-        self.model_error = 1
+        self.model_error = 0
         self.true_error = 0
         self.m = 2  # ensemble runs
         self.n = pedestrian_num  # number of agents. Note that the models f_true and f_model only work
-        self.d = 2  # dimension per "agent" (we only have one here) self.nd = n*d # total state dimension
+        self.d = 4  # dimension per "agent" (we only have one here) self.nd = n*d # total state dimension
 
         self.nd = self.n * self.d  # total state dimension
         self.xt = np.zeros((self.NT, (self.nd * self.m)))
@@ -41,19 +41,22 @@ class EntropyMetric:
         self.xm_hat_prev = 0
         self.xm = None
 
-        # paths
-        self.source_scenario = './bottleneck/scenarios/OSM/bottleneck_osm.json'
-        self.target_scenario = './bottleneck/scenarios/GNM/bottleneck_gnm.json'
-        self.output_path = './bottleneck/output/GNM/'
-        self.vadere_path = '/home/ahmad/praktikum/vadere/'
+        self.source = 'osm'
+        self.target = 'gnm'
 
-        self.true_data = parse_trajectory(pedestrian_num=pedestrian_num) + np.random.randn(self.n,
-                                                                                           self.d) * self.true_error
+        # paths
+        self.vadere_root = '/home/ahmad/praktikum/vadere/'
+        self.path_scenario = f'./bottleneck/scenarios/bottleneck_{self.target}.json'
+        self.output_path = f'./bottleneck/output/{self.target.upper()}/prediction/'
+        self.source_trajectory = f"./bottleneck/output/OSM/model/bottleneck_{self.source.upper()}_{self.n}"
+        self.dynamic_scenario_path = self.path_scenario[:-5] + '_edited.json'
+
+        self.true_data = parse_trajectory(path=self.source_trajectory) + np.random.randn(self.n,
+                                                                                         self.d) * self.true_error
 
     def f_model(self, x, error):
-        model_prediction(x, self.source_scenario, self.target_scenario, self.output_path, self.vadere_path)
-        return parse_trajectory(self.output_path,
-                                delete_output=True)[1] + np.random.randn(x.shape[0], x.shape[1]) * error
+        return predict(x, self.path_scenario, self.output_path, self.dynamic_scenario_path, self.vadere_root)\
+               + np.random.randn(x.shape[0], x.shape[1]) * error
 
     @staticmethod
     def normal_draw(cov):
@@ -74,6 +77,8 @@ class EntropyMetric:
         # initialize the initial guess for the model state with random numbers
         # normally, one would probably have a better guess
         xk = np.random.randn(z_data.shape[0], z_data.shape[1]) / 10000
+        # TODO: I initialized the xk with first state of true data rather then random because othewise the prediction
+        #  model keeps being stuck on the random position for the next timesteps
         xk[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
         for k in range(1, t):
             print("Timestep: ", k)
@@ -86,15 +91,21 @@ class EntropyMetric:
                 qk = self.normal_draw(q_l)
                 zk[(i * self.nd):((i + 1) * self.nd)] = \
                     observation(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(1, -1)) + qk
-            zkhat = 1 / self.m * np.sum([zk[i::self.nd] for i in range(self.nd)], axis=1)
+            zkhat = 1 / self.m * (np.sum([zk[i::self.nd] for i in range(self.nd)], axis=1))
             zdiff = np.row_stack([(zk[(i * self.nd):((i + 1) * self.nd)] - zkhat) for i in range(self.m)])
+
+            # TODO: why calculate the covariance of the zdiff here? rather then: 1 / self.m * np.sum(zdiff @ zdiff.T)
             z_k = np.cov(zdiff.T)
 
             for j in range(1, k + 1):
                 xjbar = np.array(1 / self.m * np.sum([xk[j, i::self.nd] for i in range(self.nd)], axis=1))
                 xdiff = np.row_stack([(xk[j, (i * self.nd):((i + 1) * self.nd)] - xjbar) for i in range(self.m)])
                 zdiff = np.row_stack([(zk[(i * self.nd):((i + 1) * self.nd)] - zkhat) for i in range(self.m)])
+
+                # TODO: why substract 1 from m here?
                 sigmaj = 1 / (self.m - 1) * (xdiff.T @ zdiff)
+
+                # TODO: pseudo inverse of z_k, which is the covariance
                 matk = sigmaj @ np.linalg.pinv(z_k, rcond=1e-10)
                 for i in range(self.m):
                     xk[j, (i * self.nd):((i + 1) * self.nd)] = xk[j, (i * self.nd):((i + 1) * self.nd)] + matk @ (
@@ -106,12 +117,15 @@ class EntropyMetric:
         data = []
         for k in range(1, t - 1):
             for i in range(self.m):
+                # TODO: I reshape the flattened xk back to (pedestrians, dimensions) i.e. reshape(self.n, self.d)
+                #  before sending to prediction model. It seems to work fine but could this cause any problems?
                 fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)
                 xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
                 data.append((xhat - fhat))
         data = np.row_stack(data)
-        # note that we do not compute it "per agent", as in the paper guy-2019b,
-        # but for all coordinates of the state (we only consider one "agent" in this code)
+
+        # TODO: Does taking the covariance of the stacked difference fhat and xhat result in the same expression as
+        #  given in the paper?
         return np.cov(data.T)
 
     def entropy(self, m_dist):
@@ -124,9 +138,6 @@ class EntropyMetric:
         for k in range(1, self.NT):
             print("Timestep: ", k)
             for i in range(self.m):
-                # using this as "true dynamics" means there is no noise in the true states(which is also ok)
-                # xt[k,(i*n):((i+1)*n)]=(f_true(xt[k-1,(i*n):((i+1)*n)].reshape(1,-1), dt))
-                # test what happens if the "true dynamics" are just a less noisy version of the model
                 self.xt[k, (i * self.nd):((i + 1) * self.nd)] = self.true_data[k, :].reshape(1, -1)
                 self.xm[k, (i * self.nd):((i + 1) * self.nd)] = \
                     (self.f_model(self.xm[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d),
@@ -172,8 +183,8 @@ class EntropyMetric:
         plt.show()
 
     def find_entropy(self):
-        self.initial_run()
-        self.plot_initial_run()
+        # self.initial_run()
+        # self.plot_initial_run()
         self.run_em()
         self.plot_em()
 
