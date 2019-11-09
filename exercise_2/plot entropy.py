@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import functools
-from task4.guy_algorithm import try_error
+from task4.entropy_metric import try_error
 
 errors = [1e-3, 1e-2, 5e-2, 1e-1, 2e-1, 3e-1, 5e-1, 7e-1, 8e-1, 1e-0]
 real_entropy = []
