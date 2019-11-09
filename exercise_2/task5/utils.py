@@ -69,13 +69,15 @@ def edit_scenario(scenario_path: str, target_path: str, pedestrian_data):
 
 
 def parse_trajectory(path, delete_output=False):
-    output_dir = os.listdir(path)[0]
+    output_dir = os.listdir(path)[1]
     position_by_timestep = pd.read_csv(f'{path}{output_dir}/postvis.traj', sep=' ', index_col=False)
     velocities = pd.read_csv(f'{path}{output_dir}/velocities.txt', sep=' ', index_col=False)
 
-    pedestrian_data = np.empty((max(position_by_timestep.timeStep), max(position_by_timestep.pedestrianId), 2))
+    position_by_timestep['pedestrianId'] = position_by_timestep['pedestrianId'].apply(int)
 
-    for _, row in position_by_timestep.iterrows():
+    pedestrian_data = np.empty((max(position_by_timestep.timeStep), max(position_by_timestep.pedestrianId), 4))
+
+    for i, row in position_by_timestep.iterrows():
         pedestrian_id = row['pedestrianId']
         x = row["x-PID6"]
         y = row["y-PID6"]
@@ -87,7 +89,8 @@ def parse_trajectory(path, delete_output=False):
                                                            & (y <= pedestrian_velocities['endY-PID1'])]
 
         if velocity_row.empty:
-            raise RuntimeError(f'No velocity row for x, y values of {(x, y)} and pedestrian ID of {pedestrian_id}')
+            print(f'No velocity row for x, y values of {(x, y)} and pedestrian ID of {pedestrian_id}')
+            continue
         elif velocity_row.shape[0] > 1:
             print(f'Found more than 1 velocity row for x, y values of {(x, y)} and pedestrian ID of {pedestrian_id}')
 
@@ -96,6 +99,7 @@ def parse_trajectory(path, delete_output=False):
         vel_y = (velocity_row['endY-PID1'].iloc[0] - velocity_row['startY-PID1'].iloc[0]) / duration
 
         pedestrian_data[int(row.timeStep) - 1, int(row.pedestrianId) - 1, :] = [x, y, vel_x, vel_y]
+
 
     if delete_output:
         shutil.rmtree(f'{path}{output_dir}')
