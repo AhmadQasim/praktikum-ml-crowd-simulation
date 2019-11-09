@@ -8,7 +8,7 @@ import shutil
 def edit_scenario(scenario_path: str, target_path: str, pedestrian_data):
     """
 
-    :param scenario_path: path of the scneario json file
+    :param scenario_path: path of the scenario json file
     :param target_path: target path where the new scenario file should be saved
     :param pedestrian_data: a 2D numpy array where each row contains the position (and soon the velocity).
     Each row's index indicates (pedestrian's id - 1)
@@ -68,7 +68,7 @@ def edit_scenario(scenario_path: str, target_path: str, pedestrian_data):
         json.dump(scenario, outfile, indent=4)
 
 
-def parse_trajectory(path="./bottleneck/output/OSM/", delete_output=False):
+def parse_trajectory(path, delete_output=False):
     output_dir = os.listdir(path)[0]
     df = pd.read_csv(f'{path}{output_dir}/postvis.traj', sep=' ').apply(pd.to_numeric)
 
@@ -76,8 +76,8 @@ def parse_trajectory(path="./bottleneck/output/OSM/", delete_output=False):
     pedestrian_data = np.empty((max(df.timeStep), max(df.pedestrianId), 2))
 
     for _, row in df.iterrows():
-        pedestrian_data[row.timeStep - 1, row.pedestrianId - 1, 0] = row["x-PID6"]
-        pedestrian_data[row.timeStep - 1, row.pedestrianId - 1, 1] = row["y-PID6"]
+        pedestrian_data[int(row.timeStep) - 1, int(row.pedestrianId) - 1, 0] = row["x-PID6"]
+        pedestrian_data[int(row.timeStep) - 1, int(row.pedestrianId) - 1, 1] = row["y-PID6"]
 
     if delete_output:
         shutil.rmtree(f'{path}{output_dir}')
@@ -85,22 +85,37 @@ def parse_trajectory(path="./bottleneck/output/OSM/", delete_output=False):
     return pedestrian_data
 
 
-def getModelPrediction(trueState, scenario_path: str, target_path: str):
-    output_path = './bottleneck/output/GNM/'
+def getModelPrediction(trueState, scenario_path: str, target_path: str, output_path: str):
     vadere_root = '"/Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/vadere/"'
     edit_scenario(scenario_path, target_path, trueState)
 
     os.system(f'java -jar {vadere_root}vadere-console.jar scenario-run ' # check vadere_root and play with the quotes
               f'--scenario-file {target_path} --output-dir="{output_path}"')
 
+def predictGNM():
+    path = './bottleneck/output/OSM/model/bottleneck_2019-11-04_18-22-38.229/bottleneck.json'
+    targetPath = path[:-5] + '_gnm.json'
+    output_path = './bottleneck/output/GNM/prediction/'
+    ped_data = parse_trajectory(path="./bottleneck/output/OSM/model/")
+    getModelPrediction(ped_data[0], path, targetPath, output_path=output_path)
+    ped_predicted_data = parse_trajectory(output_path, delete_output=True)
+    return ped_predicted_data
+
+def predictOSM():
+    path = './bottleneck/output/GNM/model/bottleneck_2019-11-08_16-33-05.882/bottleneck.json'
+    targetPath = path[:-5] + '_osm.json'
+    output_path = './bottleneck/output/OSM/prediction/'
+    ped_data = parse_trajectory(path="./bottleneck/output/GNM/model/")
+    getModelPrediction(ped_data[0], path, targetPath, output_path=output_path)
+    ped_predicted_data = parse_trajectory(output_path, delete_output=True)
+    return ped_predicted_data
+
 
 if __name__ == '__main__':
-    path = './bottleneck/output/OSM/bottleneck_2019-11-04_18-22-38.229/bottleneck.json'
-    targetPath = path[:-5] + '_gnm.json'
-    output_path = './bottleneck/output/GNM/'
-
-    ped_data = parse_trajectory()
-    getModelPrediction(ped_data[0], path, targetPath)
-    ped_predicted_data = parse_trajectory(output_path, delete_output=True)
-
+    # flag = 0 means OSM (ground truth) predict GNM, otherwise (GNM ground truth predict OSM) 1
+    flag = 1
+    if flag == 0:
+        ped_predicted_data = predictGNM()
+    else:
+        ped_predicted_data = predictOSM()
     print(ped_predicted_data[0])
