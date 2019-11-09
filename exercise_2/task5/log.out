@@ -1,0 +1,156 @@
+14:14:43,676   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+14:14:43,678   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/GNM
+14:14:44,081 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+14:14:44,112   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+14:14:44,112   INFO ScenarioRun:126 - StartIt bottleneck
+14:14:44,114   INFO ScenarioRun:105 - scenario context initialized.
+14:14:44,153   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+14:14:44,371   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:216[ms]
+14:14:44,375   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+14:14:44,522   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:129[ms]
+14:14:44,582   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:49[ms]
+14:14:45,615   INFO Simulation:332 - Finished writing all output files
+14:14:45,616   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
+14:28:24,102   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+14:28:24,104   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/GNM
+14:28:24,458 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+14:28:24,484   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+14:28:24,484   INFO ScenarioRun:126 - StartIt bottleneck
+14:28:24,486   INFO ScenarioRun:105 - scenario context initialized.
+14:28:24,522   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+14:28:24,726   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:202[ms]
+14:28:24,729   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+14:28:24,900   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:151[ms]
+14:28:24,963   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:46[ms]
+14:28:25,994   INFO Simulation:332 - Finished writing all output files
+14:28:25,995   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
+15:28:01,446   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+15:28:01,448   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/GNM/prediction
+15:28:01,928 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+15:28:01,963   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+15:28:01,964   INFO ScenarioRun:126 - StartIt bottleneck
+15:28:01,968   INFO ScenarioRun:105 - scenario context initialized.
+15:28:02,018   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+15:28:02,249   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:229[ms]
+15:28:02,252   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+15:28:02,411   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:142[ms]
+15:28:02,521   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:103[ms]
+15:28:03,561   INFO Simulation:332 - Finished writing all output files
+15:28:03,563   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
+23:41:58,725   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+23:41:58,728   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/GNM/prediction
+23:41:59,204 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+23:41:59,240   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+23:41:59,241   INFO ScenarioRun:126 - StartIt bottleneck
+23:41:59,245   INFO ScenarioRun:105 - scenario context initialized.
+23:41:59,294   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+23:41:59,498   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:202[ms]
+23:41:59,501   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+23:41:59,652   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:131[ms]
+23:41:59,723   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:63[ms]
+23:42:00,765   INFO Simulation:332 - Finished writing all output files
+23:42:00,766   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
+17:29:08,909   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+17:29:08,912   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/OSM/prediction
+17:29:09,415 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+17:29:09,451   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck_GNM'...
+17:29:09,452   INFO ScenarioRun:126 - StartIt bottleneck_GNM
+17:29:09,455   INFO ScenarioRun:105 - scenario context initialized.
+17:29:09,481   INFO VadereConfig:70 - Use config file from path /Users/mm/.config/vadere.conf
+17:29:09,710   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+17:29:09,894   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:181[ms]
+17:29:09,895   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+17:29:10,047   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:133[ms]
+17:29:10,117   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:58[ms]
+17:29:11,795   INFO Simulation:332 - Finished writing all output files
+17:29:11,795   INFO ScenarioRun:177 - Simulation of scenario bottleneck_GNM finished.
+18:23:24,499   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+18:23:24,502   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/OSM/prediction
+18:23:24,870 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+18:23:24,896   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+18:23:24,896   INFO ScenarioRun:126 - StartIt bottleneck
+18:23:24,898   INFO ScenarioRun:105 - scenario context initialized.
+18:23:24,913   INFO VadereConfig:70 - Use config file from path /Users/mm/.config/vadere.conf
+18:23:25,035   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+18:23:25,253   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:214[ms]
+18:23:25,255   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+18:23:25,457   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:185[ms]
+18:23:25,562   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:96[ms]
+18:23:26,576   INFO Simulation:332 - Finished writing all output files
+18:23:26,577   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
+18:24:04,886   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+18:24:04,888   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/GNM/prediction
+18:24:05,268 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+18:24:05,294   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+18:24:05,294   INFO ScenarioRun:126 - StartIt bottleneck
+18:24:05,297   INFO ScenarioRun:105 - scenario context initialized.
+18:24:05,343   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+18:24:05,571   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:225[ms]
+18:24:05,574   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+18:24:05,720   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:127[ms]
+18:24:05,787   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:57[ms]
+18:24:06,816   INFO Simulation:332 - Finished writing all output files
+18:24:06,817   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
+18:24:19,089   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+18:24:19,092   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/OSM/prediction
+18:24:19,451 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+18:24:19,477   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+18:24:19,478   INFO ScenarioRun:126 - StartIt bottleneck
+18:24:19,480   INFO ScenarioRun:105 - scenario context initialized.
+18:24:19,495   INFO VadereConfig:70 - Use config file from path /Users/mm/.config/vadere.conf
+18:24:19,625   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+18:24:19,845   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:218[ms]
+18:24:19,849   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+18:24:19,983   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:116[ms]
+18:24:20,059   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:70[ms]
+18:24:21,075   INFO Simulation:332 - Finished writing all output files
+18:24:21,076   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
+18:28:34,325   INFO STDOUTERR:15 - Redirect StdOut and StdErr
+18:28:34,327   INFO ScenarioRunSubCommand:55 - Use output directory: /Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/praktikum-ml-crowd/exercise_2/task5/./bottleneck/output/OSM/prediction
+18:28:34,707 STDOUT STDOUTERR:22 - Topography Warning:
+   The target is not used in any source. Remove target to increase performance. 
+   The target is not used in any source. Remove target to increase performance. 
+   Two targets overlap. 
+
+18:28:34,733   INFO ScenarioRun:124 - Initializing scenario. Start of scenario 'bottleneck'...
+18:28:34,733   INFO ScenarioRun:126 - StartIt bottleneck
+18:28:34,735   INFO ScenarioRun:105 - scenario context initialized.
+18:28:34,747   INFO VadereConfig:70 - Use config file from path /Users/mm/.config/vadere.conf
+18:28:34,879   INFO PotentialFieldDistancesBruteForce:47 - initialize floor field (PotentialFieldDistancesBruteForce)
+18:28:35,111   INFO PotentialFieldDistancesBruteForce:82 - floor field initialization time:230[ms]
+18:28:35,113   INFO Topography:351 - Set PedestrianIdCount to start value: 2
+18:28:35,239   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:111[ms]
+18:28:35,300   INFO EikonalSolverDefaultProvider:23 - floor field initialization time:54[ms]
+18:28:36,312   INFO Simulation:332 - Finished writing all output files
+18:28:36,312   INFO ScenarioRun:177 - Simulation of scenario bottleneck finished.
