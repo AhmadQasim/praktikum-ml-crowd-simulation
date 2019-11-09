@@ -69,11 +69,10 @@ def edit_scenario(scenario_path: str, target_path: str, pedestrian_data):
 
 
 def parse_trajectory(path, delete_output=False):
-    output_dir = os.listdir(path)[1]
+    output_dir = os.listdir(path)[0]
     position_by_timestep = pd.read_csv(f'{path}{output_dir}/postvis.traj', sep=' ', index_col=False)
     velocities = pd.read_csv(f'{path}{output_dir}/velocities.txt', sep=' ', index_col=False)
 
-    # TODO: add 2 more values to the last axis indicating the directions of the velocity
     pedestrian_data = np.empty((max(position_by_timestep.timeStep), max(position_by_timestep.pedestrianId), 2))
 
     for _, row in position_by_timestep.iterrows():
@@ -82,8 +81,15 @@ def parse_trajectory(path, delete_output=False):
         y = row["y-PID6"]
 
         pedestrian_velocities = velocities[velocities['pedestrianId'] == pedestrian_id]
-        velocity_row = pedestrian_velocities[(pedestrian_velocities['startX-PID1'] <= x) & (x <= pedestrian_velocities['endX-PID1'])
-                                             & (pedestrian_velocities['startY-PID1'] <= y) & (y <= pedestrian_velocities['endY-PID1'])]
+        velocity_row: pd.DataFrame = pedestrian_velocities[(pedestrian_velocities['startX-PID1'] <= x)
+                                                           & (x <= pedestrian_velocities['endX-PID1'])
+                                                           & (pedestrian_velocities['startY-PID1'] <= y)
+                                                           & (y <= pedestrian_velocities['endY-PID1'])]
+
+        if velocity_row.empty:
+            raise RuntimeError(f'No velocity row for x, y values of {(x, y)} and pedestrian ID of {pedestrian_id}')
+        elif velocity_row.shape[0] > 1:
+            print(f'Found more than 1 velocity row for x, y values of {(x, y)} and pedestrian ID of {pedestrian_id}')
 
         duration = velocity_row['endTime-PID1'].iloc[0] - velocity_row['simTime'].iloc[0]
         vel_x = (velocity_row['endX-PID1'].iloc[0] - velocity_row['startX-PID1'].iloc[0]) / duration
