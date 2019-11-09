@@ -69,9 +69,8 @@ def edit_scenario(scenario_path: str, target_path: str, pedestrian_data):
 
 
 def parse_trajectory(path, delete_output=False):
-    output_dir = os.listdir(path)[1]
-    position_by_timestep = pd.read_csv(f'{path}{output_dir}/postvis.traj', sep=' ', index_col=False)
-    velocities = pd.read_csv(f'{path}{output_dir}/velocities.txt', sep=' ', index_col=False)
+    position_by_timestep = pd.read_csv(f'{path}/postvis.traj', sep=' ', index_col=False)
+    velocities = pd.read_csv(f'{path}/velocities.txt', sep=' ', index_col=False)
 
     position_by_timestep['pedestrianId'] = position_by_timestep['pedestrianId'].apply(int)
 
@@ -102,7 +101,7 @@ def parse_trajectory(path, delete_output=False):
 
 
     if delete_output:
-        shutil.rmtree(f'{path}{output_dir}')
+        shutil.rmtree(path)
 
     return pedestrian_data
 
@@ -114,22 +113,24 @@ def getModelPrediction(trueState, scenario_path: str, target_path: str, output_p
     os.system(f'java -jar {vadere_root}vadere-console.jar scenario-run ' # check vadere_root and play with the quotes
               f'--scenario-file {target_path} --output-dir="{output_path}"')
 
-def predictGNM():
-    path = './bottleneck/output/OSM/model/bottleneck_2019-11-09_13-54-50.43/bottleneck.json'
-    targetPath = path[:-5] + '_gnm.json'
+def predictGNM(pedestrian_count):
+    path = './bottleneck/scenarios/bottleneck_gnm.json'
+    targetPath = path[:-5] + '_edited.json'
     output_path = './bottleneck/output/GNM/prediction/'
-    ped_data = parse_trajectory(path="./bottleneck/output/OSM/model/")
+    ped_data = parse_trajectory(path=f"./bottleneck/output/OSM/model/bottleneck_OSM_{pedestrian_count}")
     getModelPrediction(ped_data[0], path, targetPath, output_path=output_path)
-    ped_predicted_data = parse_trajectory(output_path, delete_output=True)
+    output_dir = os.listdir(output_path)[0]
+    ped_predicted_data = parse_trajectory(os.path.join(output_path, output_dir), delete_output=True)
     return ped_predicted_data
 
-def predictOSM():
-    path = './bottleneck/output/GNM/model/bottleneck_2019-11-08_16-33-05.882/bottleneck.json'
-    targetPath = path[:-5] + '_osm.json'
+def predictOSM(pedestrian_count):
+    path = './bottleneck/scenarios/bottleneck_osm.json'
+    targetPath = path[:-5] + '_edited.json'
     output_path = './bottleneck/output/OSM/prediction/'
-    ped_data = parse_trajectory(path="./bottleneck/output/GNM/model/")
+    ped_data = parse_trajectory(path=f"./bottleneck/output/GNM/model/bottleneck_OSM_{pedestrian_count}")
     getModelPrediction(ped_data[0], path, targetPath, output_path=output_path)
-    ped_predicted_data = parse_trajectory(output_path, delete_output=True)
+    output_dir = os.listdir(output_path)[0]
+    ped_predicted_data = parse_trajectory(os.path.join(output_path, output_dir), delete_output=True)
     return ped_predicted_data
 
 
