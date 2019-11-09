@@ -1,21 +1,20 @@
 import numpy as np
-import fire
 import matplotlib.pyplot as plt
-
+from utils import model_prediction, parse_trajectory
 
 random_seed = 1  # used throughout the example
 np.random.seed(random_seed)
 
 
 class EntropyMetric:
-    def __init__(self):
+    def __init__(self, pedestrian_num):
         # Initial state of the true and simulated data
         x0 = np.array([1, 0]).reshape(1, -1)
         self.x0 = x0 / np.linalg.norm(x0)
         # Number of time steps for the given simulation
-        self.NT = 100
+        self.NT = 30
         # Physical time that passes in the given number of time steps
-        self.T = 5
+        self.T = self.NT
         self.dt = self.T / self.NT
         self.time = np.linspace(0, self.T, self.NT)
 
@@ -23,11 +22,10 @@ class EntropyMetric:
         # Values below 0.05 yield essentially no visible difference to the truth, while values above 0.1
         # make the trajectories almost indistinguishable from noise, and only ensemble runs make it possible to evaluate
         # the error and estimate the true state.
-        self.model_error = 0.01
-        # this is the error in the true model, and also in the observations. You do not need to change this.
-        self.true_error = 1e-4
-        self.m = 10  # ensemble runs
-        self.n = 1  # number of agents. Note that the models f_true and f_model only work
+        self.model_error = 1
+        self.true_error = 0
+        self.m = 2  # ensemble runs
+        self.n = pedestrian_num  # number of agents. Note that the models f_true and f_model only work
         self.d = 2  # dimension per "agent" (we only have one here) self.nd = n*d # total state dimension
 
         self.nd = self.n * self.d  # total state dimension
@@ -43,14 +41,19 @@ class EntropyMetric:
         self.xm_hat_prev = 0
         self.xm = None
 
-    def f_true(self, x, data_t):
-        xc0 = x[:, 0] + 1j * x[:, 1]
-        angle = np.angle(xc0)
-        xc1 = (1 + np.sin(5 * angle) / 3) * np.exp(1j * (angle + data_t))
-        return np.column_stack([np.real(xc1), np.imag(xc1)])
+        # paths
+        self.source_scenario = './bottleneck/scenarios/OSM/bottleneck_osm.json'
+        self.target_scenario = './bottleneck/scenarios/GNM/bottleneck_gnm.json'
+        self.output_path = './bottleneck/output/GNM/'
+        self.vadere_path = '/home/ahmad/praktikum/vadere/'
 
-    def f_model(self, x, data_t, m_error):
-        return self.f_true(x, data_t) + np.random.randn(x.shape[0], x.shape[1]) * m_error
+        self.true_data = parse_trajectory(pedestrian_num=pedestrian_num) + np.random.randn(self.n,
+                                                                                           self.d) * self.true_error
+
+    def f_model(self, x, error):
+        model_prediction(x, self.source_scenario, self.target_scenario, self.output_path, self.vadere_path)
+        return parse_trajectory(self.output_path,
+                                delete_output=True)[1] + np.random.randn(x.shape[0], x.shape[1]) * error
 
     @staticmethod
     def normal_draw(cov):
@@ -60,7 +63,7 @@ class EntropyMetric:
     @staticmethod
     def observation(x):
         # relatively simple observation function z=h(x), also no change in dimension
-        return -x / 2 + np.cos(x) / 3
+        return x
 
     # compute ensemble Kalman smoothing
     def algorithm1_enks(self, z_data, error_covariance_m, error_covariance_q, observation, fhat_model):
@@ -71,12 +74,15 @@ class EntropyMetric:
         # initialize the initial guess for the model state with random numbers
         # normally, one would probably have a better guess
         xk = np.random.randn(z_data.shape[0], z_data.shape[1]) / 10000
+        xk[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
         for k in range(1, t):
+            print("Timestep: ", k)
             zk = np.zeros((z_data.shape[1],))
             for i in range(self.m):
                 mkm1 = self.normal_draw(m_l)
                 xk[k, (i * self.nd):((i + 1) * self.nd)] = \
-                    fhat_model(xk[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(1, -1)) + mkm1
+                    fhat_model(xk[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)\
+                    + mkm1
                 qk = self.normal_draw(q_l)
                 zk[(i * self.nd):((i + 1) * self.nd)] = \
                     observation(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(1, -1)) + qk
@@ -100,7 +106,7 @@ class EntropyMetric:
         data = []
         for k in range(1, t - 1):
             for i in range(self.m):
-                fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(1, -1))
+                fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)
                 xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
                 data.append((xhat - fhat))
         data = np.row_stack(data)
@@ -109,20 +115,22 @@ class EntropyMetric:
         return np.cov(data.T)
 
     def entropy(self, m_dist):
-        return 1 / 2 * self.n * np.log((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist))
+        print((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist))
+        return 1 / 2 * (self.n * np.log((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist)))
 
     def initial_run(self):
-        self.xt[0, :] = np.column_stack([self.x0 + np.random.randn(1) / 1000 for _ in range(self.m * self.n)])
+        self.xt[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
         self.xm = self.xt.copy()
         for k in range(1, self.NT):
+            print("Timestep: ", k)
             for i in range(self.m):
                 # using this as "true dynamics" means there is no noise in the true states(which is also ok)
                 # xt[k,(i*n):((i+1)*n)]=(f_true(xt[k-1,(i*n):((i+1)*n)].reshape(1,-1), dt))
                 # test what happens if the "true dynamics" are just a less noisy version of the model
-                self.xt[k, (i * self.nd):((i + 1) * self.nd)] = (self.f_model(
-                    self.xt[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(1, -1), self.dt, self.true_error))
-                self.xm[k, (i * self.nd):((i + 1) * self.nd)] = (self.f_model(
-                    self.xm[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(1, -1), self.dt, self.model_error))
+                self.xt[k, (i * self.nd):((i + 1) * self.nd)] = self.true_data[k, :].reshape(1, -1)
+                self.xm[k, (i * self.nd):((i + 1) * self.nd)] = \
+                    (self.f_model(self.xm[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d),
+                                  self.model_error).reshape(1, -1))
 
     def plot_initial_run(self):
         fig, ax = plt.subplots(1, 2, figsize=(8, 4), sharey='all')
@@ -132,7 +140,6 @@ class EntropyMetric:
         ax[0].set_xlabel('space 1')
         ax[0].set_ylabel('space 2')
         ax[0].set_title('trajectories in space')
-        ax[0].legend()
         ax[1].plot(self.time, self.xt)
         ax[1].plot(self.time, self.xm)
         ax[1].set_xlabel('time')
@@ -144,8 +151,8 @@ class EntropyMetric:
         self.zk = self.observation(self.xt[1:, :])
         for k in range(self.N_ITER):
             self.xm_hat = self.algorithm1_enks(self.zk, self.Mhat, self.Q, self.observation,
-                                               lambda x: self.f_model(x, self.dt, self.model_error))
-            self.Mhat = self.max_likelihood(self.xm_hat, lambda x: self.f_model(x, self.dt, self.model_error))
+                                               lambda x: self.f_model(x, self.model_error))
+            self.Mhat = self.max_likelihood(self.xm_hat, lambda x: self.f_model(x, self.model_error))
             print('current det(M)', np.linalg.det(self.Mhat))
             print('error change ', np.linalg.norm(self.xm_hat - self.xm_hat_prev))
             self.xm_hat_prev = self.xm_hat
@@ -154,18 +161,14 @@ class EntropyMetric:
         fig, ax = plt.subplots(1, 2, figsize=(16, 4), sharey='all')
         for i in range(self.nd):
             ax[0].plot(self.time, self.xt[:, i], label='true state {}'.format(i))
-        for i in range(self.nd):
-            ax[0].plot(self.time[1:], self.zk[:, i], 'g:', label='observation {}'.format(i))
-        ax[0].set_title('true states and observations')
-        ax[0].legend()
+        ax[0].set_title('true states/observations')
 
         # this second plot shows the estimated MODEL (!) state, but since the model here is just the truth plus noise,
         # the estimated model state should be the true state.
         # We also skip the first state in xm_hat, since it was chosen at random.
         for i in range(self.nd):
-            ax[1].plot(self.time[2:], self.xm_hat[1:, i], '-', label='estimated model state 1')
+            ax[1].plot(self.time[2:], self.xm_hat[1:, i], '-', label='estimated model state {}'.format(i))
         ax[1].set_title('estimated states from observations and model')
-        ax[1].legend()
         plt.show()
 
     def find_entropy(self):
@@ -174,9 +177,14 @@ class EntropyMetric:
         self.run_em()
         self.plot_em()
 
-        print('entropy(M estimated) ', self.entropy(self.Mhat))
-        print('entropy(M true) ', self.entropy(np.identity(self.Mhat.shape[0]) * self.model_error ** 2))
+        with open('./results', 'a') as fp:
+            print('entropy(M estimated) ', self.entropy(self.Mhat))
+            fp.writelines('entropy(M estimated) {}'.format(self.entropy(self.Mhat)))
 
 
 if __name__ == "__main__":
-    fire.Fire(EntropyMetric)
+    pedestrians = [15, 20, 25, 30]
+
+    for pedestrian in pedestrians:
+        entropy_metric = EntropyMetric(pedestrian)
+        entropy_metric.find_entropy()
