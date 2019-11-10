@@ -1,10 +1,36 @@
-entropy(M estimated) nan
-entropy(M estimated) -6323.694221386146
-entropy(M estimated) -inf
-entropy(M estimated) -inf
-entropy(M estimated) -2213.1649286553557
-entropy(M estimated) nan
-entropy(M estimated) -604.7176506847375
-entropy(M estimated) -1240.235294735637
-entropy(M estimated) -2313.5793820765643
-entropy(M estimated) nanentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) nanentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) -2526.190058730666entropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) 89.3311347222968entropy(M estimated) 115.43375676111516entropy(M estimated) 85.21890062504124entropy(M estimated) 119.24545973077028entropy(M estimated) 144.07754305540985entropy(M estimated) 169.99493657191073entropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) -infentropy(M estimated) 92.45386929523774entropy(M estimated) 177.48792273389307entropy(M estimated) 80.7582361485959entropy(M estimated) 385.9535540118349entropy(M estimated) 117.09741654881648entropy(M estimated) 86.67550550464057entropy(M estimated) 113.10562207502659entropy(M estimated) 144.33445032738095entropy(M estimated) 169.8294972559295entropy(M estimated) 95.65129872009175entropy(M estimated) 128.064644013641entropy(M estimated) 159.70550679371803entropy(M estimated) 190.48030593308462entropy(M estimated) 117.41511675274185entropy(M estimated) 157.70801221757762entropy(M estimated) 194.7788769117027entropy(M estimated) 235.04100997636183entropy(M estimated) 92.45386929523774entropy(M estimated) 121.5865407718473entropy(M estimated) 151.5777351498638entropy(M estimated) 181.27240797004785
+***************************************
+Time: 2019-11-10 12:07:19.818237
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 89.17299201394758
+
+
+
+***************************************
+Time: 2019-11-10 12:09:17.359774
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 119.69115983946209
+
+
+
+***************************************
+Time: 2019-11-10 12:10:44.291188
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 147.33173477674313
+
+
+

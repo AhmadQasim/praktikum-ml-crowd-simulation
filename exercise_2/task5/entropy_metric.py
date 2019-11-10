@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from utils import predict, parse_trajectory
+import datetime
 
 random_seed = 1  # used throughout the example
 np.random.seed(random_seed)
@@ -34,7 +35,7 @@ class EntropyMetric:
         self.M = np.identity(self.nd)
         # this is the guess for the true error in the observations. should be small here
         self.Q = np.identity(self.nd) * self.true_error ** 2
-        self.N_ITER = 5  # number of iterations of algorithm1_enks and max_likelihood
+        self.N_ITER = 1  # number of iterations of algorithm1_enks and max_likelihood
         self.Mhat = self.M
         self.zk = None
         self.xm_hat = None
@@ -133,14 +134,10 @@ class EntropyMetric:
         m = 0
         for k in range(0, t - 1):
             for i in range(self.m):
-                # TODO: I reshape the flattened xk back to (pedestrians, dimensions) i.e. reshape(self.n, self.d)
-                #  before sending to prediction model. It seems to work fine but could this cause any problems?
                 fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)
                 xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
                 mul = xhat - fhat
                 m += mul @ mul.T
-        # TODO: Does taking the covariance of the stacked difference fhat and xhat result in the same expression as
-        #  given in the paper?
 
         return m / (t * self.m * self.n)
 
@@ -205,7 +202,16 @@ class EntropyMetric:
 
         with open('./results', 'a') as fp:
             print('entropy(M estimated) ', self.entropy(self.Mhat))
-            fp.writelines('entropy(M estimated) {}'.format(self.entropy(self.Mhat)))
+            fp.writelines('***************************************\n')
+            fp.writelines('Time: {}\n'.format(datetime.datetime.now()))
+            fp.writelines('Pedestrians Count: {}\n'.format(self.n))
+            fp.writelines('Dimensions Count: {}\n'.format(self.d))
+            fp.writelines('Ensembles Count: {}\n'.format(self.m))
+            fp.writelines('Timesteps Count: {}\n'.format(self.NT))
+            fp.writelines('Model Error: {}\n'.format(self.model_error))
+            fp.writelines('True Error: {}\n'.format(self.true_error))
+            fp.writelines('entropy(M estimated) {}\n'.format(self.entropy(self.Mhat)))
+            fp.writelines('\n\n\n')
 
 
 if __name__ == "__main__":
