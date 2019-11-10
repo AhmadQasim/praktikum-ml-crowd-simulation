@@ -22,11 +22,11 @@ class EntropyMetric:
         # Values below 0.05 yield essentially no visible difference to the truth, while values above 0.1
         # make the trajectories almost indistinguishable from noise, and only ensemble runs make it possible to evaluate
         # the error and estimate the true state.
-        self.model_error = 0
-        self.true_error = 0
+        self.model_error = 1e-1
+        self.true_error = 1e-4
         self.m = 2  # ensemble runs
         self.n = pedestrian_num  # number of agents. Note that the models f_true and f_model only work
-        self.d = 4  # dimension per "agent" (we only have one here) self.nd = n*d # total state dimension
+        self.d = 4  # dimension per "agent" (we only have one here) self.nd = n*d
 
         self.nd = self.n * self.d  # total state dimension
         self.xt = np.zeros((self.NT, (self.nd * self.m)))
@@ -77,7 +77,7 @@ class EntropyMetric:
         # initialize the initial guess for the model state with random numbers
         # normally, one would probably have a better guess
         xk = np.random.randn(z_data.shape[0], z_data.shape[1]) / 10000
-        # TODO: I initialized the xk with first state of true data rather then random because othewise the prediction
+        # TODO: I initialized the xk with first state of true data rather then random because otherwise the prediction
         #  model keeps being stuck on the random position for the next timesteps
         xk[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
         for k in range(1, t):
@@ -102,7 +102,7 @@ class EntropyMetric:
                 xdiff = np.row_stack([(xk[j, (i * self.nd):((i + 1) * self.nd)] - xjbar) for i in range(self.m)])
                 zdiff = np.row_stack([(zk[(i * self.nd):((i + 1) * self.nd)] - zkhat) for i in range(self.m)])
 
-                # TODO: why substract 1 from m here?
+                # TODO: why subtract 1 from m here?
                 sigmaj = 1 / (self.m - 1) * (xdiff.T @ zdiff)
 
                 # TODO: pseudo inverse of z_k, which is the covariance
@@ -115,7 +115,8 @@ class EntropyMetric:
     def max_likelihood(self, xk, fhat_model):
         t = xk.shape[0]
         data = []
-        for k in range(1, t - 1):
+        for k in range(0, t - 1):
+            print("Timestep: ", k + 1)
             for i in range(self.m):
                 # TODO: I reshape the flattened xk back to (pedestrians, dimensions) i.e. reshape(self.n, self.d)
                 #  before sending to prediction model. It seems to work fine but could this cause any problems?
@@ -123,13 +124,27 @@ class EntropyMetric:
                 xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
                 data.append((xhat - fhat))
         data = np.row_stack(data)
-
         # TODO: Does taking the covariance of the stacked difference fhat and xhat result in the same expression as
         #  given in the paper?
         return np.cov(data.T)
 
+    def max_likelihood_multi(self, xk, fhat_model):
+        t = xk.shape[0]
+        m = 0
+        for k in range(0, t - 1):
+            for i in range(self.m):
+                # TODO: I reshape the flattened xk back to (pedestrians, dimensions) i.e. reshape(self.n, self.d)
+                #  before sending to prediction model. It seems to work fine but could this cause any problems?
+                fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)
+                xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
+                mul = xhat - fhat
+                m += mul @ mul.T
+        # TODO: Does taking the covariance of the stacked difference fhat and xhat result in the same expression as
+        #  given in the paper?
+
+        return m / (t * self.m * self.n)
+
     def entropy(self, m_dist):
-        print((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist))
         return 1 / 2 * (self.n * np.log((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist)))
 
     def initial_run(self):
@@ -163,7 +178,7 @@ class EntropyMetric:
         for k in range(self.N_ITER):
             self.xm_hat = self.algorithm1_enks(self.zk, self.Mhat, self.Q, self.observation,
                                                lambda x: self.f_model(x, self.model_error))
-            self.Mhat = self.max_likelihood(self.xm_hat, lambda x: self.f_model(x, self.model_error))
+            self.Mhat = self.max_likelihood_multi(self.xm_hat, lambda x: self.f_model(x, self.model_error))
             print('current det(M)', np.linalg.det(self.Mhat))
             print('error change ', np.linalg.norm(self.xm_hat - self.xm_hat_prev))
             self.xm_hat_prev = self.xm_hat
@@ -183,8 +198,8 @@ class EntropyMetric:
         plt.show()
 
     def find_entropy(self):
-        # self.initial_run()
-        # self.plot_initial_run()
+        self.initial_run()
+        self.plot_initial_run()
         self.run_em()
         self.plot_em()
 
