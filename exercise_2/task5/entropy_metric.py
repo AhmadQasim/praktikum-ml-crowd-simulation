@@ -8,12 +8,12 @@ np.random.seed(random_seed)
 
 
 class EntropyMetric:
-    def __init__(self, pedestrian_num):
+    def __init__(self, pedestrian_num, model_error):
         # Initial state of the true and simulated data
         x0 = np.array([1, 0]).reshape(1, -1)
         self.x0 = x0 / np.linalg.norm(x0)
         # Number of time steps for the given simulation
-        self.NT = 30
+        self.NT = 5
         # Physical time that passes in the given number of time steps
         self.T = self.NT
         self.dt = self.T / self.NT
@@ -23,7 +23,7 @@ class EntropyMetric:
         # Values below 0.05 yield essentially no visible difference to the truth, while values above 0.1
         # make the trajectories almost indistinguishable from noise, and only ensemble runs make it possible to evaluate
         # the error and estimate the true state.
-        self.model_error = 1e-1
+        self.model_error = model_error
         self.true_error = 1e-4
         self.m = 2  # ensemble runs
         self.n = pedestrian_num  # number of agents. Note that the models f_true and f_model only work
@@ -35,21 +35,22 @@ class EntropyMetric:
         self.M = np.identity(self.nd)
         # this is the guess for the true error in the observations. should be small here
         self.Q = np.identity(self.nd) * self.true_error ** 2
-        self.N_ITER = 1  # number of iterations of algorithm1_enks and max_likelihood
+        self.N_ITER = 2  # number of iterations of algorithm1_enks and max_likelihood
         self.Mhat = self.M
         self.zk = None
         self.xm_hat = None
         self.xm_hat_prev = 0
         self.xm = None
 
-        self.source = 'osm'
-        self.target = 'gnm'
+        self.source = 'gnm'
+        self.target = 'osm'
 
         # paths
         self.vadere_root = '/home/ahmad/praktikum/vadere/'
         self.path_scenario = f'./bottleneck/scenarios/bottleneck_{self.target}.json'
         self.output_path = f'./bottleneck/output/{self.target.upper()}/prediction/'
-        self.source_trajectory = f"./bottleneck/output/OSM/model/bottleneck_{self.source.upper()}_{self.n}"
+        self.source_trajectory = f"./bottleneck/output/{self.source.upper()}" \
+            f"/model/bottleneck_{self.source.upper()}_{self.n}"
         self.dynamic_scenario_path = self.path_scenario[:-5] + '_edited.json'
 
         self.true_data = parse_trajectory(path=self.source_trajectory) + np.random.randn(self.n,
@@ -78,8 +79,6 @@ class EntropyMetric:
         # initialize the initial guess for the model state with random numbers
         # normally, one would probably have a better guess
         xk = np.random.randn(z_data.shape[0], z_data.shape[1]) / 10000
-        # TODO: I initialized the xk with first state of true data rather then random because otherwise the prediction
-        #  model keeps being stuck on the random position for the next timesteps
         xk[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
         for k in range(1, t):
             print("Timestep: ", k)
@@ -95,7 +94,6 @@ class EntropyMetric:
             zkhat = 1 / self.m * (np.sum([zk[i::self.nd] for i in range(self.nd)], axis=1))
             zdiff = np.row_stack([(zk[(i * self.nd):((i + 1) * self.nd)] - zkhat) for i in range(self.m)])
 
-            # TODO: why calculate the covariance of the zdiff here? rather then: 1 / self.m * np.sum(zdiff @ zdiff.T)
             z_k = np.cov(zdiff.T)
 
             for j in range(1, k + 1):
@@ -103,10 +101,8 @@ class EntropyMetric:
                 xdiff = np.row_stack([(xk[j, (i * self.nd):((i + 1) * self.nd)] - xjbar) for i in range(self.m)])
                 zdiff = np.row_stack([(zk[(i * self.nd):((i + 1) * self.nd)] - zkhat) for i in range(self.m)])
 
-                # TODO: why subtract 1 from m here?
                 sigmaj = 1 / (self.m - 1) * (xdiff.T @ zdiff)
 
-                # TODO: pseudo inverse of z_k, which is the covariance
                 matk = sigmaj @ np.linalg.pinv(z_k, rcond=1e-10)
                 for i in range(self.m):
                     xk[j, (i * self.nd):((i + 1) * self.nd)] = xk[j, (i * self.nd):((i + 1) * self.nd)] + matk @ (
@@ -115,19 +111,21 @@ class EntropyMetric:
 
     def max_likelihood(self, xk, fhat_model):
         t = xk.shape[0]
-        data = []
+        per_agent_diff = np.zeros(shape=(t-1, self.m, self.n, self.d))
+        per_agent_cov = np.zeros(shape=(self.d, self.d))
         for k in range(0, t - 1):
             print("Timestep: ", k + 1)
             for i in range(self.m):
-                # TODO: I reshape the flattened xk back to (pedestrians, dimensions) i.e. reshape(self.n, self.d)
-                #  before sending to prediction model. It seems to work fine but could this cause any problems?
                 fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)
                 xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
-                data.append((xhat - fhat))
-        data = np.row_stack(data)
-        # TODO: Does taking the covariance of the stacked difference fhat and xhat result in the same expression as
-        #  given in the paper?
-        return np.cov(data.T)
+                diff = xhat - fhat
+                for j in range(self.n):
+                    per_agent_diff[k, i, j, :] = diff[0, (j*self.d):(j*self.d) + self.d]
+
+        for j in range(self.n):
+            per_agent_cov += np.cov(per_agent_diff[:, :, j, :].reshape(self.m * (t-1), self.d).T)
+
+        return per_agent_cov / (t * self.m * self.n)
 
     def max_likelihood_multi(self, xk, fhat_model):
         t = xk.shape[0]
@@ -137,12 +135,13 @@ class EntropyMetric:
                 fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)
                 xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
                 mul = xhat - fhat
-                m += mul @ mul.T
+                for j in range(self.n):
+                    m += mul[0, (j*self.d):(j*self.d) + self.d] @ mul[0, (j*self.d):(j*self.d) + self.d].T
 
-        return m / (t * self.m * self.n)
+        return np.array([[m / (t * self.m * self.n)]])
 
     def entropy(self, m_dist):
-        return 1 / 2 * (self.n * np.log((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist)))
+        return (1 / 2) * (self.n * np.log((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist)))
 
     def initial_run(self):
         self.xt[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
@@ -195,10 +194,10 @@ class EntropyMetric:
         plt.show()
 
     def find_entropy(self):
-        self.initial_run()
-        self.plot_initial_run()
+        # self.initial_run()
+        # self.plot_initial_run()
         self.run_em()
-        self.plot_em()
+        # self.plot_em()
 
         with open('./results', 'a') as fp:
             print('entropy(M estimated) ', self.entropy(self.Mhat))
@@ -213,10 +212,18 @@ class EntropyMetric:
             fp.writelines('entropy(M estimated) {}\n'.format(self.entropy(self.Mhat)))
             fp.writelines('\n\n\n')
 
+        return self.entropy(self.Mhat)
+
 
 if __name__ == "__main__":
     pedestrians = [15, 20, 25, 30]
+    model_errors = [0.1]
+    entropies = []
 
     for pedestrian in pedestrians:
-        entropy_metric = EntropyMetric(pedestrian)
-        entropy_metric.find_entropy()
+        for error in model_errors:
+            entropy_metric = EntropyMetric(pedestrian, error)
+            entropies.append(entropy_metric.find_entropy())
+
+    plt.plot(model_errors, entropies)
+    plt.show()

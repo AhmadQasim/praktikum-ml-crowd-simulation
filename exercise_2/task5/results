@@ -34,3 +34,1131 @@ entropy(M estimated) 147.33173477674313
 
 
 
+***************************************
+Time: 2019-11-10 12:46:04.623144
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 5
+Timesteps Count: 30
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 85.49429847707584
+
+
+
+***************************************
+Time: 2019-11-10 14:44:22.000895
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 5
+Timesteps Count: 30
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 72.71586416677872
+
+
+
+***************************************
+Time: 2019-11-10 16:26:00.788175
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 5
+Timesteps Count: 30
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 98.21835061741734
+
+
+
+***************************************
+Time: 2019-11-10 18:08:46.035652
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 5
+Timesteps Count: 30
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 117.00474315845632
+
+
+
+***************************************
+Time: 2019-11-10 19:59:15.822410
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 5
+Timesteps Count: 30
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 141.41023200127842
+
+
+
+***************************************
+Time: 2019-11-10 23:54:57.793392
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 86.67550550464057
+
+
+
+***************************************
+Time: 2019-11-10 23:55:31.499111
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 113.10562207502659
+
+
+
+***************************************
+Time: 2019-11-10 23:56:07.589217
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 144.33445032738095
+
+
+
+***************************************
+Time: 2019-11-10 23:56:45.681096
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 169.8294972559295
+
+
+
+***************************************
+Time: 2019-11-10 23:58:04.038446
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.01
+True Error: 0.0001
+entropy(M estimated) 86.53867035826343
+
+
+
+***************************************
+Time: 2019-11-10 23:58:37.870609
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.01
+True Error: 0.0001
+entropy(M estimated) 112.67356155888191
+
+
+
+***************************************
+Time: 2019-11-10 23:59:13.908387
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.01
+True Error: 0.0001
+entropy(M estimated) 143.711784536545
+
+
+
+***************************************
+Time: 2019-11-10 23:59:52.296413
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.01
+True Error: 0.0001
+entropy(M estimated) 169.49004209872638
+
+
+
+***************************************
+Time: 2019-11-11 00:03:15.903446
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 95.65129872009175
+
+
+
+***************************************
+Time: 2019-11-11 00:03:49.369345
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 128.064644013641
+
+
+
+***************************************
+Time: 2019-11-11 00:04:27.904822
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 159.70550679371803
+
+
+
+***************************************
+Time: 2019-11-11 00:05:05.914299
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 190.48030593308462
+
+
+
+***************************************
+Time: 2019-11-11 00:06:16.166505
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 5
+True Error: 0.0001
+entropy(M estimated) 117.41511675274185
+
+
+
+***************************************
+Time: 2019-11-11 00:06:49.805372
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 5
+True Error: 0.0001
+entropy(M estimated) 157.70801221757762
+
+
+
+***************************************
+Time: 2019-11-11 00:07:25.636203
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 5
+True Error: 0.0001
+entropy(M estimated) 194.7788769117027
+
+
+
+***************************************
+Time: 2019-11-11 00:08:07.528447
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 5
+True Error: 0.0001
+entropy(M estimated) 235.04100997636183
+
+
+
+***************************************
+Time: 2019-11-11 00:09:18.343148
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.05
+True Error: 0.0001
+entropy(M estimated) 86.56395378303891
+
+
+
+***************************************
+Time: 2019-11-11 00:09:53.720891
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.05
+True Error: 0.0001
+entropy(M estimated) 112.79783036359687
+
+
+
+***************************************
+Time: 2019-11-11 00:10:30.214760
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.05
+True Error: 0.0001
+entropy(M estimated) 143.9367073526973
+
+
+
+***************************************
+Time: 2019-11-11 00:11:08.288922
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.05
+True Error: 0.0001
+entropy(M estimated) 169.54839419596533
+
+
+
+***************************************
+Time: 2019-11-11 00:11:48.896991
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.0001
+True Error: 0
+entropy(M estimated) 86.54125848345024
+
+
+
+***************************************
+Time: 2019-11-11 00:12:22.551843
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.0001
+True Error: 0
+entropy(M estimated) 112.66017989805451
+
+
+
+***************************************
+Time: 2019-11-11 00:12:58.538207
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.0001
+True Error: 0
+entropy(M estimated) 143.66954935266432
+
+
+
+***************************************
+Time: 2019-11-11 00:13:36.685642
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 3
+Model Error: 0.0001
+True Error: 0
+entropy(M estimated) 169.4987792022284
+
+
+
+***************************************
+Time: 2019-11-11 00:34:05.840101
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 10
+Model Error: 10
+True Error: 0.0001
+entropy(M estimated) 132.06919371009752
+
+
+
+***************************************
+Time: 2019-11-11 00:37:12.887924
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 10
+Model Error: 10
+True Error: 0.0001
+entropy(M estimated) 175.8218772010231
+
+
+
+***************************************
+Time: 2019-11-11 00:40:26.323740
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 10
+Model Error: 10
+True Error: 0.0001
+entropy(M estimated) 220.474708214155
+
+
+
+***************************************
+Time: 2019-11-11 00:43:48.431272
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 10
+Model Error: 10
+True Error: 0.0001
+entropy(M estimated) 264.4845131082214
+
+
+
+***************************************
+Time: 2019-11-11 00:47:19.535349
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 10
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 166.48093519851255
+
+
+
+***************************************
+Time: 2019-11-11 00:50:25.500809
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 10
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 221.83307695659278
+
+
+
+***************************************
+Time: 2019-11-11 00:53:42.017825
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 10
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 278.0408209269459
+
+
+
+***************************************
+Time: 2019-11-11 01:02:14.309528
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 166.8389198482323
+
+
+
+***************************************
+Time: 2019-11-11 01:05:02.446840
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 166.8389198482323
+
+
+
+***************************************
+Time: 2019-11-11 01:07:40.532224
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 166.8389198482323
+
+
+
+***************************************
+Time: 2019-11-11 01:09:12.928505
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 220.55767594904805
+
+
+
+***************************************
+Time: 2019-11-11 01:11:10.431975
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 100
+True Error: 0.0001
+entropy(M estimated) 274.8812830157384
+
+
+
+***************************************
+Time: 2019-11-11 01:16:24.930343
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.0001
+True Error: 0.0001
+entropy(M estimated) 88.84399676611231
+
+
+
+***************************************
+Time: 2019-11-11 01:17:49.753430
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.001
+True Error: 0.0001
+entropy(M estimated) 87.90416237850636
+
+
+
+***************************************
+Time: 2019-11-11 01:19:10.039422
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.01
+True Error: 0.0001
+entropy(M estimated) 88.88727750339775
+
+
+
+***************************************
+Time: 2019-11-11 01:20:43.237980
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 88.69119054821294
+
+
+
+***************************************
+Time: 2019-11-11 01:22:28.092884
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 98.99690018908916
+
+
+
+***************************************
+Time: 2019-11-11 01:24:27.435530
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 10
+True Error: 0.0001
+entropy(M estimated) 130.81141006899915
+
+
+
+***************************************
+Time: 2019-11-11 01:34:02.939074
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.0001
+True Error: 0.0001
+entropy(M estimated) 47.88321429136787
+
+
+
+***************************************
+Time: 2019-11-11 01:35:59.178631
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.001
+True Error: 0.0001
+entropy(M estimated) 47.86209478278759
+
+
+
+***************************************
+Time: 2019-11-11 01:37:55.770197
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.01
+True Error: 0.0001
+entropy(M estimated) 49.91297556012677
+
+
+
+***************************************
+Time: 2019-11-11 01:39:50.131010
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 64.38207311756337
+
+
+
+***************************************
+Time: 2019-11-11 01:41:44.975055
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 100.31647540730977
+
+
+
+***************************************
+Time: 2019-11-11 01:45:38.938243
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 67.87273439238578
+
+
+
+***************************************
+Time: 2019-11-11 01:47:32.990693
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.4
+True Error: 0.0001
+entropy(M estimated) 83.99980462846501
+
+
+
+***************************************
+Time: 2019-11-11 01:49:28.272167
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.6
+True Error: 0.0001
+entropy(M estimated) 87.98113519470611
+
+
+
+***************************************
+Time: 2019-11-11 01:51:21.900771
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.8
+True Error: 0.0001
+entropy(M estimated) 93.92014483155347
+
+
+
+***************************************
+Time: 2019-11-11 01:53:16.677829
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 100.31647540730977
+
+
+
+***************************************
+Time: 2019-11-11 01:59:41.008166
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 538.3692004799178
+
+
+
+***************************************
+Time: 2019-11-11 02:01:40.812544
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.4
+True Error: 0.0001
+entropy(M estimated) 760.8611845081904
+
+
+
+***************************************
+Time: 2019-11-11 02:03:40.068731
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.6
+True Error: 0.0001
+entropy(M estimated) 874.5887140253628
+
+
+
+***************************************
+Time: 2019-11-11 02:05:39.585824
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.8
+True Error: 0.0001
+entropy(M estimated) 1177.5508229995244
+
+
+
+***************************************
+Time: 2019-11-11 02:07:50.400264
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 1282.7531934748279
+
+
+
+***************************************
+Time: 2019-11-11 02:16:05.289033
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 67.87273439238578
+
+
+
+***************************************
+Time: 2019-11-11 02:18:24.039638
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.4
+True Error: 0.0001
+entropy(M estimated) 83.99980462846501
+
+
+
+***************************************
+Time: 2019-11-11 02:20:25.670006
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.6
+True Error: 0.0001
+entropy(M estimated) 87.98113519470611
+
+
+
+***************************************
+Time: 2019-11-11 02:22:29.993046
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.8
+True Error: 0.0001
+entropy(M estimated) 93.92014483155347
+
+
+
+***************************************
+Time: 2019-11-11 02:24:32.433724
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 100.31647540730977
+
+
+
+***************************************
+Time: 2019-11-11 02:35:42.052662
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -1708.9329125684988
+
+
+
+***************************************
+Time: 2019-11-11 02:38:02.562240
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.4
+True Error: 0.0001
+entropy(M estimated) -1676.341778802656
+
+
+
+***************************************
+Time: 2019-11-11 02:40:21.914500
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.6
+True Error: 0.0001
+entropy(M estimated) -1683.9177964445032
+
+
+
+***************************************
+Time: 2019-11-11 02:43:19.327460
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.8
+True Error: 0.0001
+entropy(M estimated) -1678.8941658998735
+
+
+
+***************************************
+Time: 2019-11-11 02:46:13.978659
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) -1674.652122869807
+
+
+
+***************************************
+Time: 2019-11-11 03:18:26.757749
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -inf
+
+
+
+***************************************
+Time: 2019-11-11 03:23:21.930166
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -inf
+
+
+
+***************************************
+Time: 2019-11-11 03:27:25.544716
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -inf
+
+
+
+***************************************
+Time: 2019-11-11 03:46:20.680766
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -inf
+
+
+
+***************************************
+Time: 2019-11-11 03:57:30.876255
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -inf
+
+
+
+***************************************
+Time: 2019-11-11 04:06:44.529639
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -inf
+
+
+
+***************************************
+Time: 2019-11-11 04:35:01.472309
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -inf
+
+
+
+***************************************
+Time: 2019-11-11 05:24:46.574554
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) -1672.954336488321
+
+
+
+***************************************
+Time: 2019-11-11 05:39:18.161604
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 102.66850063769482
+
+
+
+***************************************
+Time: 2019-11-11 05:40:44.084922
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.4
+True Error: 0.0001
+entropy(M estimated) 102.39576350227232
+
+
+
+***************************************
+Time: 2019-11-11 05:42:14.609088
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.6
+True Error: 0.0001
+entropy(M estimated) 104.21021743679798
+
+
+
+***************************************
+Time: 2019-11-11 05:43:45.348234
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.8
+True Error: 0.0001
+entropy(M estimated) 105.31778015376581
+
+
+
+***************************************
+Time: 2019-11-11 05:45:13.573549
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 1
+True Error: 0.0001
+entropy(M estimated) 106.22614328667548
+
+
+
+***************************************
+Time: 2019-11-11 13:07:32.055150
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 102.66850063769482
+
+
+
+***************************************
+Time: 2019-11-11 13:14:45.679284
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 101.84111313472663
+
+
+
+***************************************
+Time: 2019-11-11 13:17:04.412370
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.4
+True Error: 0.0001
+entropy(M estimated) 101.615483472833
+
+
+
+***************************************
+Time: 2019-11-11 13:19:27.088897
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.6
+True Error: 0.0001
+entropy(M estimated) 103.55124544801005
+
+
+
+***************************************
+Time: 2019-11-11 13:21:49.904452
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.8
+True Error: 0.0001
+entropy(M estimated) 104.4096410683608
+
+
+
+***************************************
+Time: 2019-11-11 13:25:20.468337
+Pedestrians Count: 15
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 101.84111313472663
+
+
+
+***************************************
+Time: 2019-11-11 13:28:03.035856
+Pedestrians Count: 20
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 135.96484544233599
+
+
+
+***************************************
+Time: 2019-11-11 13:29:47.361776
+Pedestrians Count: 25
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 170.15237367987424
+
+
+
+***************************************
+Time: 2019-11-11 13:31:26.091562
+Pedestrians Count: 30
+Dimensions Count: 4
+Ensembles Count: 2
+Timesteps Count: 5
+Model Error: 0.1
+True Error: 0.0001
+entropy(M estimated) 204.66460723778266
+
+
+
