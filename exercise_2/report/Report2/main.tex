@@ -3,27 +3,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MODIFY:
 
-\newcommand{\authorA}{Thomas Mustermann (1234567890)}
-\newcommand{\authorB}{Maria Musterfrau (1234567891)}
-\newcommand{\authorC}{Alexander Musterstudent (1234567892)}
-\newcommand{\groupNumber}{123} % - YOUR GROUP NUMBER
-\newcommand{\exerciseNumber}{1} % - THE NUMBER OF THE EXERCISE
-\newcommand{\sourceCodeLink}{https://www.github.com/link/to/our/github/project}
+\newcommand{\authorA}{Ahmad Bin Qasim (03693345)}
+\newcommand{\authorB}{Kaan Atukalp (03709123)}
+\newcommand{\authorC}{Martin Meinel (03710370)}
+\newcommand{\groupNumber}{H} % - YOUR GROUP NUMBER
+\newcommand{\exerciseNumber}{2} % - THE NUMBER OF THE EXERCISE
+\newcommand{\sourceCodeLink}{https://gitlab.lrz.de/ga53rog/praktikum-ml-crowd}
 
 \newcommand{\workPerAuthor}{
-\authorA&Task 1&0\%\\
-      &Task 2&20\%\\
-      &Task 3&30\%\\
+\authorA&Task 1&33\%\\
+      &Task 2&33\%\\
+      &Task 3&33\%\\
+      &Task 4&33\%\\
+      &Task 5&33\%\\
       \hline
-\authorB&Task 1&100\%\\
-      &Task 2&40\%\\
-      &Task 3&30\%\\
+\authorB&Task 1&33\%\\
+      &Task 2&33\%\\
+      &Task 3&33\%\\
+      &Task 4&33\%\\
+      &Task 5&33\%\\
       \hline
-\authorC&Task 1&0\%\\
-      &Task 2&40\%\\
-      &Task 3&40\%
+\authorC&Task 1&33\%\\
+      &Task 2&33\%\\
+      &Task 3&33\%\\
+      &Task 4&33\%\\
+      &Task 5&33\%\\
 }
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{./imports.tex}
@@ -164,7 +169,33 @@ After using the Social Force Model for simulating the three scenarios and compar
         \label{fig:rimea1_gnm}
     \end{figure}
     \item RiMEA Scenario 6:\\
-    The difference to the previous models is that the pedestrians try to walk along the wall around the corner. So they are stick at the wall. This behaviour can be seen in Figure \ref{fig:rimea6_gnm}. In comparison to the previous models it seems unnaturally.
+     The difference to the previous models is that the pedestrians try to walk along the wall around the corner. So they are stick at the wall. The following table shows that the pedestrians using this model take the most time to reach the target in comparison to the other models. The reason for this is that the pedestrians are stick to the wall and do not want to go around the corner in a bigger radius. This behaviour can be seen in Figure \ref{fig:rimea6_gnm}. In comparison to the previous models it seems unnaturally.
+    \bigbreak
+    \begin{tabular}{c|c}
+    pedestrianID&evacuationTime\\
+    \hline
+         1& 22.0 \\
+         2& 33.6\\
+         3&34.0\\
+         4&21.2\\
+         5&34.8\\
+         6&31.6\\
+         7&18.4\\
+         8&33.2\\
+         9&16.0\\
+         10&20.0\\
+         11&22.4\\
+         12&32.4\\
+         13&35.6\\
+         14&20.8\\
+         15&18.0\\
+         16&20.4\\
+         17&35.2\\
+         18&17.2\\
+         19&31.2\\
+         20&21.6\\
+    \end{tabular}
+    \bigbreak
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{pictures/gnm/rimeatest6.png}
