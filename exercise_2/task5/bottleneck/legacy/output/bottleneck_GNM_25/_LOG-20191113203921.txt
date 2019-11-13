@@ -1,0 +1,18 @@
+Info:Analyzing scenario file output/bottleneck_OSM_25/bottleneck
+Info:<bottleneck> Start Transform to Version: 1.5
+Info:Scenario Migrated - OK. Move copy of old version to legacllyDir
+Info:Analyzing scenario file output/bottleneck_OSM_20/bottleneck
+Info:<bottleneck> Start Transform to Version: 1.5
+Info:Scenario Migrated - OK. Move copy of old version to legacllyDir
+Info:Analyzing scenario file output/bottleneck_OSM_30/bottleneck
+Info:<bottleneck> Start Transform to Version: 1.5
+Info:Scenario Migrated - OK. Move copy of old version to legacllyDir
+Info:Analyzing scenario file output/bottleneck_GNM_20/bottleneck
+Info:<bottleneck> Start Transform to Version: 1.5
+Info:Scenario Migrated - OK. Move copy of old version to legacllyDir
+Info:Analyzing scenario file output/bottleneck_GNM_30/bottleneck
+Info:<bottleneck> Start Transform to Version: 1.5
+Info:Scenario Migrated - OK. Move copy of old version to legacllyDir
+Info:Analyzing scenario file output/bottleneck_GNM_25/bottleneck
+Info:<bottleneck> Start Transform to Version: 1.5
+Info:Scenario Migrated - OK. Move copy of old version to legacllyDir

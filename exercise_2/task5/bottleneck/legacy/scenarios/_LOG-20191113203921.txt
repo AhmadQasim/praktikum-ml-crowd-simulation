@@ -1,0 +1,3 @@
+Info:Analyzing scenario file scenarios/bottleneck_GNM
+Info:<bottleneck_GNM> Start Transform to Version: 1.5
+Info:Scenario Migrated - OK. Move copy of old version to legacllyDir

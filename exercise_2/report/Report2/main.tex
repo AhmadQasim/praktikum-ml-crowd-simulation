@@ -11,17 +11,17 @@
 \newcommand{\sourceCodeLink}{https://gitlab.lrz.de/ga53rog/praktikum-ml-crowd}
 
 \newcommand{\workPerAuthor}{
-\authorA&Task 1&0\%\\
-      &Task 2&20\%\\
-      &Task 3&30\%\\
+\authorA&Task 1&33\%\\
+      &Task 2&33\%\\
+      &Task 3&33\%\\
       \hline
-\authorB&Task 1&100\%\\
-      &Task 2&40\%\\
-      &Task 3&30\%\\
+\authorB&Task 1&33\%\\
+      &Task 2&33\%\\
+      &Task 3&33\%\\
       \hline
-\authorC&Task 1&0\%\\
-      &Task 2&40\%\\
-      &Task 3&40\%
+\authorC&Task 1&33\%\\
+      &Task 2&33\%\\
+      &Task 3&33\%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -216,25 +216,71 @@ The new pedestrian needs only 9.6 seconds to reach the target since it starts wa
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{pictures/task4_entropy.png}
+    \includegraphics[width=0.7\textwidth]{pictures/task4/task4_entropy.png}
     \caption{Change of entropy by model error}
     \label{fig:entropy_change_task4}
 \end{figure}
 
 \end{task}
 \begin{task}{5, Tests}
-\begin{enumerate}
-\item[TEST1:] RiMEA scenario 1 (straight line, ignore premovement time)\\
-- not done, but citing RiMEA guideli -
-\item[TEST2:] RiMEA scenario 4 (fundamental diagram, be careful with periodic boundary conditions).\\
-- test successful - 
-\item[TEST3:] RiMEA scenario 6 (movement around a corner).\\
-- test successful - 
-\item[TEST4:] RiMEA scenario\\
-- test successful - 
-\end{enumerate}
+We setup the bottleneck scenario, as it is recommended in the exercise sheet. The dimensions of the source, the target and the obstacles as well as the distances between them are calibrated accordingly.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pictures/task5/bottleneck.png}
+    \caption{The bottleneck scenario being simulated using the OSM model and 25 pedestrians}
+    \label{fig:bottleneck_task5}
+\end{figure}
 \end{task}
-
+\begin{enumerate}
+	\item We simulate the bottleneck that we setup using the OSM model for a set of pedestrians i.e. \{15, 20, 25, 30\}. We save the output files (postvis.traj and velocities.txt) as the true data in the following folders bottleneck\_OSM\_15, bottleneck\_OSM\_20, bottleneck\_OSM\_25 and bottleneck\_OSM\_30 respectively. We also save the simulation scenario file into a separate folder so that it can later be edited programmatically. We repeated this process for the GNM model as well so that during the later phase of this task, GNM can be used as the source
+	\item As a second step, we parse the postvis.traj and velocities.txt files of the "true" model (OSM or GNM in case of the reverse case) using the \textbf{parse\_trajectory} function and the obtain the "predicted" coordinates and velocities. The following approach is used to achieve this:
+	\begin{itemize}
+			\item The input to this function is the path to the output files (postvis.traj and velocities.txt) of true model and it outputs coordinates and velocities of each pedestrian over a series of timesteps, which are considered as the true data that is stored in the \textbf{zk} variable in the implementation. 
+			\item In order to obtain the "simulated" model output to run the Guy et. al. algorithm, we create a function titled \textbf{f\_model}. The input to this function are the true model's pedestrian coordinates and the velocities at a given timestep.
+			\item This true data is used to initialize dynamic elements within the bottleneck scnenario file created in the previous step. The bottleneck scenario file is parsed using the json python library and then the dynamic elements are initialized within a loop for each pedestrian in the true data. The modified scenario file is saved at a temporary location. The modified scenario file uses the "prediction" model (GNM or OSM in the reverse case).
+			\item Then we use the python os library to execute the vadere-console.jar to run the modified scenario file for 5 timesteps. 
+			\item The output generated from the prediction model is parsed using the \textbf{parse\_trajectory} function and the predicted coordinates and velocities are returned as the output of \textbf{f\_model} function.
+	\end{itemize}
+	Lastly, we have to mention the approach that we took for calculating the velocity. We used a built-in vadere processor for obtaining the true data velocities.txt file. This file contains the simTime and endTime-PID1 attributes for each timestep for every pedestrian which we use to determine the time duration of each timestep. This file, also contains the startX-PID1, startY-PID1, endX-PID1 and endY-PID1 attributes, which we use to calculate the distance covered in the corresponding time duration. Using the time duration of each timestep and the corresponding distance covered by each pedestrian in that time duration, we calculate the velocity's X and Y component. 
+	\item To estimate the entropy of GNM with respect to OSM, we made the following changes to the implementation which was provided already:
+	\begin{itemize}
+		\item Changing the maximum likelihood implementation, which was implemented for only a single agent in the original implementation. In order to achieve that we followed the maximum likelihood algorithm provided in the Guy et. al. paper. 
+		\item The observation function $H$ is set as the identity function, since in our case, model state x and the true data z are the same.
+		\item We modify the implementation to use the true data obtained from the true model output and the predicted data obtained from the prediction model output.
+		\item A normally distributed noise is added to the true and the predicted model data.
+		\item The whole code is made modular and dynamic so that it can be run with different models set as true/prediction. 
+	\end{itemize}
+	The parameters that we use for calculating the entropy between the true and prediction models are:
+	 \begin{center}
+	\begin{tabular}{ |c|c|c|c| } 
+	\hline
+	Parameter & Value & Description \\
+	\hline\hline
+	true\_error & 1e-4 & The standard dev of the normally distributed error added to the true data \\ 
+	model\_error & 1e-3 & The standard dev of the normally distributed error added to the predicted data \\ 
+	NT & 30 & The total number of timesteps from the true data \\ 
+	m & 10 & The number of ensembles \\ 
+	d & 4 & The dimension of the true/predicted data. \\ 
+	N\_ITER & 5 & The number of iterations for which the algorithm is executed \\ 
+	\hline
+\end{tabular}
+\end{center}
+	\item As mentioned during the first step, we generate the true and the predicted data for different number of pedestrians in the bottleneck scenario. We plot the entropy results obtained using OSM model as the source of true data and comparing it to GNM as prediction model.
+	\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{pictures/task5/osm_gnm.png}
+    \caption{The entropy increases linearly with the increase in the of pedestrians}
+    \label{fig:osm_gnm}
+	\end{figure}
+The linear increase in the entropy is due to the fact that, as the number of pedestrians increase, so does the interactions between the pedestrians and also the interactions of the pedestrians with obstacles. As the OSM and GNM model direct the pedestrian behavior differently, this results in less similarity in the pedestrian trajectories and the velocities throughout over a series of timesteps.
+	\item We implemented two simple command line arguments which can be adjusted to interchange between using OSM as the true data source and the GNM as prediction model and vice versa. All the paths are adjusted accordingly e.g. paths for the true data and the scenario files.
+	\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{pictures/task5/gnm_osm.png}
+    \caption{The entropy increases linearly with the increase in the of 			pedestrians}
+    \label{fig:gnm_osm}
+	\end{figure}
+\end{enumerate}
 \bibliographystyle{plain}
 \bibliography{Literature}
 

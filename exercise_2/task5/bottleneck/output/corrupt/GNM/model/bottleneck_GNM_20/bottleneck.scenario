@@ -1,5 +1,5 @@
 {
-  "name" : "bottleneck_GNM",
+  "name" : "bottleneck",
   "description" : "",
   "release" : "1.5",
   "processWriters" : {
@@ -15,6 +15,10 @@
       "type" : "org.vadere.simulator.projects.dataprocessing.outputfile.NoDataKeyOutputFile",
       "filename" : "overlapCount.txt",
       "processors" : [ 4 ]
+    }, {
+      "type" : "org.vadere.simulator.projects.dataprocessing.outputfile.EventtimePedestrianIdOutputFile",
+      "filename" : "velocities.txt",
+      "processors" : [ 1, 2 ]
     } ],
     "processors" : [ {
       "type" : "org.vadere.simulator.projects.dataprocessing.processor.FootStepProcessor",
@@ -101,7 +105,7 @@
       "digitsPerCoordinate" : 2,
       "useFixedSeed" : true,
       "fixedSeed" : 8862303966158154952,
-      "simulationSeed" : 0,
+      "simulationSeed" : 8862303966158154952,
       "usePsychologyLayer" : false
     },
     "topography" : {
@@ -185,7 +189,7 @@
         },
         "interSpawnTimeDistribution" : "org.vadere.state.scenario.ConstantDistribution",
         "distributionParameters" : [ 1.0 ],
-        "spawnNumber" : 30,
+        "spawnNumber" : 20,
         "maxSpawnNumberTotal" : -1,
         "startTime" : 0.0,
         "endTime" : 0.0,

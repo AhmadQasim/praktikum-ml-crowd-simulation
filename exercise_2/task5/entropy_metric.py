@@ -8,7 +8,7 @@ np.random.seed(random_seed)
 
 
 class EntropyMetric:
-    def __init__(self, pedestrian_num, model_error):
+    def __init__(self, pedestrian_num, model_error, source, target):
         # Initial state of the true and simulated data
         x0 = np.array([1, 0]).reshape(1, -1)
         self.x0 = x0 / np.linalg.norm(x0)
@@ -42,8 +42,8 @@ class EntropyMetric:
         self.xm_hat_prev = 0
         self.xm = None
 
-        self.source = 'gnm'
-        self.target = 'osm'
+        self.source = source
+        self.target = target
 
         # paths
         self.vadere_root = '/home/ahmad/praktikum/vadere/'
@@ -222,7 +222,7 @@ if __name__ == "__main__":
 
     for pedestrian in pedestrians:
         for error in model_errors:
-            entropy_metric = EntropyMetric(pedestrian, error)
+            entropy_metric = EntropyMetric(pedestrian, error, source='osm', target='gnm')
             entropies.append(entropy_metric.find_entropy())
 
     plt.plot(model_errors, entropies)
