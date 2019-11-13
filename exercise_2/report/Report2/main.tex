@@ -184,10 +184,43 @@ After using the Social Force Model for simulating the three scenarios and compar
 \end{task}
 
 \begin{task}{3, Interaction of pedestrians}
-- not done -
+The new pedestrian needs only 9.6 seconds to reach the target since it starts walking at the corner. We set up the pedestrian at the position (12.3, 1.8) with the targetId of 1. We used the json library of Python to read the scenario file of the “Corner Scenario” and adjusted it so that the additional pedestrian is added to the corner at position (12.3,1.8). We gave the newly generated JSON file’s path as an argument on the command line and ran Vadere from the console as well. The output can be seen below where the first column is the pedestrian ID and the second column is the arrival time at the target. The pedestrian of ID 1 is the one that was added to the corner.\\
+\bigbreak
+    \begin{tabular}{c|c}
+    pedestrianID&evacuationTime\\
+        1&	9.6\\
+        2&	22.8\\
+        3&	15.6\\
+        4&	14\\
+        5&	12.\\
+        6&	19.6\\
+        7&	22\\
+        8&	16.4\\
+        9&	14.4\\
+        10&	21.6\\
+        11&	17.2\\
+        12&	14.8\\
+        13&	18.4\\
+        14&	13.2\\
+        15&	11.2\\
+        16&	19.6\\
+        17&	26\\
+        18&	14.8\\
+        19&	20.4\\
+    \end{tabular}
+    \bigbreak
 \end{task}
 \begin{task}{4, Obstacle avoidance}
-Pedestrians can avoid obstacles, using Dijkstras algorithm. See figure.
+
+3. The entropy increases logarithmically as the \texttt{model\_error} parameter increases (see Figure \ref{fig:entropy_change_task4}). Since \hat{M} has a linear relationship with \texttt{model\_error} and \hat{M} is fed in into the logarithm function to calculate the entropy, the entropy shows a logarithmic correlation with \texttt{model\_error}. Thus, the bigger the model error, the more the model differs from the truth; but the rate of difference diminishes. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pictures/task4_entropy.png}
+    \caption{Change of entropy by model error}
+    \label{fig:entropy_change_task4}
+\end{figure}
+
 \end{task}
 \begin{task}{5, Tests}
 \begin{enumerate}
