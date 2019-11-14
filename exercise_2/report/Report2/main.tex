@@ -82,7 +82,7 @@ In the following paragraph we compare the vadere simulation of  these scenarios 
     In comparison to our simulation from the first exercise we did not record the time every pedestrian needs to reach the target. We recorded only the time that all pedestrians took to reach the target around the corner. Furthermore vadere shows the single paths of the pedestrians to the target, while in our cellular automoton it was only possible to see which cells were not part of any path to the target. Figure \ref{fig:rimea6_osm} shows the RiMEA 6 sceanrio simulated with the Optimal Steps Model. The picture shows which path the single pedestrians take to reach the target.
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{pictures/osm/rimeatest6.png}
+        \includegraphics[width=0.4\textwidth]{pictures/osm/rimeatest6.png}
         \caption{RiMEA scenario 6 with OSM}
         \label{fig:rimea6_osm}
     \end{figure}
@@ -90,7 +90,7 @@ In the following paragraph we compare the vadere simulation of  these scenarios 
     At first some of the pedestrians do not pass by the obstacle left or right. They walk some steps in the wrong direction in direction of the obstacle and wait until the the most pedestrians have passed the obstacle. Afterwards they turn around and go back on the right path and reach the target as well. This behaviour is caused by the big crowd. In our simulation we did not have such a behaviour. The reason for this could be that we set less pedestrians in our chickentest scenario, so that every pedestrian can reach the target on its own path and is not blocked by any other pedestrian. Our simulation could probably not handle the big amount of pedestrians which vadere uses to simulate the scenario. This scenario was pre-configured as well. In Figure \ref{fig:chickentest_osm} the pedestrians which first take the wrong path and do not pass by the obstacle at the first try can be seen.
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{pictures/osm/chickentest.png}
+        \includegraphics[width=0.4\textwidth]{pictures/osm/chickentest.png}
         \caption{Chickentest with OSM}
         \label{fig:chickentest_osm}
     \end{figure}
@@ -140,13 +140,13 @@ At first the Social Force Model is used to simulate the three scenarios.
     Figure \ref{fig:rimea6_sfm} shows that the distance between the pedestrians is smaller than before. It can be seen from that picture that the radius with which the pedestrians walk around the corner is smaller for the SFM than for the OSM. Figure \ref{fig:rimea6_sfm2} shows the corner situation and makes it clearer that all the pedestrians have less distance towards each other.
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{pictures/sfm/rimeatest6.png}
+        \includegraphics[width=0.45\textwidth]{pictures/sfm/rimeatest6.png}
         \caption{RiMEA 6 scenario with SFM}
         \label{fig:rimea6_sfm}
     \end{figure}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{pictures/sfm/rimeatest6_atcorner.png}
+        \includegraphics[width=0.45\textwidth]{pictures/sfm/rimeatest6_atcorner.png}
         \caption{RiMEA scenario showing the corner with SFM}
         \label{fig:rimea6_sfm2}
     \end{figure}
@@ -154,7 +154,7 @@ At first the Social Force Model is used to simulate the three scenarios.
     The number of pedestrians is set to 300 to make it possible to compare the OSM to the SFM. If the Social Force Model is used the pedestrians try not not to avoid other pedestrians as much as for the OSM. Consequently, less people leave the right path and walk in the wrong direction towards the obstacle. So less people get stuck for a while in the region of the obstacle, even though we observed a problem that some pedestrians overlap with the obstacle and jump over it. Figure \ref{fig:chickentest_sfm} shows that much less pedestrians get stuck at the inner side of the obstacle than before. Furthermore it shows the encountered problem that pedestrians jump over the obstacle. This can be seen from the paths leading over the obstacle.
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{pictures/sfm/chicken.png}
+        \includegraphics[width=0.45\textwidth]{pictures/sfm/chicken.png}
         \caption{Chickentest with SFM}
         \label{fig:chickentest_sfm}
     \end{figure}
@@ -199,7 +199,7 @@ After using the Social Force Model for simulating the three scenarios and compar
     \bigbreak
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{pictures/gnm/rimeatest6.png}
+        \includegraphics[width=0.45\textwidth]{pictures/gnm/rimeatest6.png}
         \caption{RiMEA scenario 6 with GNM}
         \label{fig:rimea6_gnm}
     \end{figure}
@@ -207,7 +207,7 @@ After using the Social Force Model for simulating the three scenarios and compar
     For the GNM model simulated with the chickentest scenario the pedestrians gather a lot at the corners of the obstacle, but do not enter the area surrounded by the obstacle. This is different to the other used models. Besides, the problem of the SFM does not occur anymore here. There are no pedestrians which jump over the obstacle from the inner side of the obstacle to the outer side of the obstacle. Furthermore the pedestrians take some more time to reach the target because they do not walk with a big radius around the obstacle. They try to pass by slightly the obstacle and walk very close to it. Another remarkable difference is that the computational work for the GNM is heavy. It takes more compuational work than for the OSM and SFM. The phenomen that the pedestrians gather at the corners of the obstacle and slightly walk around the corner can be seen in Figure \ref{fig:chickentest_gnm}.
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{pictures/gnm/chicken.png}
+        \includegraphics[width=0.45\textwidth]{pictures/gnm/chicken.png}
         \caption{Chickentest with GMN}
         \label{fig:chickentest_gnm}
     \end{figure}
@@ -287,6 +287,12 @@ We setup the bottleneck scenario, as it is recommended in the exercise sheet. Th
 			\item The output generated from the prediction model is parsed using the \textbf{parse\_trajectory} function and the predicted coordinates and velocities are returned as the output of \textbf{f\_model} function.
 	\end{itemize}
 	Lastly, we have to mention the approach that we took for calculating the velocity. We used a built-in vadere processor for obtaining the true data velocities.txt file. This file contains the simTime and endTime-PID1 attributes for each timestep for every pedestrian which we use to determine the time duration of each timestep. This file, also contains the startX-PID1, startY-PID1, endX-PID1 and endY-PID1 attributes, which we use to calculate the distance covered in the corresponding time duration. Using the time duration of each timestep and the corresponding distance covered by each pedestrian in that time duration, we calculate the velocity's X and Y component. 
+	\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pictures/task5_graphs/ped_30_2.png}
+    \caption{True states and estimated states with true model as OSM and prediction model as GNM with 30 pedestrians}
+    \label{fig:ped30_2}
+	\end{figure}
 	\item To estimate the entropy of GNM with respect to OSM, we made the following changes to the implementation which was provided already:
 	\begin{itemize}
 		\item Changing the maximum likelihood implementation, which was implemented for only a single agent in the original implementation. In order to achieve that we followed the maximum likelihood algorithm provided in the Guy et. al. paper. 
