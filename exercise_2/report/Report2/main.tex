@@ -79,7 +79,7 @@ In the following paragraph we compare the vadere simulation of  these scenarios 
     20&15.6\\
     \end{tabular}
     \bigbreak
-    In comparison to our simulation from the first exercise we did not record the time every pedestrian needs to reach the target. We recorded only the time that all pedestrians took to reach the target around the corner. Furthermore Vadere shows the single paths of the pedestrians to the target, while in our cellular automaton it was only possible to see which cells were not part of any path to the target. Figure \ref{fig:rimea6_osm} shows the RiMEA 6 scenario simulated with the Optimal Steps Model. The picture shows which path the single pedestrians take to reach the target.
+    In comparison to our simulation from the first exercise we did not record the time every pedestrian needs to reach the target. We recorded only the time that all pedestrians took to reach the target around the corner. Furthermore vadere shows the single paths of the pedestrians to the target, while in our cellular automoton it was only possible to see which cells were not part of any path to the target. Figure \ref{fig:rimea6_osm} shows the RiMEA 6 sceanrio simulated with the Optimal Steps Model. The picture shows which path the single pedestrians take to reach the target.
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{pictures/osm/rimeatest6.png}
@@ -87,7 +87,7 @@ In the following paragraph we compare the vadere simulation of  these scenarios 
         \label{fig:rimea6_osm}
     \end{figure}
     \item "Chicken Test" scenario: \\
-    At first some of the pedestrians do not pass by the obstacle left or right. They walk some steps in the wrong direction in direction of the obstacle and wait until the the most pedestrians have passed the obstacle. Afterwards they turn around and go back on the right path and reach the target as well. This behaviour is caused by the big crowd. In our simulation we did not have such a behaviour. The reason for this could be that we set less pedestrians in our chickentest scenario, so that every pedestrian can reach the target on its own path and is not blocked by any other pedestrian. Our simulation could probably not handle the big amount of pedestrians which Vadere uses to simulate the scenario. This scenario was pre-configured as well. In Figure \ref{fig:chickentest_osm} the pedestrians which first take the wrong path and do not pass by the obstacle at the first try can be seen.
+    At first some of the pedestrians do not pass by the obstacle left or right. They walk some steps in the wrong direction in direction of the obstacle and wait until the the most pedestrians have passed the obstacle. Afterwards they turn around and go back on the right path and reach the target as well. This behaviour is caused by the big crowd. In our simulation we did not have such a behaviour. The reason for this could be that we set less pedestrians in our chickentest scenario, so that every pedestrian can reach the target on its own path and is not blocked by any other pedestrian. Our simulation could probably not handle the big amount of pedestrians which vadere uses to simulate the scenario. This scenario was pre-configured as well. In Figure \ref{fig:chickentest_osm} the pedestrians which first take the wrong path and do not pass by the obstacle at the first try can be seen.
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{pictures/osm/chickentest.png}
@@ -95,7 +95,7 @@ In the following paragraph we compare the vadere simulation of  these scenarios 
         \label{fig:chickentest_osm}
     \end{figure}
     \item General differences and observations: \\
-    In general our cellular automaton passes the tests as well as the Vadere simulation does. Furthermore, the GUI of Vadere lets the user adjust much more things of the simulation. We use the command line to set up different scenarios and adjust them, but we do not offer as many options as Vadere does. One example is that the user can set up a mean, minimum, maximum and standard deviation of the pedestrian speed. In our case the pedestrians have a constant speed.
+    In general our cellular automoton passes the tests as well as the vadere simulation does. Furthermore, the GUI of vadere lets the user adjust much more things of the simulation. We use the command line to set up different scenarios and adjust them, but we do not offer as many options as vadere does. One example is that the user can set up a mean, minimum, maximum and standard deviation of the pedestrian speed. In our case the pedestrians have a constant speed.
 \end{itemize}
 \end{task}
 \begin{task}{2, Simulation of the scenario with a different model}
@@ -204,7 +204,7 @@ After using the Social Force Model for simulating the three scenarios and compar
         \label{fig:rimea6_gnm}
     \end{figure}
     \item Chickentest:\\
-    For the GNM model simulated with the chickentest scenario the pedestrians gather a lot at the corners of the obstacle, but do not enter the area surrounded by the obstacle. This is different to the other used models. Besides, the problem of the SFM does not occur anymore here. There are no pedestrians which jump over the obstacle from the inner side of the obstacle to the outer side of the obstacle. Furthermore the pedestrians take some more time to reach the target because they do not walk with a big radius around the obstacle. They try to pass by slightly the obstacle and walk very close to it. Another remarkable difference is that the computational work for the GNM is heavy. It takes more computational work than for the OSM and SFM. The phenomena that the pedestrians gather at the corners of the obstacle and slightly walk around the corner can be seen in Figure \ref{fig:chickentest_gnm}.
+    For the GNM model simulated with the chickentest scenario the pedestrians gather a lot at the corners of the obstacle, but do not enter the area surrounded by the obstacle. This is different to the other used models. Besides, the problem of the SFM does not occur anymore here. There are no pedestrians which jump over the obstacle from the inner side of the obstacle to the outer side of the obstacle. Furthermore the pedestrians take some more time to reach the target because they do not walk with a big radius around the obstacle. They try to pass by slightly the obstacle and walk very close to it. Another remarkable difference is that the computational work for the GNM is heavy. It takes more compuational work than for the OSM and SFM. The phenomen that the pedestrians gather at the corners of the obstacle and slightly walk around the corner can be seen in Figure \ref{fig:chickentest_gnm}.
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{pictures/gnm/chicken.png}
@@ -243,7 +243,6 @@ The new pedestrian needs only 9.6 seconds to reach the target since it starts wa
     \bigbreak
 \end{task}
 \begin{task}{4, Analyzing output of models}
-
 \begin{enumerate}
 \item In the given example, the true data is generated by using the formula:
 
@@ -258,10 +257,8 @@ where dt is a constant which drives the change in angle at each timestep. This e
 		\item The inverse of $Z\_k$ is calculated using the pseudo inverse which is not mentioned in the paper.
 		\item The implementation of maximum likelihood is not consistent with the algorithm provided in the paper
 	\end{itemize}
-    \item The entropy increases logarithmically as the \texttt{model\_error} parameter increases (see Figure \ref{fig:entropy_change_task4}). Since $\hat{M}$ has a linear relationship with \texttt{model\_error} and $\hat{M}$ is fed in into the logarithm function to calculate the entropy, the entropy shows a logarithmic correlation with \texttt{model\_error}. Thus, the bigger the model error, the more the model differs from the truth; but the rate of difference diminishes.
+\item The entropy increases logarithmically as the \texttt{model\_error} parameter increases (see Figure \ref{fig:entropy_change_task4}). Since $\hat{M}$ has a linear relationship with \texttt{model\_error} and $\hat{M}$ is fed in into the logarithm function to calculate the entropy, the entropy shows a logarithmic correlation with \texttt{model\_error}. Thus, the bigger the model error, the more the model differs from the truth; but the rate of difference diminishes. 
 \end{enumerate}
- 
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{pictures/task4/task4_entropy.png}
@@ -285,7 +282,7 @@ We setup the bottleneck scenario, as it is recommended in the exercise sheet. Th
 	\begin{itemize}
 			\item The input to this function is the path to the output files (postvis.traj and velocities.txt) of true model and it outputs coordinates and velocities of each pedestrian over a series of timesteps, which are considered as the true data that is stored in the \textbf{zk} variable in the implementation. 
 			\item In order to obtain the "simulated" model output to run the Guy et. al. algorithm, we create a function titled \textbf{f\_model}. The input to this function are the true model's pedestrian coordinates and the velocities at a given timestep.
-			\item This true data is used to initialize dynamic elements within the bottleneck scenario file created in the previous step. The bottleneck scenario file is parsed using the json python library and then the dynamic elements are initialized within a loop for each pedestrian in the true data. The modified scenario file is saved at a temporary location. The modified scenario file uses the "prediction" model (GNM or OSM in the reverse case).
+			\item This true data is used to initialize dynamic elements within the bottleneck scnenario file created in the previous step. The bottleneck scenario file is parsed using the json python library and then the dynamic elements are initialized within a loop for each pedestrian in the true data. The modified scenario file is saved at a temporary location. The modified scenario file uses the "prediction" model (GNM or OSM in the reverse case).
 			\item Then we use the python os library to execute the vadere-console.jar to run the modified scenario file for 5 timesteps. 
 			\item The output generated from the prediction model is parsed using the \textbf{parse\_trajectory} function and the predicted coordinates and velocities are returned as the output of \textbf{f\_model} function.
 	\end{itemize}
@@ -305,7 +302,7 @@ We setup the bottleneck scenario, as it is recommended in the exercise sheet. Th
 	Parameter & Value & Description \\
 	\hline\hline
 	true\_error & 1e-4 & The standard dev of the normally distributed error added to the true data \\ 
-	model\_error & 1e-3 & The standard dev of the normally distributed error added to the predicted data \\ 
+	model\_error & 1e-1 & The standard dev of the normally distributed error added to the predicted data \\ 
 	NT & 30 & The total number of timesteps from the true data \\ 
 	m & 10 & The number of ensembles \\ 
 	d & 4 & The dimension of the true/predicted data. \\ 

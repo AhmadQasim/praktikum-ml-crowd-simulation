@@ -13,7 +13,7 @@ class EntropyMetric:
         x0 = np.array([1, 0]).reshape(1, -1)
         self.x0 = x0 / np.linalg.norm(x0)
         # Number of time steps for the given simulation
-        self.NT = 5
+        self.NT = 30
         # Physical time that passes in the given number of time steps
         self.T = self.NT
         self.dt = self.T / self.NT
@@ -25,7 +25,7 @@ class EntropyMetric:
         # the error and estimate the true state.
         self.model_error = model_error
         self.true_error = 1e-4
-        self.m = 2  # ensemble runs
+        self.m = 10  # ensemble runs
         self.n = pedestrian_num  # number of agents. Note that the models f_true and f_model only work
         self.d = 4  # dimension per "agent" (we only have one here) self.nd = n*d
 
@@ -35,7 +35,7 @@ class EntropyMetric:
         self.M = np.identity(self.nd)
         # this is the guess for the true error in the observations. should be small here
         self.Q = np.identity(self.nd) * self.true_error ** 2
-        self.N_ITER = 2  # number of iterations of algorithm1_enks and max_likelihood
+        self.N_ITER = 5  # number of iterations of algorithm1_enks and max_likelihood
         self.Mhat = self.M
         self.zk = None
         self.xm_hat = None
@@ -57,21 +57,85 @@ class EntropyMetric:
                                                                                          self.d) * self.true_error
 
     def f_model(self, x, error):
+        """
+        :param x: the true data for pedestrians at a timestep
+        :param error: the standard deviation of the gaussian noise to be added to the model predictions
+        """
+        """
+            For the given true trajectories for the pedestrians over a timestep. Predict the trajectories according to
+            the prediction model
+        """
         return predict(x, self.path_scenario, self.output_path, self.dynamic_scenario_path, self.vadere_root)\
                + np.random.randn(x.shape[0], x.shape[1]) * error
 
+    def initial_run(self):
+        """
+        """
+        """
+            A function which populates the xt array with true data and then calculates xm without applying the EM
+            algorithm. The resulting predicted trajectories are then plotted. 
+        """
+        self.xt[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
+        self.xm = self.xt.copy()
+        for k in range(1, self.NT):
+            print("Timestep: ", k)
+            for i in range(self.m):
+                self.xt[k, (i * self.nd):((i + 1) * self.nd)] = self.true_data[k, :].reshape(1, -1)
+                self.xm[k, (i * self.nd):((i + 1) * self.nd)] = \
+                    (self.f_model(self.xm[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d),
+                                  self.model_error).reshape(1, -1))
+
+    def plot_initial_run(self):
+        """
+        """
+        """
+            A function for plotting the initial run data i.e. xt and xm
+        """
+        fig, ax = plt.subplots(1, 2, figsize=(8, 4), sharey='all')
+        ax[0].scatter(self.xt[:, 0], self.xt[:, 1], s=1, label='true state')
+
+        ax[0].scatter(self.xm[:, 0], self.xm[:, 1], s=1, label='model state')
+        ax[0].set_xlabel('space 1')
+        ax[0].set_ylabel('space 2')
+        ax[0].set_title('trajectories in space')
+        ax[1].plot(self.time, self.xt)
+        ax[1].plot(self.time, self.xm)
+        ax[1].set_xlabel('time')
+        ax[1].set_ylabel('space 1,2')
+        ax[1].set_title('trajectories in time')
+        plt.show()
+
     @staticmethod
     def normal_draw(cov):
-        """draw an n-dimensional point from a Gaussian distribution with given covariance."""
+        """
+        :param cov: the per-agent covariance matrix M
+        """
+        """
+            draw an n-dimensional point from a Gaussian distribution with given covariance.
+        """
         return np.random.multivariate_normal(0 * cov[:, 0], cov, size=1)
 
     @staticmethod
     def observation(x):
-        # relatively simple observation function z=h(x), also no change in dimension
+        """
+        :param x: the true data zk
+        """
+        """
+            the observation function h is an identity function
+        """
         return x
 
-    # compute ensemble Kalman smoothing
     def algorithm1_enks(self, z_data, error_covariance_m, error_covariance_q, observation, fhat_model):
+        """
+        :param z_data: the true data of the pedestrian trajectories
+        :param error_covariance_m: the per agent covariance matrix M
+        :param error_covariance_q: the true model error covariance matrix Q
+        :param observation: the observation function h
+        :param fhat_model: the model predictions function f_model
+        """
+        """
+            the enks computation function
+        """
         t = z_data.shape[0]
         m_l = error_covariance_m
         q_l = error_covariance_q
@@ -109,25 +173,14 @@ class EntropyMetric:
                             z_data[k, (i * self.nd):((i + 1) * self.nd)] - zk[(i * self.nd):((i + 1) * self.nd)])
         return xk
 
-    def max_likelihood(self, xk, fhat_model):
-        t = xk.shape[0]
-        per_agent_diff = np.zeros(shape=(t-1, self.m, self.n, self.d))
-        per_agent_cov = np.zeros(shape=(self.d, self.d))
-        for k in range(0, t - 1):
-            print("Timestep: ", k + 1)
-            for i in range(self.m):
-                fhat = fhat_model(xk[k, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d)).reshape(1, -1)
-                xhat = xk[k + 1, (i * self.nd):((i + 1) * self.nd)]
-                diff = xhat - fhat
-                for j in range(self.n):
-                    per_agent_diff[k, i, j, :] = diff[0, (j*self.d):(j*self.d) + self.d]
-
-        for j in range(self.n):
-            per_agent_cov += np.cov(per_agent_diff[:, :, j, :].reshape(self.m * (t-1), self.d).T)
-
-        return per_agent_cov / (t * self.m * self.n)
-
     def max_likelihood_multi(self, xk, fhat_model):
+        """
+        :param xk: the model state which is equal to zk as observation function is identity
+        :param fhat_model: the model predictions function f_model
+        """
+        """
+            the maximum likelihood computation function
+        """
         t = xk.shape[0]
         m = 0
         for k in range(0, t - 1):
@@ -141,35 +194,20 @@ class EntropyMetric:
         return np.array([[m / (t * self.m * self.n)]])
 
     def entropy(self, m_dist):
+        """
+        :param m_dist: the per-agent covariance matrix M
+        """
+        """
+            the entropy computation function
+        """
         return (1 / 2) * (self.n * np.log((2 * np.pi * np.exp(1)) ** self.d * np.linalg.det(m_dist)))
 
-    def initial_run(self):
-        self.xt[0, :] = np.column_stack([self.true_data[0, :].reshape(1, -1) for _ in range(self.m)])
-        self.xm = self.xt.copy()
-        for k in range(1, self.NT):
-            print("Timestep: ", k)
-            for i in range(self.m):
-                self.xt[k, (i * self.nd):((i + 1) * self.nd)] = self.true_data[k, :].reshape(1, -1)
-                self.xm[k, (i * self.nd):((i + 1) * self.nd)] = \
-                    (self.f_model(self.xm[k - 1, (i * self.nd):((i + 1) * self.nd)].reshape(self.n, self.d),
-                                  self.model_error).reshape(1, -1))
-
-    def plot_initial_run(self):
-        fig, ax = plt.subplots(1, 2, figsize=(8, 4), sharey='all')
-        ax[0].scatter(self.xt[:, 0], self.xt[:, 1], s=1, label='true state')
-
-        ax[0].scatter(self.xm[:, 0], self.xm[:, 1], s=1, label='model state')
-        ax[0].set_xlabel('space 1')
-        ax[0].set_ylabel('space 2')
-        ax[0].set_title('trajectories in space')
-        ax[1].plot(self.time, self.xt)
-        ax[1].plot(self.time, self.xm)
-        ax[1].set_xlabel('time')
-        ax[1].set_ylabel('space 1,2')
-        ax[1].set_title('trajectories in time')
-        plt.show()
-
     def run_em(self):
+        """
+        """
+        """
+            iterate the EM algorithm through different steps
+        """
         self.zk = self.observation(self.xt[1:, :])
         for k in range(self.N_ITER):
             self.xm_hat = self.algorithm1_enks(self.zk, self.Mhat, self.Q, self.observation,
@@ -180,6 +218,11 @@ class EntropyMetric:
             self.xm_hat_prev = self.xm_hat
 
     def plot_em(self):
+        """
+        """
+        """
+            plot the result of the EM algorithm i.e. xt and xm_hat
+        """
         fig, ax = plt.subplots(1, 2, figsize=(16, 4), sharey='all')
         for i in range(self.nd):
             ax[0].plot(self.time, self.xt[:, i], label='true state {}'.format(i))
@@ -194,10 +237,9 @@ class EntropyMetric:
         plt.show()
 
     def find_entropy(self):
-        # self.initial_run()
-        # self.plot_initial_run()
+        self.initial_run()
         self.run_em()
-        # self.plot_em()
+        self.plot_em()
 
         with open('./results', 'a') as fp:
             print('entropy(M estimated) ', self.entropy(self.Mhat))
@@ -216,7 +258,9 @@ class EntropyMetric:
 
 
 if __name__ == "__main__":
+    # the number of pedestrians to run the algorithm for
     pedestrians = [15, 20, 25, 30]
+    # the different model errors
     model_errors = [0.1]
     entropies = []
 
