@@ -3,4 +3,3 @@ fire
 numpy
 tkinter
 pandas
-/__pycache__/
