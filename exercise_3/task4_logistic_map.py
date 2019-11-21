@@ -29,7 +29,7 @@ def plot(r_vals, x_vals, title='Bifurcation Diagram', x_lim=(0, 4), vertical_lin
 
     if vertical_lines is not None:
         for x, c in vertical_lines:
-            ax.axvline(x=x, c=c, label=f'line at x = {x}', alpha=0.6)
+            ax.axvline(x=x, c=c, label=f'line at r={x}', alpha=0.6)
         ax.legend(loc='upper left')
 
     ax.set_title(title)

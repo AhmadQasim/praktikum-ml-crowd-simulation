@@ -37,7 +37,7 @@ if __name__ == '__main__':
         'fun': lorenz_attractor
     }
 
-    mode = 1
+    mode = 0
 
     if mode == 0:
         print("1", dt)
