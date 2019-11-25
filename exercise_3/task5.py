@@ -38,6 +38,7 @@ def parse_trajectories(output_path: str) -> np.ndarray:
     for pedestrian_id in range(1, total_pedestrians+1):
         pedestrian_trajectory = trajectories[trajectories['pedestrianId'] == pedestrian_id]
         pedestrian_trajectory.sort_values(by='timeStep', inplace=True)
+
         out[pedestrian_id-1] = pedestrian_trajectory[['x-PID1', 'y-PID1']].values.T
 
     return out
@@ -45,13 +46,16 @@ def parse_trajectories(output_path: str) -> np.ndarray:
 
 def createPlot(pedestrian_id=1):
     for y_value in os.listdir("./outputs/"):
-        if y_value.startswith('.'):
+        if y_value.startswith('.'):  # skip the hidden cache files
             continue
+
         trajectory_path = f'./outputs/{y_value}/{os.listdir("./outputs/"+y_value).pop()}/postvis.trajectories'
         coordinates = parse_trajectories(trajectory_path)
+
         xs = coordinates[pedestrian_id-1, 0, :]
         ys = coordinates[pedestrian_id, 1, :]
         timesteps = np.arange(0, len(xs))
+
         plt.figure(figsize=(15, 5))
         plt.plot(timesteps, xs, 'r', label='x')
         plt.plot(timesteps, ys, 'g', label='y')
