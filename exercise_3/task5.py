@@ -90,10 +90,14 @@ def plot_phase_portrait(time_gap: int, y_values, pedestrian_id=3):
 
 
 if __name__ == '__main__':
-    plot_phase_portrait(163-68, filter(lambda f: not f.startswith('.'), os.listdir('./outputs/')), pedestrian_id=3)
+    #plot_phase_portrait(163-68, filter(lambda f: not f.startswith('.'), os.listdir('./outputs/')), pedestrian_id=3)
     #createPlot(3)
     #y = 4.5
     #edit_scenario("Bottleneck bifurcation.scenario", y=y)
     #run_simulation("'/Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/vadere/'",
                       # "'Bottleneck bifurcation.scenario'",
                       # f'outputs/{y}/')
+
+    for d in np.arange(0.0, 5.0, 0.5):
+        edit_scenario("./Saddle_Node_Bifurcation.scenario", d=d)
+        run_simulation('"C:/Users/Kaan/Desktop/vadere/"', "./Saddle_Node_Bifurcation.scenario", f'./outputs/saddle_d{d}/')
