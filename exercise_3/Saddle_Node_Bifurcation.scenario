@@ -116,9 +116,9 @@
                     "absorbing": true,
                     "shape": {
                         "x": 7.0,
-                        "y": 5.613686755773383,
-                        "width": 1.0,
-                        "height": 1.0,
+                        "y": 5.683256642234404,
+                        "width": 0.5,
+                        "height": 0.5,
                         "type": "RECTANGLE"
                     },
                     "waitingTime": 0.0,
@@ -134,9 +134,9 @@
                     "absorbing": true,
                     "shape": {
                         "x": 7.0,
-                        "y": 1.3710460686540977,
-                        "width": 1.0,
-                        "height": 1.0,
+                        "y": 1.3014761821930754,
+                        "width": 0.5,
+                        "height": 0.5,
                         "type": "RECTANGLE"
                     },
                     "waitingTime": 0.0,
