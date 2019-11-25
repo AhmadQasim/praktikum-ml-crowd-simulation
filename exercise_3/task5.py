@@ -5,11 +5,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def edit_scenario(scenario_path: str, y=2.0):
+def edit_scenario(scenario_path: str, y=None, d=None):
     with open(scenario_path, 'r') as infile:
         scenario = json.load(infile)
 
-    scenario['scenario']['topography']['obstacles'][0]['shape']['y'] = y
+    if y is not None:
+        scenario['scenario']['topography']['obstacles'][0]['shape']['y'] = y
+    elif d is not None:
+        targets = scenario['scenario']['topography']['targets']
+
+        source = scenario['scenario']['topography']['sources'][0]['shape']
+        mid_point = (source['y'] + source['height']) / 2
+
+        targets[0]['shape']['y'] = mid_point + np.sqrt(d)
+        targets[1]['shape']['y'] = mid_point - np.sqrt(d)
 
     with open(scenario_path, 'w') as outfile:
         json.dump(scenario, outfile, indent=4)
@@ -84,7 +93,7 @@ if __name__ == '__main__':
     plot_phase_portrait(163-68, filter(lambda f: not f.startswith('.'), os.listdir('./outputs/')), pedestrian_id=3)
     #createPlot(3)
     #y = 4.5
-    #edit_scenario("Bottleneck bifurcation.scenario", y)
+    #edit_scenario("Bottleneck bifurcation.scenario", y=y)
     #run_simulation("'/Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/vadere/'",
                       # "'Bottleneck bifurcation.scenario'",
                       # f'outputs/{y}/')
