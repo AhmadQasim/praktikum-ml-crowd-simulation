@@ -66,8 +66,23 @@ def createPlot(pedestrian_id=1):
         plt.savefig(f'plots/task5/{pedestrian_id}_{y_value}.png', dpi=256)
 
 
+def plot_phase_portrait(time_gap: int, y_values, pedestrian_id=3):
+    for y_value in y_values:
+        coordinates = parse_trajectories(f'./outputs/{y_value}/{os.listdir("./outputs/"+y_value).pop()}/postvis.trajectories')
+        xs = coordinates[pedestrian_id-1, 0, :]
+
+        plt.figure()
+        plt.plot(xs[:-time_gap], xs[time_gap:], lw=0.3, c='blue')
+
+        plt.title('y='+y_value)
+        plt.xlabel('x at time step t')
+        plt.ylabel(f'x at time step t+{time_gap}')
+        plt.savefig(f'./plots/task5/{pedestrian_id}_phase_portrait_y_{y_value}.png')
+
+
 if __name__ == '__main__':
-    createPlot(3)
+    plot_phase_portrait(163-68, filter(lambda f: not f.startswith('.'), os.listdir('./outputs/')), pedestrian_id=3)
+    #createPlot(3)
     #y = 4.5
     #edit_scenario("Bottleneck bifurcation.scenario", y)
     #run_simulation("'/Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/vadere/'",
