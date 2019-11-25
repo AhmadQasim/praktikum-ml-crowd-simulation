@@ -100,4 +100,4 @@ if __name__ == '__main__':
 
     for d in np.arange(0.0, 5.0, 0.5):
         edit_scenario("./Saddle_Node_Bifurcation.scenario", d=d)
-        run_simulation('"C:/Users/Kaan/Desktop/vadere/"', "./Saddle_Node_Bifurcation.scenario", f'./outputs/saddle_d{d}/')
+        run_simulation('"/Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/vadere/"', "./Saddle_Node_Bifurcation.scenario", f'./outputs/saddle_d{d}/')
