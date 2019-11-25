@@ -29,7 +29,7 @@ def run_simulation(vadere_root: str, scenario_path, output_path):
               f'--scenario-file {scenario_path} --output-dir="{output_path}" --scenario-checker off')
 
 
-def parse_trajectories(output_path: str) -> np.ndarray:
+def parse_trajectories(output_path: str, time_step_mode='fixed') -> [np.ndarray, dict]:
     '''
 
     :param output_path:
@@ -42,7 +42,12 @@ def parse_trajectories(output_path: str) -> np.ndarray:
     total_time_steps = max(trajectories['timeStep'])
     total_pedestrians = max(trajectories['pedestrianId'])
 
-    out = np.zeros((total_pedestrians, 2, total_time_steps))
+    if time_step_mode == 'fixed':
+        out = np.zeros((total_pedestrians, 2, total_time_steps))
+    elif time_step_mode == 'varying':
+        out = {}
+    else:
+        raise ValueError
 
     for pedestrian_id in range(1, total_pedestrians+1):
         pedestrian_trajectory = trajectories[trajectories['pedestrianId'] == pedestrian_id]
@@ -61,8 +66,8 @@ def createPlot(pedestrian_id=1):
         trajectory_path = f'./outputs/{y_value}/{os.listdir("./outputs/"+y_value).pop()}/postvis.trajectories'
         coordinates = parse_trajectories(trajectory_path)
 
-        xs = coordinates[pedestrian_id-1, 0, :]
-        ys = coordinates[pedestrian_id, 1, :]
+        xs = coordinates[pedestrian_id-1][0, :]
+        ys = coordinates[pedestrian_id][1, :]
         timesteps = np.arange(0, len(xs))
 
         plt.figure(figsize=(15, 5))
@@ -89,6 +94,17 @@ def plot_phase_portrait(time_gap: int, y_values, pedestrian_id=3):
         plt.savefig(f'./plots/task5/{pedestrian_id}_phase_portrait_y_{y_value}.png')
 
 
+def plot_saddle_bifurcation(d_values):
+    plt.figure()
+    for d in d_values:
+        traj_dict: dict = parse_trajectories(f'./outputs/saddle_d{d}/{os.listdir("./outputs/saddle_d"+str(d)).pop()}/postvis.traj', time_step_mode='varying')
+        last_points = [traj[1, -1] for traj in traj_dict.values()]
+        plt.scatter(np.full_like(last_points, fill_value=d), last_points, c='red', marker='.', s=0.2)
+    plt.xlabel('d')
+    plt.ylabel('y')
+    plt.title('Bifurcation Diagram')
+    plt.savefig('./plots/saddle_bifurcation.png')
+
 if __name__ == '__main__':
     #plot_phase_portrait(163-68, filter(lambda f: not f.startswith('.'), os.listdir('./outputs/')), pedestrian_id=3)
     #createPlot(3)
@@ -97,6 +113,8 @@ if __name__ == '__main__':
     #run_simulation("'/Users/mm/Desktop/Data Engineering and Analysis/3. Semester/Lab Course/vadere/'",
                       # "'Bottleneck bifurcation.scenario'",
                       # f'outputs/{y}/')
+    plot_saddle_bifurcation(np.arange(0.0, 5.0, 0.5))
+    exit()
 
     for d in np.arange(0.0, 5.0, 0.5):
         edit_scenario("./Saddle_Node_Bifurcation.scenario", d=d)
