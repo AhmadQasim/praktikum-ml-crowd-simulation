@@ -39,6 +39,42 @@
 \frontpage
 
 \begin{task}{1, Vector fields, orbits, and visualization}
+A phase portrait is a good way to visualize a dynamical system with a one or two-dimensional state space. The linear dynamical system is defined with a state space $X = \mathbb{R}, I = \mathbb{R}$, parameter $\alpha \in \mathbb{R}$ and flow $\phi_{\alpha}$ defined by $\frac{\partial \phi_{\alpha}(t,x)}{\partial t}|_{t=0} = A_{\alpha}x$ with $A_{\alpha} = \begin{bmatrix}\alpha&\alpha \\ -\frac{1}{4}&0\end{bmatrix}$. The task is to adjust $\alpha$ in the parametric matrix A to create phase portraits of a node, saddle and focus. Afterwards it has to be specified if the different systems for the different alphas are topologically equivalent or not. The phase portrait of a dynamical system depends on how the derivative of its flow looks like. In general you can distinguish between five topological classes of hyperbolic equilibria on the plane.
+\begin{itemize}
+    \item If you have two negative eigenvalues and no positive eigenvalue without any imaginary parts the phase portrait will be classified as a stable node, where the lines point in direction of the node.
+    \item The dynamical system is still stable for the case that there are only negative eigenvalues but without any imaginary part. In this case the phase portrait changes to a stable focus. Stable foci and stable nodes are topologically equivalent.
+    \item In case there is one negative and one positive eigenvalue the system is not stable anymore. The phase portrait is classified as a saddle.
+    \item If both eigenvalues are positive and do not have any imaginary part then the phase diagram can be classified as a node. It is an unstable node, because only systems with only negative eigenvalues are stable.
+    \item The last case is if a system has two positive eigenvalues with an imaginary part. This leads to an unstable focus. As for the stable focus and stable node the unstable focus and unstable node are topologically equivalent.
+\end{itemize}
+The goal of this task is to choose different values for $\alpha$ in order to generate all these different five phase plots. We compute the eigenvalues by computing: \begin{align*}
+    det(A_\alpha - \lambda I) \overset{!}{=} 0 \\
+    (\alpha -\lambda)(-\lambda) - (-\frac{1}{4}\alpha) \overset{!}{=}0\\
+    \lambda^2-\alpha \lambda + \frac{1}{4}\alpha \overset{!}{=}0\\
+    \lambda_{1/2} = \frac{\alpha (+/-) \sqrt{\alpha^2-\alpha}}{2}
+\end{align*}
+The equation for $\lambda_1 =  \frac{\alpha + \sqrt{\alpha^2-\alpha}}{2}$ is always $> 0$. Consequently there will never be the case that both eigenvalues are negative. As a consequence of this the system can be seen as unstable. We have to find three different values for $\alpha$ to obtain a saddle, an unstable focus and an unstable node. For the value of $alpha = 2$ there are two positive eigenvalues: $\lambda_1 = 1.71$ and $\lambda_2 = 0.29$. The phase diagram is an unstable node which can be seen in Figure \ref{fig:task1_node}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/node.png}
+    \caption{Phase diagram showing a node for two positive eigenvalues and $\alpha = 2$}
+    \label{fig:task1_node}
+\end{figure}
+We choose an $\alpha = 0.5$ to obtain two positive eigenvalues with imaginary part. These two eigenvalues are $\lambda_{1/2} = \frac{0.5 (+/-) 0.5i}{2}$. These eigenvalues lead to an unstable focus, which can be seen in Figure
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/focus.png}
+    \caption{Phase diagram showing a focus for two positive eigenvalues with imaginary part for $\alpha = \frac{1}{2}$}
+    \label{fig:task1_focus}
+\end{figure}
+A value of $\alpha=-0.1$ leads to the two eigenvalues $\lambda_1 = 0.11$ and $\lambda_2=-0.22$. One eigenvalue is positive and the other negative. This leads to an unstable saddle which is shown by Figure \ref{fig:task1_saddle}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/saddle.png}
+    \caption{Phase diagram showing a saddle for one positive and one negative eigenvalue for $\alpha = -0.1$}
+    \label{fig:task1_saddle}
+\end{figure}
+In general foci and nodes are topologically equivalent if both are stable or both are unstable. Consequently the phase diagrams shown by Figure \ref{fig:task1_focus} and \ref{fig:task1_node} are topologically equivalent, because both of them are unstable.
 \end{task}
 \begin{task}{2, Common bifurcations in nonlinear systems}
      \begin{figure}[H]
@@ -70,6 +106,72 @@
     \end{figure}
 \end{task}
 \begin{task}{3, Bifurcations in higher dimensions}
+The Andronov-Hopf bifurcation is an important bifurcation for systems with one parameter and two-dimensional state spaces. The vector field in normal form is defined by the following equations:
+\begin{align*}
+    \dot{x_1} &= \alpha x_1 - x_2-x_1(x_1^2+x_2)^2\\ 
+    \dot{x_2}&=x_1+\alpha x_2 -x_2(x_1^2+x_2)^2
+\end{align*}
+The following phase diagrams  show the bifurcation of the system for three different values for $alpha$.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/Andronov_1,8.png}
+    \caption{Phase diagram for Andronov-Hopf bifurcation for $\alpha = -1.8$}
+    \label{fig:task3_-1.8}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/Andronov_0.png}
+    \caption{Phase diagram for Andronov-Hopf bifurcation for $\alpha=0.0$}
+    \label{fig:task3_0.0}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/Andronov_1,3.png}
+    \caption{Phase diagram for Andronov-Hopf bifurcation for $\alpha =1.3 $}
+    \label{fig:task3_1.3}
+\end{figure}
+The figures show that the stability of the equilibrium changes when the value for $\alpha$ changes from negative to positive. This can be seen if the direction of the arrows are compared between Figure \ref{fig:task3_-1.8} and Figure \ref{fig:task3_1.3}. Furthermore a unique limit cycle builds when $\alpha$ passes through zero and the equilibrium changes stability. This cycle can be seen in Figure \ref{fig:task3_1.3}.\\
+Besides we computed and visualized two orbits of the system forward in time for the starting points (2,0) and (0.5,0) and a fixed value for $\alpha = 1$. The Euler's method is used to predict the next coordinates of the orbit. The Euler's method computes the next coordinates for an orbit as follows:
+\begin{equation*}
+    x_n = x_{n-1} + \delta t * v(x_{n-1})
+\end{equation*}
+We use the Andronov-Hopf bifurcation, because of that v(x) corresponds to the equations for $\dot{x_1} $and$\dot{x_2}$ which are shown above. Furthermore we use a small value of $\delta t = 0.01$. The starting point is marked in green, while the end point is marked in blue for the following figures. Figure \ref{fig:task3_orbit2} shows the orbit for starting at the point of $\begin{bmatrix} 2.0\\0.0\end{bmatrix}$ which is marked in green and ending at the point marked in blue. It can be seen that the ending point is not a stable point. This means that from starting at the point $\begin{bmatrix} 2.0\\0.0\end{bmatrix}$ it will never converge to a stable point it will always go around on its orbit as it did several times which can be seen in Figure \ref{fig:task3_orbit2}. Figure \ref{fig:task3_orbit0.5} shows the orbit for starting at $\begin{bmatrix} 0.5\\0.0\end{bmatrix}$, but it shows as well that the same applies for this orbit as for the orbit before. There is not a stalbe point where the point converges to after a certain amount of steps. It will not stop moving. It will always stay on its orbit and walk on it. This behaviour is visualized in Figure \ref{fig:task3_orbit0.5}, where the starting point is marked in green again and the end point in blue. As already mentioned this is not a stable endpoint, because the point will not stop to move forward at a certain point.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/Figure_3.png}
+    \caption{Orbit for starting at (2.0,0.0) using Euler's method}
+    \label{fig:task3_orbit2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/Figure_4.png}
+    \caption{Orbit for starting at (0.5,0.0) using Euler's method}
+    \label{fig:task3_orbit0.5}
+\end{figure}
+\bigbreak
+The cusp bifurcation occurs already in one state space dimension $X=\mathbb{R}$, but with two parameters $\alpha \in \mathbb{R}^2$. The normal form of the cusp bifurcation is given with:
+\begin{equation*}
+    \dot{x} = \alpha_1 + \alpha_2x - x^3
+\end{equation*}
+The bifurcation surface, where $\dot{x} = 0$ is visualized in Figure \ref{fig:task3_cusp}. It is called cusp bifurcation, because it fulfills the following cusp bifurcation conditions (1, 2). \\
+\begin{equation}
+     \lambda = f_x(0,0) = 0 
+\end{equation}
+\begin{equation}
+     b = \frac{1}{2}f_{xx}(0,0) = 0
+\end{equation}
+You can see that both conditions are fulfilled if you plug in $x = 0$, $\alpha_1 = 0$ and $\alpha_2 = 0$ into both equations. The functions for $f_x(x,\alpha)$ and $f_{xx}(x,\alpha)$ are given below. Consequently f has for $\alpha=0$ the equilibrium $x= 0$. This is characteristic for cusp bifurcation.
+\begin{align*}
+    \dot{x} = f(x,\alpha), x\in \mathbb{R}, \alpha \in \mathbb{R}^2 \\
+    f_x(x,\alpha) = \alpha_2 - 6x^2 \\
+    f_{xx}(x,\alpha) = -12x 
+\end{align*}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/Figure_0.png}
+    \caption{Cusp bifurcation surface}
+    \label{fig:task3_cusp}
+\end{figure}
 \end{task}
 \begin{task}{4, Chaotic dynamics}
 \end{task}
