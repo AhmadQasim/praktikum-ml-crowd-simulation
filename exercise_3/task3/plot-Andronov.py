@@ -16,7 +16,9 @@ def compute(alpha, x1, x2):
     plt.figure()
     a1 = plt.subplot()
     a1.streamplot(X1, X2, dx1, dx2)
-    a1.set_title('Phase Diagram for alpha: '+str(a))
+    a1.set_title('Andronov-Hopf phase diagram for alpha: '+str(a))
+    plt.xlabel('x1')
+    plt.ylabel('x2')
     plt.show()
 
 #  Generate 3d plot for given function fn,
@@ -109,12 +111,12 @@ if __name__ == "__main__":
     2 = cusp bifurcation diagram
     3 = Computation and visualization of trajectories for given start point and Euler approximation
     """
-    flag = 2
+    flag = 0
     if flag == 0:
         # Representative values for alpha
         alphas = [-1.8, 0.0, 1.3]
-        x1 = np.arange(-1, 1.1, 0.1)
-        x2 = np.arange(-1, 1.1, 0.1)
+        x1 = np.arange(-3, 3.1, 0.1)
+        x2 = np.arange(-3, 3.1, 0.1)
         for a in alphas:
             compute(a, x1, x2)
     elif flag == 1:
