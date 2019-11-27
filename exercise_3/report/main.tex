@@ -174,6 +174,66 @@ You can see that both conditions are fulfilled if you plug in $x = 0$, $\alpha_1
 \end{figure}
 \end{task}
 \begin{task}{4, Chaotic dynamics}
+For a bifurcation analysis, a random x value between 0 and 1 is chosen and iterated 120 times and then the following 60 iteration coordinates are saved. The evolution equation is as follows: \\
+\begin{equation}
+    x_{n+1}= r x_n (1 - x_n), n \in \mathbb{N}
+\end{equation}
+
+No bifurcations occur and there is a steady state for all r values between 0 and 2 (see Figure \ref{fig:logistic_bif_02}). The steady state is $x=0$ for all $r<1$ since r values are constantly multiplied with each other at every iteration. Period-doubling bifurcations start to happen around $r=3$ and there are still steady states until $r=3.567$ (see Figure \ref{fig:logistic_bif_24}). Except for some values in between ($x = 2.63, 3.74, 3.83$), there are limit cycles with an increasing range as r increases. When r=4, the limit cycle is roughly within range $[0, 1]$ as seen in Figure \ref{fig:logistic_bif_04}. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/logistic_bif_0-2.png}
+    \caption{Bifurcation diagram of the logistic map between $r$ values of $0$ and $2$.}
+    \label{fig:logistic_bif_02}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/logistic_bif_2-4.png}
+    \caption{Bifurcation diagram of the logistic map between $r$ values of $2$ and $4$.}
+    \label{fig:logistic_bif_24}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/logistic_bif_0-4.png}
+    \caption{Bifurcation diagram of the logistic map between $r$ values of $0$ and $4$. Vertical lines indicate the steady states.}
+    \label{fig:logistic_bif_04}
+\end{figure}
+
+The trajectories of a Lorenz system of parameters $\alpha=10$, $\beta=8/3$, and $\rho=28$ until $T=1000$ with the starting points $(10, 10, 10)$ and $(10+10^{-8}, 10, 10)$ were calculated and plotted using the \texttt{solve\_ivp} method of Python’s \texttt{scipy} module. The trajectory looks like a butterfly as seen in Figures \ref{fig:lorenz_1} and \ref{fig:lorenz_2}. The chaotic nature of the system can be realised when these two trajectories are plotted together (see Figure \ref{fig:lorenz_3}). The trajectories are quite non-overlapping even though the starting points were extremely close to each other. The distances between the trajectories are less than 1 only for the $T$ values from $0$ until $23$ and $T$ values of $25$, $608$, $609$, and $654$ within the first 1000 time steps. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/lorenz_1.png}
+    \caption{The trajectory of a Lorenz system with starting point $(10, 10, 10)$.}
+    \label{fig:lorenz_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/lorenz_2.png}
+    \caption{The trajectory of a Lorenz system with starting point $(10+10^{-8}, 10, 10)$.}
+    \label{fig:lorenz_2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/lorenz_3.png}
+    \caption{The trajectories plotted together with starting points $(10+10^{-8}, 10, 10)$ and $(10, 10, 10)$.}
+    \label{fig:lorenz_3}
+\end{figure}
+
+If the $\rho$ parameter is changed to $0.5$, both of the trajectories with the aforementioned starting points converge to the same trajectory and end up roughly at the origin point as seen in Figure \ref{fig:lorenz_4}, which happens to be their steady state. Since $\rho=0.5$ has a steady state and $\rho=28$ does not, there must be a bifurcation in between where the system loses its stability. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/lorenz_4.png}
+    \caption{The trajectories plotted together with starting points $(10+10^{-8}, 10, 10)$ and $(10, 10, 10)$ where $\rho=0.5$. Both trajectories end up at origin.}
+    \label{fig:lorenz_4}
+\end{figure}
+
 \end{task}
 \begin{task}{5, Bifurcations in crowd dynamics}
 
