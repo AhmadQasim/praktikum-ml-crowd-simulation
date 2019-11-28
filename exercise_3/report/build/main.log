@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.6.29)  28 NOV 2019 00:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.6.29)  28 NOV 2019 08:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -383,7 +383,14 @@ ounters
 \c@pointCounter=\count150
 \c@pointCounter@totc=\count151
 )
-(build/main.aux)
+(build/main.aux
+
+LaTeX Warning: Label `fig:part2_bifurcation' multiply defined.
+
+
+LaTeX Warning: Label `fig:part2_bifurcation' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
@@ -400,8 +407,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
 LaTeX Font Info:    ... okay on input line 37.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
 LaTeX Font Info:    ... okay on input line 37.
-
-(/usr/share/texlive/texmf-dist/tex/latex/fmtcount/fc-english.def
+ (/usr/share/texlive/texmf-dist/tex/latex/fmtcount/fc-english.def
 File: fc-english.def 2016/01/12
 )
 *geometry* driver: auto-detecting
@@ -652,29 +658,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 177--178
  []
 
 
-LaTeX Warning: Reference `fig:logistic_bif_02' on page 10 undefined on input li
-ne 182.
-
-
-LaTeX Warning: Reference `fig:logistic_bif_24' on page 10 undefined on input li
-ne 182.
-
-
-LaTeX Warning: Reference `fig:logistic_bif_04' on page 10 undefined on input li
-ne 182.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 182--183
 
  []
 
-<../plots/logistic_bif_0-2.png, id=104, 732.8178pt x 458.1918pt>
+<../plots/logistic_bif_0-2.png, id=107, 732.8178pt x 458.1918pt>
 File: ../plots/logistic_bif_0-2.png Graphic file (type png)
 <use ../plots/logistic_bif_0-2.png>
 Package pdftex.def Info: ../plots/logistic_bif_0-2.png  used on input line 186.
 
 (pdftex.def)             Requested size: 338.58632pt x 211.70065pt.
-<../plots/logistic_bif_2-4.png, id=105, 937.3419pt x 543.4704pt>
+<../plots/logistic_bif_2-4.png, id=108, 937.3419pt x 543.4704pt>
 File: ../plots/logistic_bif_2-4.png Graphic file (type png)
 <use ../plots/logistic_bif_2-4.png>
 Package pdftex.def Info: ../plots/logistic_bif_2-4.png  used on input line 193.
@@ -693,31 +687,18 @@ l.197
                                                   \fi \fi 
 l.197 
        <../plots/Figure_0.png> <../plots/logistic_bif_0-2.png>]
-<../plots/logistic_bif_0-4.png, id=114, 1045.7469pt x 567.3195pt>
+<../plots/logistic_bif_0-4.png, id=119, 1045.7469pt x 567.3195pt>
 File: ../plots/logistic_bif_0-4.png Graphic file (type png)
 <use ../plots/logistic_bif_0-4.png>
 Package pdftex.def Info: ../plots/logistic_bif_0-4.png  used on input line 200.
 
 (pdftex.def)             Requested size: 338.58632pt x 183.68413pt.
 
-
-LaTeX Warning: Reference `fig:lorenz_1' on page 11 undefined on input line 205.
-
-
-
-LaTeX Warning: Reference `fig:lorenz_2' on page 11 undefined on input line 205.
-
-
-
-LaTeX Warning: Reference `fig:lorenz_3' on page 11 undefined on input line 205.
-
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 205--206
 
  []
 
-<../plots/lorenz_1.png, id=115, 1387.584pt x 717.6411pt>
+<../plots/lorenz_1.png, id=123, 1387.584pt x 717.6411pt>
 File: ../plots/lorenz_1.png Graphic file (type png)
 <use ../plots/lorenz_1.png>
 Package pdftex.def Info: ../plots/lorenz_1.png  used on input line 209.
@@ -735,21 +716,16 @@ l.213
                                                   \fi \fi 
 l.213 
        <../plots/logistic_bif_2-4.png> <../plots/logistic_bif_0-4.png>]
-<../plots/lorenz_2.png, id=125, 1387.584pt x 717.6411pt>
+<../plots/lorenz_2.png, id=134, 1387.584pt x 717.6411pt>
 File: ../plots/lorenz_2.png Graphic file (type png)
 <use ../plots/lorenz_2.png>
 Package pdftex.def Info: ../plots/lorenz_2.png  used on input line 216.
 (pdftex.def)             Requested size: 338.58632pt x 175.10635pt.
-<../plots/lorenz_3.png, id=126, 1387.584pt x 717.6411pt>
+<../plots/lorenz_3.png, id=135, 1387.584pt x 717.6411pt>
 File: ../plots/lorenz_3.png Graphic file (type png)
 <use ../plots/lorenz_3.png>
 Package pdftex.def Info: ../plots/lorenz_3.png  used on input line 223.
 (pdftex.def)             Requested size: 338.58632pt x 175.10635pt.
-
-
-LaTeX Warning: Reference `fig:lorenz_4' on page 12 undefined on input line 228.
-
-
 
 Underfull \hbox (badness 10000) in paragraph at lines 228--229
 
@@ -774,38 +750,93 @@ l.229
                                                   \fi \fi 
 l.229 
        <../plots/lorenz_1.png> <../plots/lorenz_2.png> <../plots/lorenz_3.png>]
-<../plots/lorenz_4.png, id=137, 462.528pt x 346.896pt>
+<../plots/lorenz_4.png, id=144, 462.528pt x 346.896pt>
 File: ../plots/lorenz_4.png Graphic file (type png)
 <use ../plots/lorenz_4.png>
 Package pdftex.def Info: ../plots/lorenz_4.png  used on input line 232.
 (pdftex.def)             Requested size: 338.58632pt x 253.95184pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 242.
+<../plots/task5/saddle_bifurcation.png, id=145, 462.528pt x 346.896pt>
+File: ../plots/task5/saddle_bifurcation.png Graphic file (type png)
+<use ../plots/task5/saddle_bifurcation.png>
+Package pdftex.def Info: ../plots/task5/saddle_bifurcation.png  used on input l
+ine 247.
+(pdftex.def)             Requested size: 338.58632pt x 253.95184pt.
 [13pdfTeX warning (ext4): destination with the same identifier (name{figure.19}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.242 \end{document}
-                     <../plots/lorenz_4.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 242.
+l.251 
+       <../plots/lorenz_4.png>]
+<../plots/task5/0_phase_portrait_y_0_0_second_part.png, id=153, 462.528pt x 346
+.896pt>
+File: ../plots/task5/0_phase_portrait_y_0_0_second_part.png Graphic file (type 
+png)
+<use ../plots/task5/0_phase_portrait_y_0_0_second_part.png>
+Package pdftex.def Info: ../plots/task5/0_phase_portrait_y_0_0_second_part.png 
+ used on input line 254.
+(pdftex.def)             Requested size: 338.58632pt x 253.95184pt.
+<../plots/task5/0_phase_portrait_y_3_4_second_part.png, id=154, 462.528pt x 346
+.896pt>
+File: ../plots/task5/0_phase_portrait_y_3_4_second_part.png Graphic file (type 
+png)
+<use ../plots/task5/0_phase_portrait_y_3_4_second_part.png>
+Package pdftex.def Info: ../plots/task5/0_phase_portrait_y_3_4_second_part.png 
+ used on input line 261.
+(pdftex.def)             Requested size: 338.58632pt x 253.95184pt.
+ [14pdfTeX warning (ext4): destination with the same identifier (name{figure.20
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.265 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+21}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.265 
+       <../plots/task5/saddle_bifurcation.png> <../plots/task5/0_phase_portrait
+_y_0_0_second_part.png>]
+<../plots/task5/0_phase_portrait_y_4_8_second_part.png, id=163, 462.528pt x 346
+.896pt>
+File: ../plots/task5/0_phase_portrait_y_4_8_second_part.png Graphic file (type 
+png)
+<use ../plots/task5/0_phase_portrait_y_4_8_second_part.png>
+Package pdftex.def Info: ../plots/task5/0_phase_portrait_y_4_8_second_part.png 
+ used on input line 268.
+(pdftex.def)             Requested size: 338.58632pt x 253.95184pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 274.
+ [15pdfTeX warning (ext4): destination with the same identifier (name{figure.22
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.274 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.23}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.274 \end{document}
+                     <../plots/task5/0_phase_portrait_y_3_4_second_part.png> <.
+./plots/task5/0_phase_portrait_y_4_8_second_part.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 274.
  (build/main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 242.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 242.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 274.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 274.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
 
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8093 strings out of 494468
- 115807 string characters out of 6175060
- 234934 words of memory out of 5000000
- 11573 multiletter control sequences out of 15000+600000
+ 8121 strings out of 494468
+ 116891 string characters out of 6175060
+ 235850 words of memory out of 5000000
+ 11590 multiletter control sequences out of 15000+600000
  5815 words of font info for 24 fonts, out of 8000000 for 9000
  81 hyphenation exceptions out of 8191
  37i,11n,43p,1429b,369s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -821,10 +852,10 @@ fonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt
 10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb>
-Output written on build/main.pdf (13 pages, 4178213 bytes).
+Output written on build/main.pdf (15 pages, 4223345 bytes).
 PDF statistics:
- 196 PDF objects out of 1000 (max. 8388607)
- 132 compressed objects within 2 object streams
- 39 named destinations out of 1000 (max. 500000)
- 96 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 224 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 116 words of extra memory for PDF output out of 10000 (max. 10000000)
 

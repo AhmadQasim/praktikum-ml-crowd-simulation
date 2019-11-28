@@ -11,4 +11,4 @@ if __name__ == '__main__':
     '''
 
     # plot_saddle_bifurcation(np.around(np.arange(0.0, 5.0, 0.2), decimals=1))
-    plot_phase_portrait_second_part(1, np.around(np.arange(0.0, 5.0, 0.2), decimals=1))
+    plot_phase_portrait_second_part(5, np.around(np.arange(0.0, 5.0, 0.2), decimals=1))

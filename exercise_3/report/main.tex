@@ -236,7 +236,39 @@ If the $\rho$ parameter is changed to $0.5$, both of the trajectories with the a
 
 \end{task}
 \begin{task}{5, Bifurcations in crowd dynamics}
+Second Part:
+For the second part, we came up with the following scenario which represents saddle node bifurcation. A source is set to be a certain distance away from two targets, on the x-axis. A parameter $d$ determines the distance between the targets As the distance cannot be negative so at $d < 0$, the behavior is not defined. At $d=0$, both of the targets are overlapping each other. So the pedestrians move from the source to the targets. As the becomes, $d > 0$, the targets move away from each other, at the rate of $\sqrt{d}$. For simplicity we consider a single pedestrian which moves from the source towards the targets. In each iteration depending upon initialized location of the pedestrian, it can move towards any of the two targets.
 
+
+The scenario depicts a saddle node bifurcation as, at values $d < 0$, no fixed point exists for the pedestrian to move towards. There is one fixed point at $d = 0$, i.e the overlapping targets and at $d > 0$, two fixed points exist and the pedestrian can move to any one of them. The distance between the targets increases as a function of $\sqrt{d}$, hence the fixed points always exist at $x_{0}=\sqrt{d}$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/task5/saddle_bifurcation.png}
+    \caption{The bifurcation diagram for the proposed scenario}
+    \label{fig:part2_bifurcation}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/task5/0_phase_portrait_y_0_0_second_part.png}
+    \caption{The phase portrait at d = 0.0}
+    \label{fig:part2_bifurcation}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/task5/0_phase_portrait_y_3_4_second_part.png}
+    \caption{The phase portrait at d = 3.4}
+    \label{fig:part2_bifurcation}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/task5/0_phase_portrait_y_4_8_second_part.png}
+    \caption{The phase portrait at d = 4.8}
+    \label{fig:part2_bifurcation}
+\end{figure}
 \end{task}
 
 \end{document}

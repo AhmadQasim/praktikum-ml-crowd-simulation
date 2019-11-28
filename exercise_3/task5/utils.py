@@ -100,7 +100,8 @@ def plot_phase_portrait_second_part(time_gap: int, d_values, pedestrian_id=0):
     for d in d_values:
         coordinates = parse_trajectories(f'../outputs/saddle_d{d}/{os.listdir("../outputs/saddle_d"+str(d)).pop()}'
                                          f'/postvis.traj', time_step_mode='varying')
-        xs = coordinates[pedestrian_id][1, :]
+        xs = coordinates[pedestrian_id][0, :]
+        ys = coordinates[pedestrian_id][1, :]
 
         plt.figure()
         plt.plot(xs[:-time_gap], xs[time_gap:], lw=0.3, c='blue')
