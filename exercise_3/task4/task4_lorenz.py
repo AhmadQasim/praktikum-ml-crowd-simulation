@@ -6,6 +6,12 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 def lorenz_attractor(ts, point, alpha=10, beta=8/3, rho=28):
+    '''
+
+    :param ts: unused parameter to fit the desired format of solve_ivp
+    :param point: coordinates
+    :return: derivatives of the trajectory for the given coordinates
+    '''
     x, y, z = point
 
     dx = alpha * (y - x)
@@ -40,23 +46,28 @@ if __name__ == '__main__':
     mode = 0
 
     if mode == 0:
+        # run the trajectories
         sol1 = solve_ivp(**params, y0=[10, 10, 10]).y
         sol2 = solve_ivp(**params, y0=[10+10**-8, 10, 10]).y
 
         diff = np.sqrt(np.sum(np.square(sol1.T - sol2.T), axis=1))
         print(np.where(diff[::int(1/dt)] <= 1.0)[0])
 
+        # plot trajectories separately and together
         plot(sol1, title='Trajectory from (10, 10, 10)')
         plot(sol2, c='darkcyan', title='Trajectory from(10+10\u207b\u2078, 10, 10)')
         plot(sol1, sol2, title='2 trajectories with slightly different starting points')
 
     elif mode == 1:
+        # change the rho parameter to 0.5
         params['fun'] = partial(lorenz_attractor, rho=0.5)
 
+        # run the trajectories ahain
         sol1 = solve_ivp(**params, y0=[10, 10, 10]).y
         sol2 = solve_ivp(**params, y0=[10 + 10 ** -8, 10, 10]).y
 
         diff = np.sqrt(np.sum(np.square(sol1.T - sol2.T), axis=1))
         print(np.where(diff[::int(1 / dt)] <= 1.0)[0])
 
+        # plot them together
         plot(sol1, sol2, lw=1, title='2 trajectories with slightly different starting points (\u03c1=0.5)')
