@@ -74,7 +74,7 @@ A value of $\alpha=-0.1$ leads to the two eigenvalues $\lambda_1 = 0.11$ and $\l
     \caption{Phase diagram showing a saddle for one positive and one negative eigenvalue for $\alpha = -0.1$}
     \label{fig:task1_saddle}
 \end{figure}
-In general foci and nodes are topologically equivalent if both are stable or both are unstable. Consequently the phase diagrams shown by Figure \ref{fig:task1_focus} and \ref{fig:task1_node} are topologically equivalent, because both of them are unstable.
+In general foci and nodes are topologically equivalent if both are stable or both are unstable. Consequently the phase diagrams shown by Figure \ref{fig:task1_focus} and \ref{fig:task1_node} are topologically equivalent, because both of them are unstable. \cite{Kuznetsov:1998:EAB:289919}
 \end{task}
 \begin{task}{2, Common bifurcations in nonlinear systems}
      \begin{figure}[H]
@@ -160,7 +160,7 @@ The bifurcation surface, where $\dot{x} = 0$ is visualized in Figure \ref{fig:ta
 \begin{equation}
      b = \frac{1}{2}f_{xx}(0,0) = 0
 \end{equation}
-You can see that both conditions are fulfilled if you plug in $x = 0$, $\alpha_1 = 0$ and $\alpha_2 = 0$ into both equations. The functions for $f_x(x,\alpha)$ and $f_{xx}(x,\alpha)$ are given below. Consequently f has for $\alpha=0$ the equilibrium $x= 0$. This is characteristic for cusp bifurcation.
+You can see that both conditions are fulfilled if you plug in $x = 0$, $\alpha_1 = 0$ and $\alpha_2 = 0$ into both equations. The functions for $f_x(x,\alpha)$ and $f_{xx}(x,\alpha)$ are given below. Consequently f has for $\alpha=0$ the equilibrium $x= 0$. This is characteristic for cusp bifurcation. \cite{Kuznetsov:1998:EAB:289919}
 \begin{align*}
     \dot{x} = f(x,\alpha), x\in \mathbb{R}, \alpha \in \mathbb{R}^2 \\
     f_x(x,\alpha) = \alpha_2 - 6x^2 \\
@@ -236,6 +236,58 @@ If the $\rho$ parameter is changed to $0.5$, both of the trajectories with the a
 
 \end{task}
 \begin{task}{5, Bifurcations in crowd dynamics}
+First Part:
+We have a given scenario for vadere, where one-hundred pedestrians are moving between two targets. In the middle between the two targets there is an obstacle, which affects the movement of the pedestrian according to its vertical position. The setup of the scenario can be seen in Figure \ref{fig:task5_setup}.
+We run the scenario twenty-five times for different values of y which determinates the vertical position of the obstacle and consequently the movement of the pedestrians.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/scenario_setup.png}
+\caption{Setup of the scenario for Task 5}
+\label{fig:task5_setup}
+\end{figure}
+After running the simulation for vertical coordinates of the obstacle between 2.0 and 4.5, plots were generated showing the x and y coordinates for a single pedestrian for different scenarios. In case the obstacle is set only at the upper edge of the scenario, the pedestrians are barely affected and can move between both targets. This movement is visualized in Figure \ref{fig:task5_obstacle_up}. It can be seen that x-coordinate changes a lot for the pedestrian because he is walking from one target to the other, but the y-coordinate is not changing much.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task5/3_4,5.png}
+\caption{Coordinates for pedestrian 3 for a vertical value of 4.5 of the obstacle}
+\label{fig:task5_obstacle_up}
+\end{figure}
+In comparison to Figure \ref{fig:task5_obstacle_up} Figure \ref{fig:task5_obstacle_down} shows the coordinates of a pedestrian when the obstacle affects the movement a lot, because the vertical value of the obstacle is low and consequently the obstacle is set in the middle of the scenario. The pedestrian starts walking normally but stops already before timestep 500 is reached. The obstacle affects the movement so much that the pedestrians get stuck and the pedestrian of Figure \ref{fig:task5_obstacle_down} stays at the same position until the end of the simulation. This can be seen that neither the x nor the y coordinate are changing after timestep 500.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task5/3_2,0.png}
+\caption{Coordinates for pedestrian 3 for a vertical value of 2.0 of the obstacle}
+\label{fig:task5_obstacle_down}
+\end{figure}
+The 12th pedestrian and a time gap of 95 were chosen to plot the phase portraits. The time gap were chosen such that when x is at the bottom $x+t$ is at the next peak at the best case $(y=4.5)$. Some phase portraits of pedestrian 12 for various y values can be seen in Figures \ref{task5_phase2.7}, \ref{task5_phase3.5}, and \ref{task5_phase4.5}.\\
+The minor principal component of the reduced phase portrait for $y=4.5$ was determined using Principal Component Analysis and was used to analyse possible bifurcations throughout all y values. The points of the graphs are projected onto that same principal component for each phase portrait and the change of standard deviations was plotted. As seen in Figure \ref{task5_std_change}, the standard deviation keep a steady and slight linear increase for $y\geq 3$; however, the change of standard deviation has no pattern for $y<3$ indicating a lack of steady state. Thus, it can be argued that a bifurcation occurs at y value of around 3.\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task5/12_phase_portrait_y_2,7.png}
+\caption{Phase diagram for pedestrian 12 for $y=2.7$}
+\label{task5_phase2.7}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task5/12_phase_portrait_y_3,5.png}
+\caption{Phase diagram for pedestrian 12 for $y=3.5$}
+\label{task5_phase3.5}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task5/12_phase_portrait_y_4,5.png}
+\caption{Phase diagram for pedestrian 12 for $y=4.5$}
+\label{task5_phase4.5}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../plots/task5/std_projection_phase_ped12.png}
+\caption{Change of standard deviation of projected phase portraits by y position of the obstacle.}
+\label{task5_std_change}
+\end{figure}
+\bigbreak
+Second Part:
+For the second part, we came up with the following scenario which represents saddle node bifurcation. A source is set to be a certain distance away from two targets, on the x-axis. A parameter $d$ determines the distance between the targets As the distance cannot be negative so at $d < 0$, the behavior is not defined. At $d=0$, both of the targets are overlapping each other. So the pedestrians move from the source to the targets. As the becomes, $d > 0$, the targets move away from each other, at the rate of $\sqrt{d}$. For simplicity we consider a single pedestrian which moves from the source towards the targets. In each iteration depending upon initialized location of the pedestrian, it can move towards any of the two targets.
 \textbf{Second Part:} \\
 For the second part, we came up with the following scenario which represents saddle node bifurcation. A source is set to be a certain distance away from two targets, on the x-axis. A parameter $d$ determines the distance between the targets As the distance cannot be negative so at $d < 0$, the behavior is not defined. At $d=0$, both of the targets are overlapping each other. So the pedestrians move from the source to the targets. As the becomes, $d > 0$, the targets move away from each other, at the rate of $\sqrt{d}$. For simplicity we consider a single pedestrian from now on, which moves from the source towards the targets. In each iteration depending upon initialized location of the pedestrian, it can move towards any of the two targets.\\
 
@@ -281,5 +333,8 @@ As it can be deduced from the bifurcation diagram that the scenario explained in
 \end{center}
 It can be proven with simple calculus that the two conditions for the saddle node bifurcation holds on this dynamical system.
 \end{task}
-
+\newpage
+\bibliographystyle{ieeetr}
+\bibliography{report}
+\nocite{*}
 \end{document}
