@@ -26,7 +26,6 @@ def plot3d(f):
     X = f(Y, Z)
     fig = plt.figure()
     ax = plt.axes(projection='3d')
-    #ax.contour3D(X,Y,Z,50,cmap='binary')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='viridis', edgecolor='none')
     ax.set_xlabel('\u03b1\u2081')
     ax.set_ylabel('\u03b1\u2082')
@@ -70,7 +69,7 @@ if __name__ == "__main__":
     1 = cusp bifurcation diagram
     2 = Computation and visualization of trajectories for given start point and Euler approximation
     """
-    flag = 1
+    flag = 2
     if flag == 0:
         # Representative values for alpha
         alphas = [-1.8, 0.0, 1.3]
