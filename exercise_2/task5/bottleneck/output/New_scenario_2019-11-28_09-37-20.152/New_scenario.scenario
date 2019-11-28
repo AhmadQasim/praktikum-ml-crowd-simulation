@@ -2,6 +2,7 @@
   "name" : "New_scenario",
   "description" : "",
   "release" : "1.5",
+  "commithash" : "5a35e1bebaba1253a4949c5ecee1db7b15d271d0",
   "processWriters" : {
     "files" : [ {
       "type" : "org.vadere.simulator.projects.dataprocessing.outputfile.EventtimePedestrianIdOutputFile",
@@ -90,7 +91,7 @@
       "digitsPerCoordinate" : 2,
       "useFixedSeed" : true,
       "fixedSeed" : -3620287740548258284,
-      "simulationSeed" : 0,
+      "simulationSeed" : -3620287740548258284,
       "usePsychologyLayer" : false
     },
     "topography" : {
@@ -155,13 +156,13 @@
             "y" : 7.7
           } ]
         },
-        "id" : 3
+        "id" : -1
       } ],
       "measurementAreas" : [ ],
       "stairs" : [ ],
       "targets" : [ {
-        "id" : 2,
-        "absorbing" : false,
+        "id" : -1,
+        "absorbing" : true,
         "shape" : {
           "x" : 4.7,
           "y" : 8.0,
@@ -180,7 +181,7 @@
       "targetChangers" : [ ],
       "absorbingAreas" : [ ],
       "sources" : [ {
-        "id" : 1,
+        "id" : -1,
         "shape" : {
           "radius" : 3.0,
           "center" : {
@@ -197,7 +198,7 @@
         "endTime" : 0.0,
         "spawnAtRandomPositions" : false,
         "useFreeSpaceOnly" : true,
-        "targetIds" : [ 2 ],
+        "targetIds" : [ -1 ],
         "groupSizeDistribution" : [ 1.0 ],
         "dynamicElementType" : "PEDESTRIAN"
       } ],

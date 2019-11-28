@@ -114,12 +114,21 @@ def plot_phase_portrait_second_part(time_gap: int, d_values, pedestrian_id=0):
 
 def plot_saddle_bifurcation(d_values):
     plt.figure()
+    traj_points = []
+    d_vals = []
     for d in d_values:
         traj_dict: dict = parse_trajectories(f'../outputs/saddle_d{d}/{os.listdir("../outputs/saddle_d"+str(d)).pop()}'
                                              f'/postvis.traj', time_step_mode='varying')
         last_points = [traj[1, -1] for traj in traj_dict.values()]
+        traj_points.extend(last_points)
+        d_vals.extend(np.full_like(last_points, fill_value=d))
         plt.scatter(np.full_like(last_points, fill_value=d), last_points, c='red', marker='.', s=0.2)
     plt.xlabel('d')
     plt.ylabel('y')
     plt.title('Bifurcation Diagram')
     plt.savefig('../plots/task5/saddle_bifurcation.png')
+
+    fitted = np.polyfit(traj_points, d_vals, deg=2)
+
+    print(fitted)
+
