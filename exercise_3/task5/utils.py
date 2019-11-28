@@ -3,7 +3,8 @@ import pandas as pd
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-
+from sklearn.linear_model import LinearRegression
+from sklearn.decomposition import PCA
 
 def edit_scenario(scenario_path: str, y=None, d=None):
     with open(scenario_path, 'r') as infile:
@@ -124,3 +125,43 @@ def plot_saddle_bifurcation(d_values):
     plt.ylabel('y')
     plt.title('Bifurcation Diagram')
     plt.savefig('../plots/task5/saddle_bifurcation.png')
+
+def pca_analysis():
+    """
+    creates a component line based on the minor component of the best case (y=4.5) using PCA
+    projects every phase portrait onto that line
+    plots the change of standard deviation
+    """
+    pedestrian_id = 12
+    time_gap = 95
+    std_list = []
+
+    pca = PCA(n_components=2)
+    coordinates = parse_trajectories(f'../outputs/4.5/{os.listdir("../outputs/" + str(4.5)).pop()}'
+                                     f'/postvis.trajectories', time_step_mode='varying')
+    xs = coordinates[pedestrian_id - 1][0, :].reshape(-1, 1)
+    space = np.concatenate([xs[:-time_gap], xs[time_gap:]], axis=1)
+    pca.fit(space)
+
+    for y_value in filter(lambda f: not f.startswith('.') and not f.startswith('s'), os.listdir('../outputs')):
+        coordinates = parse_trajectories(f'../outputs/{y_value}/{os.listdir("../outputs/" + str(y_value)).pop()}'
+                                         f'/postvis.trajectories', time_step_mode='varying')
+        xs = coordinates[pedestrian_id - 1][0, :].reshape(-1, 1)
+        space = np.concatenate([xs[:-time_gap], xs[time_gap:]], axis=1)
+        components = pca.transform(space)
+        std_list.append((float(y_value), np.mean(components, axis=0), np.std(components, axis=0)))
+
+    stds = list(map(lambda t: t[-1][-1], std_list))
+    y_values = list(map(lambda t: float(t[0]), std_list))
+    reg = LinearRegression()
+    reg.fit(np.arange(3.0, 4.6, 0.1).reshape(-1, 1), stds[-16:])
+
+    plt.figure()
+    plt.plot(y_values, stds)
+    plt.plot([[3.0], [4.5]], reg.predict([3.0, 4.5]), c='grey', alpha=0.5)
+    plt.xticks(np.arange(2.0, 4.6, 0.1))
+    plt.grid()
+    plt.title('Standard Deviation of Projected Phase Portraits of Pedestrian 12')
+    plt.ylabel('Standard deviation')
+    plt.xlabel('y value of the obstacle')
+    plt.show()
