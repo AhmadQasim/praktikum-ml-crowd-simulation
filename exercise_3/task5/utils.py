@@ -84,8 +84,8 @@ def create_plot(pedestrian_id=1):
 def plot_phase_portrait_first_part(time_gap: int, y_values, pedestrian_id=3):
     for y_value in y_values:
         coordinates = parse_trajectories(f'../outputs/{y_value}/{os.listdir("../outputs/"+y_value).pop()}'
-                                         f'/postvis.trajectories')
-        xs = coordinates[pedestrian_id-1, 0, :]
+                                         f'/postvis.trajectories', time_step_mode='varying')
+        xs = coordinates[pedestrian_id-1][0, :]
 
         plt.figure()
         plt.plot(xs[:-time_gap], xs[time_gap:], lw=0.3, c='blue')
@@ -94,6 +94,7 @@ def plot_phase_portrait_first_part(time_gap: int, y_values, pedestrian_id=3):
         plt.xlabel('x at time step t')
         plt.ylabel(f'x at time step t+{time_gap}')
         plt.savefig(f'../plots/task5/{pedestrian_id}_phase_portrait_y_{y_value}.png')
+        plt.close()
 
 
 def plot_phase_portrait_second_part(time_gap: int, d_values, pedestrian_id=0):

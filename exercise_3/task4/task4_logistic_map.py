@@ -6,10 +6,24 @@ from itertools import product
 
 
 def logistic(x, r=2):
+    """
+    logistic map
+    :param x: location
+    :param r: r parameter
+    :return: next step's location
+    """
     return r * x * (1 - x)
 
 
 def iterate(x0, r_space=(0, 4), sample_count=60):
+    """
+    iterates in the logistic map.
+    :param x0: the starting coordinate
+    :param r_space: the r parameter to iterate through
+    :param sample_count: the number of coordinates to save after 120 steps
+    :return: 2 iterables r values and x values of size sample_count * 10000.
+    Their value order are in parallel
+    """
     out = []
 
     for r in np.linspace(*r_space, num=10000):
@@ -23,6 +37,14 @@ def iterate(x0, r_space=(0, 4), sample_count=60):
 
 
 def plot(r_vals, x_vals, title='Bifurcation Diagram', x_lim=(0, 4), vertical_lines=None):
+    """
+    plots the bifurcation diagram
+    :param r_vals: r parameter values
+    :param x_vals: x coordinates
+    :param title: title of the graph
+    :param x_lim:
+    :param vertical_lines: list of tuples of r value and colour to put vertical lines
+    """
     fig, ax = plt.subplots(1, 1)
 
     ax.scatter(r_vals, x_vals, c='darkcyan', marker='.', s=0.1)
