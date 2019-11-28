@@ -79,13 +79,13 @@ In general foci and nodes are topologically equivalent if both are stable or bot
 \begin{task}{2, Common bifurcations in nonlinear systems}
      \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{../plots/task2_1.png}
+        \includegraphics[width=0.6\textwidth]{../plots/task2_1.png}
         \caption{The bifurcation diagram for equation 6 with $\alpha$ in (-1,1)}
         \label{fig:task2_1_bifurcation}
     \end{figure}    
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{../plots/task2_2.png}
+        \includegraphics[width=0.6\textwidth]{../plots/task2_2.png}
         \caption{The bifurcation diagram for equation 7 with $\alpha$ in (-1,1)}
         \label{fig:task2_2_bifurcation}
     \end{figure}
@@ -100,7 +100,7 @@ In general foci and nodes are topologically equivalent if both are stable or bot
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{../plots/task2_3.png}
+        \includegraphics[width=0.6\textwidth]{../plots/task2_3.png}
         \caption{The bifurcation diagram for equation 7 with $\alpha$ in (-4,4)}
         \label{fig:task2_3_bifurcation}
     \end{figure}
@@ -236,16 +236,29 @@ If the $\rho$ parameter is changed to $0.5$, both of the trajectories with the a
 
 \end{task}
 \begin{task}{5, Bifurcations in crowd dynamics}
-Second Part:
-For the second part, we came up with the following scenario which represents saddle node bifurcation. A source is set to be a certain distance away from two targets, on the x-axis. A parameter $d$ determines the distance between the targets As the distance cannot be negative so at $d < 0$, the behavior is not defined. At $d=0$, both of the targets are overlapping each other. So the pedestrians move from the source to the targets. As the becomes, $d > 0$, the targets move away from each other, at the rate of $\sqrt{d}$. For simplicity we consider a single pedestrian which moves from the source towards the targets. In each iteration depending upon initialized location of the pedestrian, it can move towards any of the two targets.
+\textbf{Second Part:} \\
+For the second part, we came up with the following scenario which represents saddle node bifurcation. A source is set to be a certain distance away from two targets, on the x-axis. A parameter $d$ determines the distance between the targets As the distance cannot be negative so at $d < 0$, the behavior is not defined. At $d=0$, both of the targets are overlapping each other. So the pedestrians move from the source to the targets. As the becomes, $d > 0$, the targets move away from each other, at the rate of $\sqrt{d}$. For simplicity we consider a single pedestrian from now on, which moves from the source towards the targets. In each iteration depending upon initialized location of the pedestrian, it can move towards any of the two targets.\\
 
+The scenario depicts a saddle node bifurcation as, at values $d < 0$, no fixed point exists for the pedestrian to move towards. There is one fixed point at $d = 0$, i.e the overlapping targets and at $d > 0$, two fixed points exist and the pedestrian can move to any one of them. The distance between the targets increases as a function of $\sqrt{d}$, hence the fixed points always exist at $x_{0}=\sqrt{d}$. We could not simulate the stability of the two fixed points, because to be able to simulate the stability, one of the targets have to the attractor and the repeller but we could not find the functionality of a repeller in Vadere software. \\
 
-The scenario depicts a saddle node bifurcation as, at values $d < 0$, no fixed point exists for the pedestrian to move towards. There is one fixed point at $d = 0$, i.e the overlapping targets and at $d > 0$, two fixed points exist and the pedestrian can move to any one of them. The distance between the targets increases as a function of $\sqrt{d}$, hence the fixed points always exist at $x_{0}=\sqrt{d}$.
+One of the examples of a system with saddle node bifurcation is: \\
+\begin{center}
+$\frac{dx}{dt} = r + x^{2}$
+\end{center}
+
+This is the normal form of saddle node bifurcation. A differential equation $\frac{dx}{dt} = f(r, x)$ with a fixed point at $x=0$ for $r=0$ with $\frac{\partial f}{\partial x}(0, 0) = 0$ is topologically equivalent to the normal form of saddle node bifurcation provided the conditions of nondegeneracy, i.e. $\frac{\partial^2 f}{\partial x^2}(0, 0) \neq 0$ and transversality i.e. $\frac{\partial f}{\partial r}(0, 0) \neq 0$. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./pictures/task5_2.jpeg}
+    \caption{The scenario with two targets and a source.}
+    \label{fig:task5_2}
+\end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{../plots/task5/saddle_bifurcation.png}
-    \caption{The bifurcation diagram for the proposed scenario}
+    \caption{The bifurcation diagram for the proposed scenario. The stable and unstable overlay shows the expected plot according to saddle node bifurcation}
     \label{fig:part2_bifurcation}
 \end{figure}
 
@@ -258,17 +271,15 @@ The scenario depicts a saddle node bifurcation as, at values $d < 0$, no fixed p
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{../plots/task5/0_phase_portrait_y_3_4_second_part.png}
-    \caption{The phase portrait at d = 3.4}
-    \label{fig:part2_bifurcation}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
     \includegraphics[width=0.7\textwidth]{../plots/task5/0_phase_portrait_y_4_8_second_part.png}
     \caption{The phase portrait at d = 4.8}
     \label{fig:part2_bifurcation}
 \end{figure}
+As it can be deduced from the bifurcation diagram that the scenario explained in this part can be represented by the following differential equation:
+\begin{center}
+	$\frac{dx}{dt} = r + x^{2} + 4$
+\end{center}
+It can be proven with simple calculus that the two conditions for the saddle node bifurcation holds on this dynamical system.
 \end{task}
 
 \end{document}

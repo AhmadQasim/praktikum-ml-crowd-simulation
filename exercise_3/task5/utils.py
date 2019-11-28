@@ -50,11 +50,11 @@ def parse_trajectories(output_path: str, time_step_mode='fixed') -> [np.ndarray,
     else:
         raise ValueError
 
-    for pedestrian_id in range(1, total_pedestrians+1):
+    for pedestrian_id in range(1, total_pedestrians + 1):
         pedestrian_trajectory = trajectories[trajectories['pedestrianId'] == pedestrian_id]
         pedestrian_trajectory = pedestrian_trajectory.sort_values(by='timeStep')
 
-        out[pedestrian_id-1] = pedestrian_trajectory[['x-PID1', 'y-PID1']].values.T
+        out[pedestrian_id - 1] = pedestrian_trajectory[['x-PID1', 'y-PID1']].values.T
 
     return out
 
@@ -64,10 +64,10 @@ def create_plot(pedestrian_id=1):
         if y_value.startswith('.'):  # skip the hidden cache files
             continue
 
-        trajectory_path = f'../outputs/{y_value}/{os.listdir("../outputs/"+y_value).pop()}/postvis.trajectories'
+        trajectory_path = f'../outputs/{y_value}/{os.listdir("../outputs/" + y_value).pop()}/postvis.trajectories'
         coordinates = parse_trajectories(trajectory_path)
 
-        xs = coordinates[pedestrian_id-1][0, :]
+        xs = coordinates[pedestrian_id - 1][0, :]
         ys = coordinates[pedestrian_id][1, :]
         timesteps = np.arange(0, len(xs))
 
@@ -83,14 +83,14 @@ def create_plot(pedestrian_id=1):
 
 def plot_phase_portrait_first_part(time_gap: int, y_values, pedestrian_id=3):
     for y_value in y_values:
-        coordinates = parse_trajectories(f'../outputs/{y_value}/{os.listdir("../outputs/"+y_value).pop()}'
+        coordinates = parse_trajectories(f'../outputs/{y_value}/{os.listdir("../outputs/" + y_value).pop()}'
                                          f'/postvis.trajectories', time_step_mode='varying')
-        xs = coordinates[pedestrian_id-1][0, :]
+        xs = coordinates[pedestrian_id - 1][0, :]
 
         plt.figure()
         plt.plot(xs[:-time_gap], xs[time_gap:], lw=0.3, c='blue')
 
-        plt.title('y='+y_value)
+        plt.title('y=' + y_value)
         plt.xlabel('x at time step t')
         plt.ylabel(f'x at time step t+{time_gap}')
         plt.savefig(f'../plots/task5/{pedestrian_id}_phase_portrait_y_{y_value}.png')
@@ -99,7 +99,7 @@ def plot_phase_portrait_first_part(time_gap: int, y_values, pedestrian_id=3):
 
 def plot_phase_portrait_second_part(time_gap: int, d_values, pedestrian_id=0):
     for d in d_values:
-        coordinates = parse_trajectories(f'../outputs/saddle_d{d}/{os.listdir("../outputs/saddle_d"+str(d)).pop()}'
+        coordinates = parse_trajectories(f'../outputs/saddle_d{d}/{os.listdir("../outputs/saddle_d" + str(d)).pop()}'
                                          f'/postvis.traj', time_step_mode='varying')
         xs = coordinates[pedestrian_id][0, :]
         ys = coordinates[pedestrian_id][1, :]
@@ -107,29 +107,32 @@ def plot_phase_portrait_second_part(time_gap: int, d_values, pedestrian_id=0):
         plt.figure()
         plt.plot(xs[:-time_gap], xs[time_gap:], lw=0.3, c='blue')
 
-        plt.title('y='+str(d))
+        plt.title('y=' + str(d))
         plt.xlabel('x at time step t')
         plt.ylabel(f'x at time step t+{time_gap}')
         plt.savefig(f'../plots/task5/{pedestrian_id}_phase_portrait_y_{d}_second_part.png')
 
 
-def plot_saddle_bifurcation(d_values):
+def plot_saddle_bifurcation(d_values, task=None):
     plt.figure()
-    traj_points = []
-    d_vals = []
     for d in d_values:
-        traj_dict: dict = parse_trajectories(f'../outputs/saddle_d{d}/{os.listdir("../outputs/saddle_d"+str(d)).pop()}'
-                                             f'/postvis.traj', time_step_mode='varying')
+        traj_dict: dict = parse_trajectories(
+            f'../outputs/saddle_d{d}/{os.listdir("../outputs/saddle_d" + str(d)).pop()}'
+            f'/postvis.traj', time_step_mode='varying')
         last_points = [traj[1, -1] for traj in traj_dict.values()]
-        traj_points.extend(last_points)
-        d_vals.extend(np.full_like(last_points, fill_value=d))
         plt.scatter(np.full_like(last_points, fill_value=d), last_points, c='red', marker='.', s=0.2)
     plt.xlabel('d')
     plt.ylabel('y')
     plt.title('Bifurcation Diagram')
+
+    if task == '5_2':
+        d = np.linspace(0, 6, 100)
+
+        x_stable = lambda a: np.sqrt(a) + 4
+        x_unstable = lambda a: -np.sqrt(a) + 4
+
+        plt.plot(d, x_stable(d), label="Stable")
+        plt.plot(d, x_unstable(d), label="Unstable")
+        plt.legend()
+
     plt.savefig('../plots/task5/saddle_bifurcation.png')
-
-    fitted = np.polyfit(traj_points, d_vals, deg=2)
-
-    print(fitted)
-

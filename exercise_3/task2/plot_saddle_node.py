@@ -43,8 +43,8 @@ def bifurcation_diagram(func):
     if func == 1:
         x_stable = list(map(func1_stable, a_series))
         x_unstable = list(map(func1_unstable, a_series))
-        plt.plot(a_series, x_stable, label = "Stable")
-        plt.plot(a_series, x_unstable, label = "Unstable")
+        plt.plot(a_series, x_stable, label="Stable")
+        plt.plot(a_series, x_unstable, label="Unstable")
 
     for a_, x_ in zip(a, x):
         plt.plot(a_, x_, ls='', marker=',')
