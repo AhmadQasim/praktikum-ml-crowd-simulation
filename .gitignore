@@ -8,3 +8,4 @@
 .DS_Store
 /exercise_4/mnist/
 /exercise_4/vae_generated/
+*.pyc
