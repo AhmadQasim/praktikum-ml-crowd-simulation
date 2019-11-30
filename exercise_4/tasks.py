@@ -3,6 +3,7 @@ sys.path.append('../..')
 
 from exercise_4.pca import PCA
 from exercise_4.diffusion_maps import DiffusionMap
+from exercise_4.vae import VAE
 import pandas as pd
 from scipy.misc import face
 import matplotlib.pyplot as plt
@@ -10,6 +11,12 @@ import numpy as np
 from codecs import decode
 from sklearn.datasets import make_swiss_roll
 from functools import reduce
+from torchvision.transforms import transforms
+from torchvision.datasets import MNIST
+from torch.utils.data import DataLoader
+from torch.utils.data import TensorDataset
+import torch
+
 
 def task1_1():
     x = pd.read_csv("data/pca_dataset.txt", delimiter=" ", header=None).values
@@ -24,6 +31,7 @@ def task1_1():
     plt.show()
     print('energy of pc1:', pca.energy(1), 'energy of pc2', pca.energy(2) - pca.energy(1))
 
+
 def task1_2():
     image = face().astype(np.float64)
 
@@ -36,6 +44,7 @@ def task1_2():
             print('processed row', row_index)
         plt.title('Reconstructed image for compression'+str(compression))
         plt.imshow(reconstructed.astype(int))
+
 
 def task1_3():
     x = pd.read_csv("data/data_DMAP_PCA_vadere.txt", delimiter=" ", header=None).values
@@ -96,7 +105,8 @@ def task2_2():
     fig.suptitle('Eigenfunctions by the first eigenfunction')
 
     for l, ax in enumerate(axes.flat, 2):
-        ax.scatter(transformed[:, 0], transformed[:, l-1], label='\u03d5' + decode(r'\u208{}'.format(l), 'unicode_escape'), marker='o', s=1)
+        ax.scatter(transformed[:, 0], transformed[:, l-1], label='\u03d5' + decode(r'\u208{}'.format(l),
+                                                                                   'unicode_escape'), marker='o', s=1)
         ax.set_ylabel('\u03d5' + decode(reduce(lambda a, b: a+b, [r'\u208'+c for c in str(l)]), 'unicode_escape'))
         ax.set_xlabel('\u03d5\u2081')
     fig.show()
@@ -114,5 +124,57 @@ def task2_3():
     dm.fit(x, 2)
 
 
+def task3():
+    batch_size = 128
+    latent_vector_sizes = [2, 32]
+    transform = transforms.Compose(
+        [transforms.ToTensor()]
+    )
+
+    train_set = MNIST(root='./mnist', train=True, download=True, transform=transform)
+    train_dataloader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0)
+
+    test_set = MNIST(root='./mnist', train=False, download=True, transform=transform)
+    test_dataloader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=0)
+
+    for latent_vector_size in latent_vector_sizes:
+        configs = {'latent_vector_size': latent_vector_size,
+                   'print_output': True,
+                   'batch_size': batch_size,
+                   'learning_rate': 0.001,
+                   'epochs': 50,
+                   'train_dataloader': train_dataloader,
+                   'test_dataloader': test_dataloader,
+                   'dataset_dims': 784}
+
+        vae = VAE(**configs)
+        vae.train()
+
+
+def task4():
+    batch_size = 128
+
+    train_set = torch.tensor(np.load("./data/FireEvac_train_set.npy"), dtype=torch.float).cuda()
+    test_set = torch.tensor(np.load("./data/FireEvac_test_set.npy"), dtype=torch.float).cuda()
+
+    train_dataset = TensorDataset(train_set, torch.zeros(size=(train_set.shape[0], )))
+    test_dataset = TensorDataset(test_set, torch.zeros(size=(test_set.shape[0], )))
+
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
+    test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
+
+    configs = {'latent_vector_size': 32,
+               'print_output': False,
+               'batch_size': batch_size,
+               'learning_rate': 0.001,
+               'epochs': 50,
+               'train_dataloader': train_dataloader,
+               'test_dataloader': test_dataloader,
+               'dataset_dims': 2}
+
+    vae = VAE(**configs)
+    vae.train()
+
+
 if __name__== "__main__":
-    task2_2()
+    task4()

@@ -1,3 +1,4 @@
+scikit-learn
 torchvision
 opencv-python
 torch

@@ -6,8 +6,6 @@ import numpy as np
 import fire
 import matplotlib.pyplot as plt
 import torch
-from torchvision.transforms import transforms
-from torchvision.datasets import MNIST
 from torch.optim import Adam
 from torch.distributions.normal import Normal
 from multiprocessing import set_start_method
@@ -22,38 +20,40 @@ except RuntimeError:
 
 
 class VAE:
-    def __init__(self):
-        self.latent_vector_size = 32
+    def __init__(self,
+                 latent_vector_size,
+                 print_output,
+                 batch_size,
+                 learning_rate,
+                 epochs,
+                 train_dataloader,
+                 test_dataloader,
+                 dataset_dims):
+
+        # logging
         self.print_on_epoch = [1, 5, 25, 50]
+        self.print_output = print_output
 
-        self.model = Model(self.latent_vector_size)
-        self.batch_size = 128
+        # dataset related parameters
+        self.train_dataloader = train_dataloader
+        self.test_dataloader = test_dataloader
+        self.batch_size = batch_size
         self.test_count = 16
-        self.classes = 10
+        self.dataset_dims = dataset_dims
 
-        self.train_mnist_dataloader = None
-        self.test_mnist_dataloader = None
-        self.mnist_epochs = 5
-        self.learning_rate = 0.001
-        self.model_opt = Adam(self.model.parameters(), lr=self.learning_rate, betas=(0.5, 0.999))
+        # model training
+        self.latent_vector_size = latent_vector_size
+        self.epochs = epochs
+        self.learning_rate = learning_rate
         self.generated_loss = torch.nn.BCELoss(reduction="sum")
+
+        # prior distribution gaussian
         self.dist = Normal(torch.tensor([0.0]), torch.tensor([1.0]))
 
-        self.model_path = 'models/vae.hdf5'
-
-    def load_data(self):
-        transform = transforms.Compose(
-            [transforms.ToTensor()]
-        )
-
-        train_set = MNIST(root='./mnist', train=True, download=True, transform=transform)
-        self.train_mnist_dataloader = torch.utils.data.DataLoader(train_set,
-                                                                  batch_size=self.batch_size,
-                                                                  shuffle=True, num_workers=0)
-
-        test_set = MNIST(root='./mnist', train=False, download=True, transform=transform)
-        self.test_mnist_dataloader = torch.utils.data.DataLoader(test_set, batch_size=self.batch_size,
-                                                                 shuffle=False, num_workers=0)
+        # intializing the model
+        self.model = Model(self.latent_vector_size, self.dataset_dims)
+        self.model_opt = Adam(self.model.parameters(), lr=self.learning_rate, betas=(0.5, 0.999))
+        self.model_path = 'models/task3.hdf5'
 
     def sample_and_save_image(self, epoch_num):
         sample_vector = torch.randn(self.test_count, self.latent_vector_size)
@@ -63,9 +63,9 @@ class VAE:
         torch.save(self.model.state_dict(), self.model_path)
 
     def generate_and_plot_results(self, epoch_num):
-        real, _ = next(iter(self.test_mnist_dataloader))
+        real, _ = next(iter(self.test_dataloader))
         real = real[0:self.test_count, :]
-        real = real.cuda().squeeze().view(-1, 784)
+        real = real.cuda().squeeze().view(-1, self.dataset_dims)
         with torch.no_grad():
             mean, logvar = self.model.encode(real)
             latent_vector = self.reparametrize(mean, logvar)
@@ -87,7 +87,7 @@ class VAE:
             plt.imshow(images[i - 1], cmap="gray_r")
         plt.suptitle("The " + t + " images at Epoch: " + str(epoch_num) + " and latent dimensions: " +
                      str(self.latent_vector_size), fontsize=40)
-        plt.savefig("plots/vae/" + t + "_epochs" + str(epoch_num) + "_latent" + str(self.latent_vector_size))
+        plt.savefig("plots/task3/" + t + "_epochs" + str(epoch_num) + "_latent" + str(self.latent_vector_size))
 
     @staticmethod
     def reparametrize(mean, logvar):
@@ -102,13 +102,12 @@ class VAE:
     def train(self):
         elbo_loss_log = []
 
-        self.load_data()
         self.model.train()
-        for epoch in range(self.mnist_epochs):
+        for epoch in range(self.epochs):
 
-            for i, data in enumerate(self.train_mnist_dataloader, 0):
-                real, real_labels = data
-                real = real.cuda().squeeze().view(-1, 784)
+            for i, data in enumerate(self.train_dataloader, 0):
+                real, _ = data
+                real = real.cuda().squeeze().view(-1, self.dataset_dims)
 
                 # run encoder
                 self.model_opt.zero_grad()
@@ -127,7 +126,7 @@ class VAE:
             # print results
             print("Epoch: ", epoch + 1, " Loss: ", total_loss)
 
-            if epoch + 1 in self.print_on_epoch:
+            if epoch + 1 in self.print_on_epoch and self.print_output:
                 self.plot_latent_rep(epoch_num=epoch+1)
                 self.generate_and_plot_results(epoch_num=epoch+1)
                 self.sample_and_save_image(epoch_num=epoch+1)
@@ -135,21 +134,21 @@ class VAE:
             elbo_loss_log.append(-self.elbo_test_loss())
 
         plt.figure()
-        plt.plot(range(self.mnist_epochs), elbo_loss_log)
+        plt.plot(range(self.epochs), elbo_loss_log)
         plt.xlabel('Epochs')
         plt.ylabel('-Loss(ELBO)')
         plt.title('The plot of elbo loss (test set) with latent dim ' + str(self.latent_vector_size) +
                   "and latent dimensions: " + str(self.latent_vector_size))
-        plt.savefig('plots/vae/loss_elbo_latent' + str(self.latent_vector_size))
+        plt.savefig('plots/task3/loss_elbo_latent' + str(self.latent_vector_size))
 
         print('Finished Training')
 
     def elbo_test_loss(self):
         total_elbo_loss = 0
 
-        for i, data in enumerate(self.test_mnist_dataloader, 0):
-            real, real_labels = data
-            real = real.cuda().squeeze().view(-1, 784)
+        for i, data in enumerate(self.test_dataloader, 0):
+            real, _ = data
+            real = real.cuda().squeeze().view(-1, self.dataset_dims)
 
             with torch.no_grad():
 
@@ -165,9 +164,9 @@ class VAE:
 
     def plot_latent_rep(self, epoch_num):
         plt.figure()
-        for i, data in enumerate(self.test_mnist_dataloader, 0):
+        for i, data in enumerate(self.test_dataloader, 0):
             real, real_labels = data
-            real = real.cuda().squeeze().view(-1, 784)
+            real = real.cuda().squeeze().view(-1, self.dataset_dims)
 
             for real_label in torch.unique(real_labels):
                 real_mask = real_labels[real_labels == real_label]
@@ -184,21 +183,23 @@ class VAE:
         plt.ylabel("y")
         plt.title("The latent representation at Epoch: " + str(epoch_num) + " and latent dimensions: " +
                   str(self.latent_vector_size))
-        plt.savefig("plots/vae/" + "latent_epoch" + str(epoch_num) + "_latent" + str(self.latent_vector_size))
+        plt.savefig("plots/task3/" + "latent_epoch" + str(epoch_num) + "_latent" + str(self.latent_vector_size))
 
 
 class Model(torch.nn.Module):
-    def __init__(self, latent_dim):
+    def __init__(self, latent_dim, dataset_dims):
         super(Model, self).__init__()
 
-        self.fc1_encoder = torch.nn.Linear(784, 256)
+        self.dataset_dims = dataset_dims
+
+        self.fc1_encoder = torch.nn.Linear(self.dataset_dims, 256)
         self.fc2_encoder = torch.nn.Linear(256, 256)
         self.fc_mean_encoder = torch.nn.Linear(256, latent_dim)
         self.fc_logvar_encoder = torch.nn.Linear(256, latent_dim)
 
         self.fc1_decoder = torch.nn.Linear(latent_dim, 256)
         self.fc2_decoder = torch.nn.Linear(256, 256)
-        self.fc_output = torch.nn.Linear(256, 784)
+        self.fc_output = torch.nn.Linear(256, self.dataset_dims)
 
     def encode(self, x):
         x = F.relu(self.fc1_encoder(x))

@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.linalg import sqrtm
+
 
 class DiffusionMap:
     def __init__(self):
