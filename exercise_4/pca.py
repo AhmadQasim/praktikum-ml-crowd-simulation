@@ -35,12 +35,12 @@ class PCA:
             raise RuntimeError
         if len(x.shape) != 2 or x.shape[1] != self.max_dimensions:
             raise ValueError
-        return x @ self.V_T.T
+        return x @ self.V_T
 
     def inverse_transform(self, US: np.ndarray) -> np.ndarray:
         if US.shape[1] > self.V_T.shape[0]:
             raise ValueError
-        return US @ self.V_T[:US.shape[1], :]
+        return US @ self.V_T.T[:US.shape[1], :]
 
     def fit_transform(self, x: np.ndarray) -> np.ndarray:
         return self.fit(x).transform(x)
