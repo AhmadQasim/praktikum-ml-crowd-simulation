@@ -1,3 +1,6 @@
+torchvision
+opencv-python
+torch
 matplotlib
 fire
 numpy
