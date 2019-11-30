@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def task1_1():
-    x = pd.read_csv("data/pca_dataset.txt", delimiter=" ").values
+    x = pd.read_csv("data/pca_dataset.txt", delimiter=" ", header=None).values
     pca = PCA().fit(x)
     plt.figure()
     plt.scatter(*x.T)
@@ -30,5 +30,32 @@ def task1_2():
         plt.title('Reconstructed image for compression'+str(compression))
         plt.imshow(reconstructed.astype(int))
 
+def task1_3():
+    x = pd.read_csv("data/data_DMAP_PCA_vadere.txt", delimiter=" ", header=None).values
+
+    plt.figure()
+    plt.plot(*x[:, :2].T, label='Pedestrian 1')
+    plt.plot(*x[:, 2:4].T, label='Pedestrian 2')
+    plt.legend()
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Trajectories of the first 2 pedestrians')
+    plt.show()
+
+    pca = PCA()
+    transformed = pca.fit_transform(x)[:, :2]
+    print('energy of pc1:', pca.energy(1), 'energy of pc2', pca.energy(2) - pca.energy(1))
+
+    reconstructed = pca.inverse_transform(transformed)
+    plt.figure()
+    plt.plot(*reconstructed[:, :2].T, label='Pedestrian 1')
+    plt.plot(*reconstructed[:, 2:4].T, label='Pedestrian 2')
+    plt.legend()
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Reconstructed trajectories of the first 2 pedestrians')
+    plt.show()
+
+
 if __name__== "__main__":
-    task1_2()
+    task1_3()
