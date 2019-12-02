@@ -28,7 +28,9 @@ class VAE:
                  epochs,
                  train_dataloader,
                  test_dataloader,
-                 dataset_dims):
+                 dataset_dims,
+                 mode,
+                 test_count):
 
         # logging
         self.print_on_epoch = [1, 5, 25, 50]
@@ -38,29 +40,37 @@ class VAE:
         self.train_dataloader = train_dataloader
         self.test_dataloader = test_dataloader
         self.batch_size = batch_size
-        self.test_count = 16
+        self.test_count = test_count
         self.dataset_dims = dataset_dims
 
         # model training
         self.latent_vector_size = latent_vector_size
         self.epochs = epochs
         self.learning_rate = learning_rate
-        self.generated_loss = torch.nn.BCELoss(reduction="sum")
+        self.mode = mode
+
+        if self.mode == "mnist":
+            self.generated_loss = torch.nn.BCELoss(reduction="sum")
+        else:
+            self.generated_loss = torch.nn.MSELoss(reduction="sum")
 
         # prior distribution gaussian
         self.dist = Normal(torch.tensor([0.0]), torch.tensor([1.0]))
 
         # intializing the model
-        self.model = Model(self.latent_vector_size, self.dataset_dims)
+        self.model = Model(self.latent_vector_size, self.dataset_dims, self.mode)
         self.model_opt = Adam(self.model.parameters(), lr=self.learning_rate, betas=(0.5, 0.999))
-        self.model_path = 'models/task3.hdf5'
+        self.model_path = 'models/task4.hdf5'
+
+        # KL annealing
+        self.beta = 0
+        self.annealed_epochs = int(self.epochs / 20)
+        self.beta_scaling = torch.linspace(0, 1, self.epochs - self.annealed_epochs)
 
     def sample_and_save_image(self, epoch_num):
         sample_vector = torch.randn(self.test_count, self.latent_vector_size)
         img = self.model.decode(sample_vector)
         self.plot_grid(img, epoch_num, "generated")
-
-        torch.save(self.model.state_dict(), self.model_path)
 
     def generate_and_plot_results(self, epoch_num):
         real, _ = next(iter(self.test_dataloader))
@@ -88,6 +98,7 @@ class VAE:
         plt.suptitle("The " + t + " images at Epoch: " + str(epoch_num) + " and latent dimensions: " +
                      str(self.latent_vector_size), fontsize=40)
         plt.savefig("plots/task3/" + t + "_epochs" + str(epoch_num) + "_latent" + str(self.latent_vector_size))
+        plt.close(fig)
 
     @staticmethod
     def reparametrize(mean, logvar):
@@ -117,13 +128,14 @@ class VAE:
                 # calculate loss
                 generated_loss = self.generated_loss(self.model.decode(latent_vector), real)
                 latent_loss = -0.5 * torch.sum(1 + logvar - mean.pow(2) - logvar.exp())
-                total_loss = generated_loss + latent_loss
+                total_loss = generated_loss + (self.beta * latent_loss)
                 total_loss.backward()
 
                 # optimize
                 self.model_opt.step()
 
             # print results
+            print("Latent Loss: ", latent_loss)
             print("Epoch: ", epoch + 1, " Loss: ", total_loss)
 
             if epoch + 1 in self.print_on_epoch and self.print_output:
@@ -131,17 +143,42 @@ class VAE:
                 self.generate_and_plot_results(epoch_num=epoch+1)
                 self.sample_and_save_image(epoch_num=epoch+1)
 
+            if epoch > self.annealed_epochs:
+                self.beta = self.beta_scaling[epoch - self.annealed_epochs]
+
             elbo_loss_log.append(-self.elbo_test_loss())
 
-        plt.figure()
+        fig = plt.figure()
         plt.plot(range(self.epochs), elbo_loss_log)
         plt.xlabel('Epochs')
         plt.ylabel('-Loss(ELBO)')
-        plt.title('The plot of elbo loss (test set) with latent dim ' + str(self.latent_vector_size) +
-                  "and latent dimensions: " + str(self.latent_vector_size))
+        plt.title('The plot of elbo loss (test set) with latent dimensions: ' + str(self.latent_vector_size))
         plt.savefig('plots/task3/loss_elbo_latent' + str(self.latent_vector_size))
+        plt.close(fig)
 
+        torch.save(self.model.state_dict(), self.model_path)
         print('Finished Training')
+
+    def test(self, reconstructed=True):
+        generated_data = torch.zeros(size=(1, self.dataset_dims))
+
+        for i, data in enumerate(self.test_dataloader, 0):
+            real, real_labels = data
+            real = real.cuda().squeeze().view(-1, self.dataset_dims)
+
+            with torch.no_grad():
+
+                if reconstructed:
+                    mean, logvar = self.model.encode(real)
+                    latent_vector = self.reparametrize(mean, logvar)
+                else:
+                    latent_vector = torch.randn(int(self.test_count / len(self.test_dataloader)),
+                                                self.latent_vector_size)
+
+                generated = self.model.decode(latent_vector)
+                generated_data = torch.cat([generated_data, generated], dim=0)
+
+        return generated_data[1:, :].cpu().detach().numpy()
 
     def elbo_test_loss(self):
         total_elbo_loss = 0
@@ -163,7 +200,7 @@ class VAE:
         return total_elbo_loss
 
     def plot_latent_rep(self, epoch_num):
-        plt.figure()
+        fig = plt.figure()
         for i, data in enumerate(self.test_dataloader, 0):
             real, real_labels = data
             real = real.cuda().squeeze().view(-1, self.dataset_dims)
@@ -184,13 +221,15 @@ class VAE:
         plt.title("The latent representation at Epoch: " + str(epoch_num) + " and latent dimensions: " +
                   str(self.latent_vector_size))
         plt.savefig("plots/task3/" + "latent_epoch" + str(epoch_num) + "_latent" + str(self.latent_vector_size))
+        plt.close(fig)
 
 
 class Model(torch.nn.Module):
-    def __init__(self, latent_dim, dataset_dims):
+    def __init__(self, latent_dim, dataset_dims, mode):
         super(Model, self).__init__()
 
         self.dataset_dims = dataset_dims
+        self.mode = mode
 
         self.fc1_encoder = torch.nn.Linear(self.dataset_dims, 256)
         self.fc2_encoder = torch.nn.Linear(256, 256)
@@ -212,7 +251,11 @@ class Model(torch.nn.Module):
     def decode(self, x):
         x = F.relu(self.fc1_decoder(x))
         x = F.relu(self.fc2_decoder(x))
-        x = torch.sigmoid(self.fc_output(x))
+
+        if self.mode == "mnist":
+            x = torch.sigmoid(self.fc_output(x))
+        else:
+            x = F.relu(self.fc_output(x))
 
         return x
 

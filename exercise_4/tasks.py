@@ -145,17 +145,33 @@ def task3():
                    'epochs': 50,
                    'train_dataloader': train_dataloader,
                    'test_dataloader': test_dataloader,
-                   'dataset_dims': 784}
+                   'dataset_dims': 784,
+                   'mode': 'mnist',
+                   'test_count': 16}
 
         vae = VAE(**configs)
         vae.train()
 
 
-def task4():
-    batch_size = 128
+def task4_plot(data, set_type):
+    fig = plt.figure()
+    plt.scatter(data[:, 0], data[:, 1])
+    plt.title("{} set scatter plot".format(set_type))
+    plt.savefig('plots/task4/{}_set_scatter'.format(set_type))
+    plt.close(fig)
 
-    train_set = torch.tensor(np.load("./data/FireEvac_train_set.npy"), dtype=torch.float).cuda()
-    test_set = torch.tensor(np.load("./data/FireEvac_test_set.npy"), dtype=torch.float).cuda()
+
+def task4():
+    batch_size = 1024
+
+    train_set = np.load("./data/FireEvac_train_set.npy")
+    test_set = np.load("./data/FireEvac_test_set.npy")
+
+    # task4_plot(train_set, "training")
+    # task4_plot(test_set, "test")
+
+    train_set = torch.tensor(train_set, dtype=torch.float).cuda()
+    test_set = torch.tensor(test_set, dtype=torch.float).cuda()
 
     train_dataset = TensorDataset(train_set, torch.zeros(size=(train_set.shape[0], )))
     test_dataset = TensorDataset(test_set, torch.zeros(size=(test_set.shape[0], )))
@@ -163,18 +179,25 @@ def task4():
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
     test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
 
-    configs = {'latent_vector_size': 32,
+    configs = {'latent_vector_size': 12,
                'print_output': False,
                'batch_size': batch_size,
-               'learning_rate': 0.001,
-               'epochs': 50,
+               'learning_rate': 0.0001,
+               'epochs': 10000,
                'train_dataloader': train_dataloader,
                'test_dataloader': test_dataloader,
-               'dataset_dims': 2}
+               'dataset_dims': 2,
+               'mode': 'mi',
+               'test_count': 100}
 
     vae = VAE(**configs)
     vae.train()
+    reconstructed_data = vae.test()
+    task4_plot(reconstructed_data, "reconstructed")
+
+    generated_data = vae.test(reconstructed=False)
+    task4_plot(generated_data, "generated")
 
 
-if __name__== "__main__":
+if __name__ == "__main__":
     task4()
