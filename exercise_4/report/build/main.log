@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.6.29)  2 DEC 2019 16:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.6.29)  2 DEC 2019 23:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -504,29 +504,265 @@ Overfull \hbox (4.87828pt too wide) in paragraph at lines 50--55
 30561274983274 en-ergy of pc2 0.3759408098565421
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 81.
-[2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 81.
- (build/main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 81.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 81.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 92.
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 92.
+<../plots/task3/latent_epoch1_latent2.png, id=13, 462.528pt x 346.896pt>
+File: ../plots/task3/latent_epoch1_latent2.png Graphic file (type png)
+<use ../plots/task3/latent_epoch1_latent2.png>
+Package pdftex.def Info: ../plots/task3/latent_epoch1_latent2.png  used on inpu
+t line 101.
+(pdftex.def)             Requested size: 111.2482pt x 83.4367pt.
+<../plots/task3/latent_epoch5_latent2.png, id=15, 462.528pt x 346.896pt>
+File: ../plots/task3/latent_epoch5_latent2.png Graphic file (type png)
+<use ../plots/task3/latent_epoch5_latent2.png>
+Package pdftex.def Info: ../plots/task3/latent_epoch5_latent2.png  used on inpu
+t line 101.
+(pdftex.def)             Requested size: 111.2482pt x 83.4367pt.
+<../plots/task3/latent_epoch25_latent2.png, id=16, 462.528pt x 346.896pt>
+File: ../plots/task3/latent_epoch25_latent2.png Graphic file (type png)
+<use ../plots/task3/latent_epoch25_latent2.png>
+Package pdftex.def Info: ../plots/task3/latent_epoch25_latent2.png  used on inp
+ut line 101.
+(pdftex.def)             Requested size: 111.2482pt x 83.4367pt.
+<../plots/task3/latent_epoch50_latent2.png, id=17, 462.528pt x 346.896pt>
+File: ../plots/task3/latent_epoch50_latent2.png Graphic file (type png)
+<use ../plots/task3/latent_epoch50_latent2.png>
+Package pdftex.def Info: ../plots/task3/latent_epoch50_latent2.png  used on inp
+ut line 101.
+(pdftex.def)             Requested size: 111.2482pt x 83.4367pt.
+<../plots/task3/real_epochs1_latent2.png, id=18, 361.35pt x 361.35pt>
+File: ../plots/task3/real_epochs1_latent2.png Graphic file (type png)
+<use ../plots/task3/real_epochs1_latent2.png>
+Package pdftex.def Info: ../plots/task3/real_epochs1_latent2.png  used on input
+ line 102.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/real_epochs5_latent2.png, id=19, 361.35pt x 361.35pt>
+File: ../plots/task3/real_epochs5_latent2.png Graphic file (type png)
+<use ../plots/task3/real_epochs5_latent2.png>
+Package pdftex.def Info: ../plots/task3/real_epochs5_latent2.png  used on input
+ line 102.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/real_epochs25_latent2.png, id=20, 361.35pt x 361.35pt>
+File: ../plots/task3/real_epochs25_latent2.png Graphic file (type png)
+<use ../plots/task3/real_epochs25_latent2.png>
+Package pdftex.def Info: ../plots/task3/real_epochs25_latent2.png  used on inpu
+t line 102.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/real_epochs50_latent2.png, id=21, 361.35pt x 361.35pt>
+File: ../plots/task3/real_epochs50_latent2.png Graphic file (type png)
+<use ../plots/task3/real_epochs50_latent2.png>
+Package pdftex.def Info: ../plots/task3/real_epochs50_latent2.png  used on inpu
+t line 102.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/reconstructed_epochs1_latent2.png, id=22, 361.35pt x 361.35pt>
+File: ../plots/task3/reconstructed_epochs1_latent2.png Graphic file (type png)
+<use ../plots/task3/reconstructed_epochs1_latent2.png>
+Package pdftex.def Info: ../plots/task3/reconstructed_epochs1_latent2.png  used
+ on input line 103.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/reconstructed_epochs5_latent2.png, id=23, 361.35pt x 361.35pt>
+File: ../plots/task3/reconstructed_epochs5_latent2.png Graphic file (type png)
+<use ../plots/task3/reconstructed_epochs5_latent2.png>
+Package pdftex.def Info: ../plots/task3/reconstructed_epochs5_latent2.png  used
+ on input line 103.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/reconstructed_epochs25_latent2.png, id=24, 361.35pt x 361.35pt>
+
+File: ../plots/task3/reconstructed_epochs25_latent2.png Graphic file (type png)
+
+<use ../plots/task3/reconstructed_epochs25_latent2.png>
+Package pdftex.def Info: ../plots/task3/reconstructed_epochs25_latent2.png  use
+d on input line 103.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/reconstructed_epochs50_latent2.png, id=25, 361.35pt x 361.35pt>
+
+File: ../plots/task3/reconstructed_epochs50_latent2.png Graphic file (type png)
+
+<use ../plots/task3/reconstructed_epochs50_latent2.png>
+Package pdftex.def Info: ../plots/task3/reconstructed_epochs50_latent2.png  use
+d on input line 103.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/generated_epochs1_latent2.png, id=26, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs1_latent2.png Graphic file (type png)
+<use ../plots/task3/generated_epochs1_latent2.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs1_latent2.png  used on 
+input line 104.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/generated_epochs5_latent2.png, id=27, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs5_latent2.png Graphic file (type png)
+<use ../plots/task3/generated_epochs5_latent2.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs5_latent2.png  used on 
+input line 104.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/generated_epochs25_latent2.png, id=28, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs25_latent2.png Graphic file (type png)
+<use ../plots/task3/generated_epochs25_latent2.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs25_latent2.png  used on
+ input line 104.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/generated_epochs50_latent2.png, id=29, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs50_latent2.png Graphic file (type png)
+<use ../plots/task3/generated_epochs50_latent2.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs50_latent2.png  used on
+ input line 104.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+
+Overfull \hbox (9.29593pt too wide) in paragraph at lines 100--106
+[][] 
+ []
+
+[2pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.107 
+      ]
+<../plots/task3/loss_elbo_latent2.png, id=41, 462.528pt x 346.896pt>
+File: ../plots/task3/loss_elbo_latent2.png Graphic file (type png)
+<use ../plots/task3/loss_elbo_latent2.png>
+Package pdftex.def Info: ../plots/task3/loss_elbo_latent2.png  used on input li
+ne 113.
+(pdftex.def)             Requested size: 217.66211pt x 163.24757pt.
+ [3pdfTeX warning (ext4): destination with the same identifier (name{figure.1})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.117 	
+       pdfTeX warning (ext4): destination with the same identifier (name{figure
+.2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.117 	
+        <../plots/task3/latent_epoch1_latent2.png> <../plots/task3/latent_epoch
+5_latent2.png> <../plots/task3/latent_epoch25_latent2.png> <../plots/task3/late
+nt_epoch50_latent2.png> <../plots/task3/real_epochs1_latent2.png> <../plots/tas
+k3/real_epochs5_latent2.png> <../plots/task3/real_epochs25_latent2.png> <../plo
+ts/task3/real_epochs50_latent2.png> <../plots/task3/reconstructed_epochs1_laten
+t2.png> <../plots/task3/reconstructed_epochs5_latent2.png> <../plots/task3/reco
+nstructed_epochs25_latent2.png> <../plots/task3/reconstructed_epochs50_latent2.
+png> <../plots/task3/generated_epochs1_latent2.png> <../plots/task3/generated_e
+pochs5_latent2.png> <../plots/task3/generated_epochs25_latent2.png> <../plots/t
+ask3/generated_epochs50_latent2.png> <../plots/task3/loss_elbo_latent2.png>]
+<../plots/task3/generated_epochs1_latent32.png, id=68, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs1_latent32.png Graphic file (type png)
+<use ../plots/task3/generated_epochs1_latent32.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs1_latent32.png  used on
+ input line 155.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/generated_epochs5_latent32.png, id=69, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs5_latent32.png Graphic file (type png)
+<use ../plots/task3/generated_epochs5_latent32.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs5_latent32.png  used on
+ input line 155.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/generated_epochs25_latent32.png, id=70, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs25_latent32.png Graphic file (type png)
+<use ../plots/task3/generated_epochs25_latent32.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs25_latent32.png  used o
+n input line 155.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+<../plots/task3/generated_epochs50_latent32.png, id=71, 361.35pt x 361.35pt>
+File: ../plots/task3/generated_epochs50_latent32.png Graphic file (type png)
+<use ../plots/task3/generated_epochs50_latent32.png>
+Package pdftex.def Info: ../plots/task3/generated_epochs50_latent32.png  used o
+n input line 155.
+(pdftex.def)             Requested size: 111.2482pt x 111.2454pt.
+
+Overfull \hbox (9.29593pt too wide) in paragraph at lines 154--157
+[][] 
+ []
+
+<../plots/task3/loss_elbo_latent32.png, id=72, 462.528pt x 346.896pt>
+File: ../plots/task3/loss_elbo_latent32.png Graphic file (type png)
+<use ../plots/task3/loss_elbo_latent32.png>
+Package pdftex.def Info: ../plots/task3/loss_elbo_latent32.png  used on input l
+ine 163.
+(pdftex.def)             Requested size: 217.66211pt x 163.24757pt.
+<../plots/task4/training_set_scatter.png, id=73, 462.528pt x 346.896pt>
+File: ../plots/task4/training_set_scatter.png Graphic file (type png)
+<use ../plots/task4/training_set_scatter.png>
+Package pdftex.def Info: ../plots/task4/training_set_scatter.png  used on input
+ line 176.
+(pdftex.def)             Requested size: 217.66211pt x 163.24757pt.
+<../plots/task4/test_set_scatter.png, id=74, 462.528pt x 346.896pt>
+File: ../plots/task4/test_set_scatter.png Graphic file (type png)
+<use ../plots/task4/test_set_scatter.png>
+Package pdftex.def Info: ../plots/task4/test_set_scatter.png  used on input lin
+e 176.
+(pdftex.def)             Requested size: 217.66211pt x 163.24757pt.
+[4pdfTeX warning (ext4): destination with the same identifier (name{table.2}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.178 \end{figure}
+                  pdfTeX warning (ext4): destination with the same identifier (
+name{figure.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.178 \end{figure}
+                  pdfTeX warning (ext4): destination with the same identifier (
+name{figure.4}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.178 \end{figure}
+                   <../plots/task3/generated_epochs1_latent32.png> <../plots/ta
+sk3/generated_epochs5_latent32.png> <../plots/task3/generated_epochs25_latent32
+.png> <../plots/task3/generated_epochs50_latent32.png> <../plots/task3/loss_elb
+o_latent32.png>]
+<../plots/task4/reconstructed_set_scatter.png, id=89, 462.528pt x 346.896pt>
+File: ../plots/task4/reconstructed_set_scatter.png Graphic file (type png)
+<use ../plots/task4/reconstructed_set_scatter.png>
+Package pdftex.def Info: ../plots/task4/reconstructed_set_scatter.png  used on 
+input line 192.
+(pdftex.def)             Requested size: 217.66211pt x 163.24757pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 196.
+ [5pdfTeX warning (ext4): destination with the same identifier (name{figure.5})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.196 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.6}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.196 \end{document}
+                     <../plots/task4/training_set_scatter.png> <../plots/task4/
+test_set_scatter.png> <../plots/task4/reconstructed_set_scatter.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 196.
+
+(build/main.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 196.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 196.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 7919 strings out of 494468
- 112519 string characters out of 6175060
- 233944 words of memory out of 5000000
- 11460 multiletter control sequences out of 15000+600000
+ 8095 strings out of 494468
+ 118600 string characters out of 6175060
+ 234360 words of memory out of 5000000
+ 11586 multiletter control sequences out of 15000+600000
  5647 words of font info for 23 fonts, out of 8000000 for 9000
  81 hyphenation exceptions out of 8191
- 37i,10n,43p,1041b,326s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,43p,1041b,460s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on build/main.pdf (2 pages, 43535 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on build/main.pdf (5 pages, 639907 bytes).
 PDF statistics:
- 25 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
- 3 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 119 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
+ 22 named destinations out of 1000 (max. 500000)
+ 126 words of extra memory for PDF output out of 10000 (max. 10000000)
 

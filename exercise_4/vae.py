@@ -85,7 +85,7 @@ class VAE:
         self.plot_grid(real, epoch_num, "real")
 
     def plot_grid(self, images, epoch_num, t):
-        fig = plt.figure(figsize=(28, 28))
+        fig = plt.figure(figsize=(5, 5))
         columns = np.sqrt(self.test_count)
         rows = np.sqrt(self.test_count)
         images = images.view(-1, 28, 28)
@@ -95,8 +95,9 @@ class VAE:
             ax = fig.add_subplot(rows, columns, i)
             ax.axis('off')
             plt.imshow(images[i - 1], cmap="gray_r")
+        plt.grid()
         plt.suptitle("The " + t + " images at Epoch: " + str(epoch_num) + " and latent dimensions: " +
-                     str(self.latent_vector_size), fontsize=40)
+                     str(self.latent_vector_size))
         plt.savefig("plots/task3/" + t + "_epochs" + str(epoch_num) + "_latent" + str(self.latent_vector_size))
         plt.close(fig)
 
@@ -191,11 +192,13 @@ class VAE:
 
                 # run encoder
                 mean, logvar = self.model.encode(real)
+                latent_vector = self.reparametrize(mean, logvar)
 
                 # calculate loss
+                generated_loss = self.generated_loss(self.model.decode(latent_vector), real)
                 latent_loss = -0.5 * torch.sum(1 + logvar - mean.pow(2) - logvar.exp())
 
-                total_elbo_loss += latent_loss
+                total_elbo_loss += (latent_loss + generated_loss)
 
         return total_elbo_loss
 

@@ -179,11 +179,11 @@ def task4():
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
     test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
 
-    configs = {'latent_vector_size': 12,
+    configs = {'latent_vector_size': 4,
                'print_output': False,
                'batch_size': batch_size,
                'learning_rate': 0.0001,
-               'epochs': 10000,
+               'epochs': 1000,
                'train_dataloader': train_dataloader,
                'test_dataloader': test_dataloader,
                'dataset_dims': 2,
