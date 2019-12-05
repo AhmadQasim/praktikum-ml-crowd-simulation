@@ -3,7 +3,7 @@ sys.path.append('../..')
 
 from exercise_4.pca import PCA
 from exercise_4.diffusion_maps import DiffusionMap
-from exercise_4.vae import VAE
+#from exercise_4.vae import VAE
 import pandas as pd
 from scipy.misc import face
 import matplotlib.pyplot as plt
@@ -23,8 +23,7 @@ def task1_1():
     pca = PCA().fit(x)
     plt.figure()
     plt.scatter(*x.T)
-    v_t = pca.V_T
-    plt.quiver([0], [0], *v_t, scale=5,color='red')
+    plt.quiver([0], [0], *pca.V, scale=5,color='red')
     plt.xlabel('x')
     plt.ylabel('f(x)')
     plt.title('Principal Components of Dataset 1')
@@ -34,16 +33,24 @@ def task1_1():
 
 def task1_2():
     image = face().astype(np.float64)
+    flattened_representation = np.zeros((image.shape[1], image.shape[0] * image.shape[2]))
 
-    for compression in [120]:
-        reconstructed = np.zeros_like(image)
-        for row_index, column_rgb in enumerate(image):
-            pca = PCA()
-            compressed = pca.fit_transform(column_rgb.T)[:, :compression]
-            reconstructed[row_index] = pca.inverse_transform(compressed).T
-            print('processed row', row_index)
-        plt.title('Reconstructed image for compression'+str(compression))
-        plt.imshow(reconstructed.astype(int))
+    for column_index in range(image.shape[1]):
+        flattened_representation[column_index] = image[:, column_index, :].flatten()
+
+    pca = PCA()
+    compressed = pca.fit_transform(flattened_representation)
+
+    for L in [10, 50, 120, image.shape[1]]:
+        reconstructed_flattened_representation = pca.inverse_transform(compressed[:, :L])
+        reconstructed_image = np.zeros_like(image)
+        for i, col in enumerate(reconstructed_flattened_representation):
+            reconstructed_image[:, i, :] = col.reshape(-1, 3)
+
+        plt.figure()
+        plt.title(f'Reconstructed image with first {L} principal components')
+        plt.axis('off')
+        plt.imshow(reconstructed_image.astype(np.int))
 
 
 def task1_3():
@@ -200,4 +207,4 @@ def task4():
 
 
 if __name__ == "__main__":
-    task4()
+    task2_2()
