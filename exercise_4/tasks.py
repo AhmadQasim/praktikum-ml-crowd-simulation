@@ -3,7 +3,7 @@ sys.path.append('../..')
 
 from exercise_4.pca import PCA
 from exercise_4.diffusion_maps import DiffusionMap
-#from exercise_4.vae import VAE
+from exercise_4.vae import VAE
 import pandas as pd
 from scipy.misc import face
 import matplotlib.pyplot as plt
@@ -88,8 +88,7 @@ def task2_1():
         X[k] = [np.cos(t[k]), np.sin(t[k])]
 
     dm = DiffusionMap()
-    dm.fit(X, 5)
-    transformed = dm.transform(X)
+    transformed = dm.fit_transform(X, 5)
 
     plt.figure()
     for l in range(5):
@@ -105,8 +104,7 @@ def task2_2():
     X = make_swiss_roll(N, random_state=7)[0]
 
     dm = DiffusionMap()
-    dm.fit(X, 10)
-    transformed = dm.transform(X)
+    transformed = dm.fit_transform(X, 10)
 
     fig, axes = plt.subplots(3, 3, sharex='all')
     fig.suptitle('Eigenfunctions by the first eigenfunction')
@@ -207,4 +205,4 @@ def task4():
 
 
 if __name__ == "__main__":
-    task2_2()
+    task2_1()

@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.linalg import sqrtm
 
 
 class DiffusionMap:
@@ -6,7 +7,7 @@ class DiffusionMap:
         self.eigenvalues = None
         self.eigenvectors = None
 
-    def fit(self, x: np.ndarray, L) -> 'DiffusionMap':
+    def fit_transform(self, x: np.ndarray, L) -> np.ndarray:
         if len(x.shape) != 2:
             raise ValueError
 
@@ -15,7 +16,7 @@ class DiffusionMap:
         # create distance matrix D
         matrix = self.create_distance_matrix(x)
 
-        epsilon = 0.01 * matrix.max()
+        epsilon = 0.05 * matrix.max()
 
         # create W
         matrix: np.ndarray = np.exp(-np.square(matrix) / epsilon)  # (N, N)
@@ -23,9 +24,10 @@ class DiffusionMap:
         # create K
         P_inv = np.linalg.inv(np.diag(matrix.sum(axis=1)))  # (N, N)
         matrix: np.ndarray = P_inv @ matrix @ P_inv  # (N, N)
+        del P_inv
 
         # create T hat
-        Q_inv_sqrt = np.linalg.inv(np.diag(matrix.sum(axis=1)) ** 0.5) # (N, N)
+        Q_inv_sqrt = np.linalg.inv(sqrtm(np.diag(matrix.sum(axis=1)))) # (N, N)
         matrix = Q_inv_sqrt @ matrix @ Q_inv_sqrt
 
         # get eigenvalues of T hat and sort them
@@ -38,13 +40,7 @@ class DiffusionMap:
 
         self.eigenvectors = (Q_inv_sqrt @ eigenvectors)[:, 1:]  # (N, N) x (N, L+1) = (N, L+1) -> (N, L)
 
-        return self
-
-    def transform(self, x):
-        return (np.diag(self.eigenvalues) @ ((self.create_distance_matrix(x) ** 0.5) @ self.eigenvectors).T).T
-
-    def fit_transform(self, x, L):
-        return self.fit(x, L).transform(x)
+        return self.eigenvectors * self.eigenvalues.reshape(1, -1)
 
     @staticmethod
     def create_distance_matrix(x):
