@@ -3,9 +3,10 @@ sys.path.append('../..')
 
 from exercise_4.pca import PCA
 from exercise_4.diffusion_maps import DiffusionMap
-from exercise_4.vae import VAE
+#from exercise_4.vae import VAE
 import pandas as pd
 from scipy.misc import face
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 from codecs import decode
@@ -124,9 +125,30 @@ def task2_2():
 
 def task2_3():
     x = pd.read_csv("data/data_DMAP_PCA_vadere.txt", delimiter=" ", header=None).values
+    N, dim = x.shape
+    L = 3
 
     dm = DiffusionMap()
-    dm.fit(x, 2)
+    transformed = dm.fit_transform(x, L)
+
+    plt.figure()
+    for l, col in enumerate(transformed.T):
+        plt.scatter(np.arange(N), col, label='\u03d5'+decode(r'\u208{}'.format(l+1), 'unicode_escape'), s=1)
+    plt.legend()
+    plt.xlabel('time step')
+    plt.ylabel('mapping of pedestrian coordinates')
+    plt.title('Mappings of Eigenfunctions')
+    plt.show()
+
+    for i in range(L):
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+        ax.scatter(x[:, 0], x[:, 1], x[:, 2], c=transformed[:, i], cmap='plasma')
+        ax.set_title(f'Eigenfunction {i+1}')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_zlabel('z')
+        fig.show()
 
 
 def task3():
@@ -205,4 +227,4 @@ def task4():
 
 
 if __name__ == "__main__":
-    task2_1()
+    task2_3()

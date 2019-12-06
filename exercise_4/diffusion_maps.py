@@ -8,10 +8,15 @@ class DiffusionMap:
         self.eigenvectors = None
 
     def fit_transform(self, x: np.ndarray, L) -> np.ndarray:
-        if len(x.shape) != 2:
-            raise ValueError
+        """
 
-        N, dim = x.shape
+        :param x: points of multidimensional represented as a 2D matrix
+        :param L: number of eigenfunctions to take
+        :return: first L eigenfunction mappings of x
+        """
+        if len(x.shape) != 2:
+            raise ValueError('x hast to be a 2 dimensional numpy array')
+
 
         # create distance matrix D
         matrix = self.create_distance_matrix(x)
@@ -44,6 +49,11 @@ class DiffusionMap:
 
     @staticmethod
     def create_distance_matrix(x):
+        """
+
+        :param x:  points of multidimensional represented as a 2D matrix
+        :return: The distance matrix of each pair of points in x
+        """
         N = x.shape[0]
         matrix = np.empty((N, N))  # (N, N)
         for i in range(N):
