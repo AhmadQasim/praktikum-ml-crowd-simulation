@@ -39,19 +39,96 @@
 \frontpage
 
 \begin{task}{1, Principal component analysis}
-First part: 
-
-Energy of the two components: 
-energy of pc1: 0.993 energy of pc2 0.007
+First part: We used the dataset from moodle and applied Principal Component Analysis. In Figure \ref{fig:task1_part1} you can see the original data set with the two principal components marked in red. The first principal component is the one pointing to the right upper corner. So the second one is the other principal component pointing towards the left upper corner and being orthogonal to the first principal component.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task1/PCA_1.png}
+\caption{Plot of the dataset with the two first principal components}
+\label{fig:task1_part1}
+\end{figure}
+The energy of a principal component describes how much variance of the data the principal component covers. In the following table you can see the energy of the drawn two principal components and the sum of them. It can be seen that the first principal component has a big energy value and therefore covers almost all the variance of the data. From the sum of both energy values it can be seen that both principal components cover the entire data set.
+\begin{center}
+\begin{tabular}{l|c}
+&Energy \\
+\hline
+Principal Component 1& 0.993\\
+Principal Component 2& 0.07\\
+First two components & 1.00\\
+\hline
+\end{tabular}
+\end{center}
+\bigbreak
 Second Part: 
-Rerun it using columns rather than rows 
-
-Third Part: 
-They are walking in loops. 
-energy of pc1: 0.47330561274983274 
-energy of pc2 0.3759408098565421 
-Total Energy is around 84\%. Two components are enough to capture the most energy. 
-It is enough because in comparison to the original plot the reconstructed plot looks similar and still captures the most information. 
+At first we used the rows of the images as single data points, but after seeing the reconstructed images we changed and considered the columns of the image as single data points and the resulting reconstructed pictures were much better reconstructed than before. Figure \ref{fig:task1_part2} shows all the four reconstructed images starting with using all principal components to only using the first ten principal components.
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.475\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../plots/task1/task1_2_firstall.png}
+\caption[]
+{{\small Reconstructed image of a racoon using all principal components}}
+\label{fig:task1_part2_all}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.475\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../plots/task1/task1_2_first120.png}
+\caption[]
+{{\small Reconstructed image of a racoon using the first 120 principal components}}
+\label{fig:task1_part2_120}
+\end{subfigure}
+\hfill
+\vskip\baselineskip
+\begin{subfigure}[b]{0.475\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../plots/task1/task1_2_first50.png}
+\caption[]
+{{\small Reconstructed image of a racoon using the first 50 principal components}}
+\label{fig:task1_part2_50}
+\end{subfigure}
+\quad
+\begin{subfigure}[b]{0.475\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../plots/task1/task1_2_first10.png}
+\caption[]
+{{\small Reconstructed image of a racoon using the first 10 principal components}}
+\label{fig:task1_part2_10}
+\end{subfigure}
+\caption{The reconstructed images of a racoon using different numbers of principal components}
+\label{fig:task1_part2}
+\end{figure}
+It can be seen that the reconstucted images using the first 120 or first 50 are close to the original picture. The reconstructed image where only the first 10 principal compenents are used seems blurry but the image can still be recognized.
+\bigbreak
+Third Part: We have a data file containing the (x,y) positions for 15 pedestrians over 1000 time steps. Figure \ref{fig:task1_part3_1} visualizes the path from the first two pedestrians in space. It shows that the first two pedestrians are walking in loops.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task1/task1_3.png}
+\caption{Visualized paths for the first two pedestrains over 1000 time steps}
+\label{fig:task1_part3_1}
+\end{figure}
+Now we use Principal Component Analysis and use the first two principal components of it to project the 30-dimensional data points to the first two principal components. The following table shows the energy values for the  first two principal components and shows that the first two principal compenents cover a variance of almost 85\% of the data.
+\begin{center}
+\begin{tabular}{l|c}
+& energy\\
+\hline
+Principal Component 1& 0.473\\
+Principal Component 2& 0.376\\
+First two  principal compenents together&0.849\\
+\hline
+\end{tabular}
+\end{center}
+We tried to reconstruct the original trajectories from Figure \ref{fig:task1_part3_1} with the first two principal components.
+The following Figure \ref{fig:task1_part3_2} shows the reconstructed trajectories for the first two pedestrians using the first two principal components.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task1/Task1_3reconstructed.png}
+\caption{Reconstructed trajctories from using the first two principal components}
+\label{fig:task1_part3_2}
+\end{figure}
+From comparing the trajectories of the first two pedestrians from Figure \ref{fig:task1_part3_1} to Figure \ref{fig:task1_part3_2} it can be seen that the trajectories are similar. Besides of that, the total amount of energy is almsot 85\% and this is why in our opinion the first two principal components are enough to capture most of the energy.
+\bigbreak
+It took us two days to implement and test the implementation of task1. \\We could represent the data very accurate. Especially for part two of task one it can be seen that even the first 50 principal component are sufficient to visualize the picture of the racoon. We measured the accuracy by using the energy which describes how much variance of the original data can be desbribed by using the corresponding principal component. Besides of that, we generated the reconstructed images and compared them to the original image. \\
+Principal Component Analysis is used for image compression. It was interesting to see how well it works and we learned that the result is different if you consider the rows or the columns of an image as single data points. So we learned that it makes sense to think about how to apply Principal Component Anaylsis to the data in advance. Furthermore we learned that often the first few principal components are sufficient to cover the data. 
 \end{task}
 \begin{task}{2, Diffusion Maps}
 Part 1:
