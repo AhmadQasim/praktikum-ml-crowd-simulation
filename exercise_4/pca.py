@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class PCA:
     def __init__(self):
         self.S: [None, np.ndarray] = None
