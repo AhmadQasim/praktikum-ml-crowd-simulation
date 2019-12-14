@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.linalg import lstsq
 
+
 class NonlinearApproximator:
 
     def __init__(self, L, epsilon):
