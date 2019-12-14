@@ -3,10 +3,13 @@ sys.path.append('../..')
 
 import numpy as np
 import pandas as pd
+from exercise_3.task4.task4_lorenz import lorenz_attractor
 from exercise_5.linear_approximator import LinearApproximator
 from exercise_5.nonlinear_approximator import NonlinearApproximator
 from exercise_5.utils import mean_squared_error
 import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+from mpl_toolkits.mplot3d import Axes3D
 
 
 def task2():
@@ -99,6 +102,34 @@ def task4():
 
     fig2 = plt.figure()
     plt.plot(data[70:, 0], data[:-70, 0])
+    plt.show()
+
+    # second part
+    dt = 0.01
+
+    trajectory = solve_ivp(lorenz_attractor, [0, 1000], y0=[10, 10, 10], t_eval=np.linspace(0, 1000, num=int(1000/dt))).y
+
+    x = trajectory[0, :]
+    skip_index = int((0.75 / 4) / dt)
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.plot(x[:-2*skip_index], x[skip_index:-skip_index], x[2*skip_index:], c='darkcyan', lw=0.2, alpha=0.75)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    plt.show()
+
+    z = trajectory[2, :]
+    skip_index = int((0.81 / 4) / dt)
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.set_title('trajectory only from z')
+    ax.plot(z[2 * skip_index:], z[skip_index:-skip_index], z[:-2 * skip_index], c='darkcyan', lw=0.2, alpha=0.75)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
     plt.show()
 
 
