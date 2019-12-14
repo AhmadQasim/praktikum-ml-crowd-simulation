@@ -12,6 +12,9 @@ class NonlinearApproximator:
         self.epsilon_square = epsilon ** 2
 
     def fit(self, x, y) -> 'NonlinearApproximator':
+        if self.fitted:
+            raise RuntimeError
+
         indices = np.random.choice(x.shape[0], size=self.L, replace=False)
         self.center_points = x[indices].copy()
 
@@ -23,6 +26,8 @@ class NonlinearApproximator:
         return self
 
     def predict(self, x) -> np.ndarray:
+        if not self.fitted:
+            raise RuntimeError
         return self._create_radial_basis_functions(x) @ self.coefficients
 
     def fit_predict(self, x, y) -> np.ndarray:
