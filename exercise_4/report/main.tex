@@ -15,19 +15,16 @@
       &Task 2&33\%\\
       &Task 3&33\%\\
       &Task 4&33\%\\
-      &Task 5&33\%\\
       \hline
 \authorB&Task 1&33\%\\
       &Task 2&33\%\\
       &Task 3&33\%\\
       &Task 4&33\%\\
-      &Task 5&33\%\\
       \hline
 \authorC&Task 1&33\%\\
       &Task 2&33\%\\
       &Task 3&33\%\\
       &Task 4&33\%\\
-      &Task 5&33\%\\
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -175,14 +172,14 @@ By plotting the eigenfunctions in a 3D plot as seen in Figure \ref{fig:task2_par
 \centering
 \begin{subfigure}[b]{0.475\textwidth}
 \centering
-\includegraphics[width=\textwidth]{../plots/task1/task2_3_eigenfunction1.png}
+\includegraphics[width=\textwidth]{../plots/task2/task2_3_eigenfunction1.png}
 \caption[]{{\small Values assigned by the first eigenfunction}}
 \label{fig:task2_part3_1}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.475\textwidth}
 \centering
-\includegraphics[width=\textwidth]{../plots/task1/task2_3_eigenfunction2.png}
+\includegraphics[width=\textwidth]{../plots/task2/task2_3_eigenfunction2.png}
 \caption[]{{\small Values assigned by the second eigenfunction}}
 \label{fig:task2_part3_2}
 \end{subfigure}
@@ -190,7 +187,7 @@ By plotting the eigenfunctions in a 3D plot as seen in Figure \ref{fig:task2_par
 \vskip\baselineskip
 \begin{subfigure}[b]{0.475\textwidth}
 \centering
-\includegraphics[width=\textwidth]{../plots/task1/task2_3_eigenfunction3.png}
+\includegraphics[width=\textwidth]{../plots/task2/task2_3_eigenfunction3.png}
 \caption[]{{\small Values assigned by the third eigenfunction}}
 \label{fig:task2_part3_3}
 \end{subfigure}
@@ -202,55 +199,11 @@ By plotting the eigenfunctions in a 3D plot as seen in Figure \ref{fig:task2_par
 \end{task}
 
 \begin{task}{3, Training a Variational Autoencoder on MNIST}
-\begin{enumerate}
-	\item We used a linear activation function to approximate the mean and standard deviation of the posterior distribution because, the mean and standard deviation values are unbounded. Other activation functions bound the output value to a certain range. We considered different activation functions but discarded it because of the bounded output. [\ref{tab:activation}]
-\begin {table}[H]
-\caption {Different activation functions} \label{tab:activation} 
-\begin{center}
-\begin{tabular}{ | m{10em} | m{10em}| } 
-\hline
-Activation Function& Bounds \\ 
-\hline \hline
-Sigmoid & (0,1) \\ 
-\hline
-Tanh & (-1,1) \\
-\hline
-Relu & max(0,x) \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
-	\item If the reconstructed image are much better then the generated images then, it means that the model has been overfitted to the input data distribution. This can happen when the KL-divergence loss (latent loss) of the approximated posterior distribution does not converge while the reconstruction loss of the input distribution converges. 
-	
-	In order to solve this problem, the reconstruction loss and the KL-divergence loss can be weighted to give more weight to the latter.
-	
-	\item After training the Variational Autoencoder model, We plotted the desired graphs. The latent space of the encoder is 2 dimensional. [\ref{fig:latent-2}]. In addition to the configurations provided in the exercise sheet, related to the model, the following changes were made:
+While initializing the VAE model class object, a configuration dictionary can be sent as an argument to the init function of the VAE class, in order to dynamically adjust the model parameters. There are a number of configurations that can be set using the dictionary [\ref{tab:configs_options}]. Most of the model configurations set for task 3, are specified in the exercise sheet [\ref{tab:configs_options_task3}]. In addition to the configurations provided in the exercise sheet, related to the model, the following notable additions are made:
 	\begin{itemize}
 		\item The output of the decoder is not the mean of likelihood but the predicted data points. This modification within the decoder can be considered as probabilistic as well because it is equivalent to modeling likelihood as Gaussian with identity covariance
-		\item Binary cross entropy is used to calculated the reconstruction loss with the predicted data points from decoder and the input data as the target.
-		\item The last layer of decoder uses a Sigmoid activation as the data in mnist is grayscale. 
+		\item Mean Squared Error (MSE) is used to calculate the reconstruction loss with the predicted data points from decoder and the input data as the target.
 	\end{itemize}
-	
-\begin{figure}[H]
-\caption{results obtained with a 2 dimensional latent space}
-\label{fig:latent-2} 
-\begin{tabular}{cccc}
-  \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch50_latent2.png} \\
-      \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs50_latent2.png} \\
-    \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs50_latent2.png} \\
-        \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs50_latent2.png} \\
-\end{tabular}
-\end{figure}
-
-	\item As the VAE is trained for more epochs, the loss decreases. [\ref{fig:loss-latent-2}]
-	\begin{figure}[H]
-		\caption{ELBO loss}
-		\label{fig:loss-latent-2}
-		\centering
-		\includegraphics[width=0.45\textwidth]{../plots/task3/loss_elbo_latent2.png}
-	\end{figure}	
-
-	\item While initializing the VAE model class object, a configuration dictionary can be sent as an argument to the init function, to dynamically change the model. There are a number of configurations that can be set using the dictionary. [\ref{tab:configs_options}].
 	
 \begin {table}[H]
 \caption {The VAE class initialization arguments} \label{tab:configs_options} 
@@ -275,26 +228,119 @@ test\_dataloader & Pytorch dataloader for test set \\
 \hline
 dataset\_dims & The dimensions of the dataset \\
 \hline
-mode & The dataset mode (mnist or mi) \\
-\hline
 test\_count & The number of test set data points \\
+\hline
+kl\_annealing & The flag for using KL annealing approach (explained in task 4, True or False) \\
+\hline
+beta\_limit & The limit upto which the weight for latent loss is increased to, in case of KL-annealing \\
+\hline
+generated\_loss\_scale & The reconstruction loss weight constant \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
-The mnist images generated using 32 dimensional latent space are more sharper. [\ref{fig:latent-32}]. The loss in this decreases more rapidly and within 50 epochs, the total loss per epoch reaches a lower value compared to the VAE trained with 2 dimensional latent space. [\ref{fig:loss-latent-32}]
+\begin {table}[H]
+\caption {Task 3 model configurations} \label{tab:configs_options_task3} 
+\begin{center}
+\begin{tabular}{ | m{10em} | m{20em}| } 
+\hline
+Argument & Value \\ 
+\hline \hline
+latent\_vector\_size & 2 or 32 \\ 
+\hline
+print\_output & True \\
+\hline
+batch\_size & 128\\
+\hline
+learning\_rate & 0.001 \\
+\hline
+epochs & 50 \\
+\hline
+train\_dataloader & mnist training set loader object \\
+\hline
+test\_dataloader & mnist test set loader object  \\
+\hline
+dataset\_dims & 784 \\
+\hline
+test\_count & 16 \\
+\hline
+kl\_annealing & False \\
+\hline
+beta\_limit & - \\
+\hline
+reconstruction\_loss\_scale & 1 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{enumerate}
+	\item We used a linear activation function to approximate the mean and standard deviation of the posterior distribution because, the mean and standard deviation values can be unbounded. We considered different activation functions but discarded each one of them because of their bounded output, as the range of mean and standard deviation of the posterior distribution is $(-\infty, +\infty)$. [\ref{tab:activation}]
+\begin {table}[H]
+\caption {Different activation functions which we considered} \label{tab:activation} 
+\begin{center}
+\begin{tabular}{ | m{10em} | m{10em}| } 
+\hline
+Activation Function& Bounds \\ 
+\hline \hline
+Sigmoid & (0,1) \\ 
+\hline
+Tanh & (-1,1) \\
+\hline
+Relu & max(0,x) \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+	\item If the reconstructed image are much better then the generated images then, it means that the model has been overfitted to the input data distribution. This can happen when the KL-divergence loss (latent loss) of the approximated posterior distribution does not converge while the reconstruction loss of the input distribution converges. 
+	
+	In order to solve this problem, the reconstruction loss and the KL-divergence loss can be weighted to give more weight to the latter.
+	
+	\item After training the Variational Autoencoder model, We plotted the desired graphs. The latent space of the encoder is 2 dimensional. [\ref{fig:latent-2}] shows, the results obtained using 2 dimensional latent space. Each row within the figure, depict the latent space representation, original images, reconstructed images and generated images respectively at epochs 1, 5, 25 and 50.
 
 \begin{figure}[H]
-\caption{results obtained with a 32 dimensional latent space}
+\caption{Results obtained with a 2 dimensional latent space}
+\label{fig:latent-2} 
+\begin{tabular}{cccc}
+1st Epoch & 5th Epoch & 25th Epoch & 50th Epoch \\
+  \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/latent_epoch50_latent2.png} \\
+      \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/real_epochs50_latent2.png} \\
+    \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs50_latent2.png} \\
+    \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs1_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs5_latent2.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs25_latent2.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs50_latent2.png} \\
+\end{tabular}
+\end{figure}
+
+	\item As the VAE is trained for more epochs, the loss decreases. [\ref{fig:loss-latent-2}]
+	\begin{figure}[H]
+		\caption{Epochs vs -ELBO loss}
+		\label{fig:loss-latent-2}
+		\centering
+		\includegraphics[width=0.45\textwidth]{../plots/task3/loss_elbo_latent2.png}
+	\end{figure}	
+
+	\item The mnist images generated using 32 dimensional latent space are not as good as the images generated using 2 dimensional latent space in terms of representing the input mnist dataset, as the former contain some visually distorting artifacts which are not present in latter. [\ref{fig:latent-32}]. An explanation for this result is that, in case of 32 dimensional latent space, the VAE over-fits itself on the input data distribution. This does not happen when 2 dimensional latent space is used because it is more challenging for the encoder to map input data distribution within 2 dimensional latent space. A strong evidence for this explanation can be put forth by comparing the reconstructed images obtained using 32 dimensional latent space [\ref{fig:latent-32-reconstructed}] to the generated images [\ref{fig:latent-32}], the former being visually superior to the latter. The loss in this decreases more rapidly and within 50 epochs, the total loss per epoch reaches a lower value compared to the VAE trained with 2 dimensional latent space. [\ref{fig:loss-latent-32}]
+
+\begin{figure}[H]
+\caption{Generated results obtained with a 32 dimensional latent space}
 \label{fig:latent-32} 
 \begin{tabular}{cccc}
+	1st Epoch & 5th Epoch & 25th Epoch & 50th Epoch \\
 	\includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs1_latent32.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs5_latent32.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs25_latent32.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/generated_epochs50_latent32.png} \\
 \end{tabular}
 \end{figure}
 
+\begin{figure}[H]
+\caption{Reconstructed results obtained with a 32 dimensional latent space}
+\label{fig:latent-32-reconstructed} 
+\begin{tabular}{cccc}
+	1st Epoch & 5th Epoch & 25th Epoch & 50th Epoch \\
+	\includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs1_latent32.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs5_latent32.png} & \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs25_latent32.png} &   \includegraphics[width=0.23\textwidth]{../plots/task3/reconstructed_epochs50_latent32.png} \\
+\end{tabular}
+\end{figure}
+
 	\begin{figure}[H]
-		\caption{ELBO loss}
+		\caption{Epochs vs -ELBO loss}
 		\label{fig:loss-latent-32}
 		\centering
 		\includegraphics[width=0.45\textwidth]{../plots/task3/loss_elbo_latent32.png}
@@ -304,8 +350,58 @@ The mnist images generated using 32 dimensional latent space are more sharper. [
 	
 \end{task}
 \begin{task}{4, Fire Evacuation Planning for the MI Building}
+The following changes are made in the model configurations compared to task 3 [\ref{tab:configs_options_task4}]:
+	\begin{itemize}
+		\item The VAE is trained for 1000 epochs, as 50 epochs are not enough for the VAE to achieve a reasonable approximation of posterior distribution. 
+		\item The learning rate of the adam optimizer is set to 0.0001 because the higher learning rate of 0.001 used in task 3 proves to be too high for training the FireEvac data. It results in rapid changes in model accuracy and the model fails to converge.
+		\item Sigmoid activation function is used for the last layer of decoder, as the FireEvac data is normalized using max normalization, so the input data has a range of (0, 1) i.e. the same as the range of sigmoid function.
+		\item The problem of posterior collapse in VAEs is a well-known one. The objective function of a VAE consists of two terms (\ref{equ_1:objective_func_VAE}), where $\mathbb{Q}(z|X)$ is the approximate posterior, $\mathbb{P}(z)$ is the prior, $X$ is the input data and $\mathbb{P}(X|z)$ is the likelihood. First term is also labeled as reconstruction loss while the second as latent loss.
+		\begin{center}
+		\begin{equation}
+			\label{equ_1:objective_func_VAE}
+			L = -\mathbb{E}[\log\mathbb{P}(X|z)] + D(\mathbb{Q}(z|X)||\mathbb{P}(z))
+		\end{equation}
+		\end{center}
+			Posterior collapse occurs when the second term, $\mathbb{Q}(z|X)$ converges to zero while the reconstruction loss is still high i.e. the approximate posterior becomes equal to the prior. In order to solve this problem, an approach called KL-annealing is used. Under this approach, the VAE is trained with reconstruction loss only for a number of epochs and then the latent loss term is introduced gradually, by increasing its weight from 0 to 1 till the end of training. This approach keeps the latent loss, from converging to zero.
+		\item Another issue that we faced while training the VAE on FireEvac dataset after solving the posterior collapse problem was the domination of latent loss over reconstruction loss. As the FireEvac dataset is two dimensional, the MSE values i.e. reconstruction loss obtained, are very small compared to the latent loss. Due to this, the VAE is optimized based on the latent loss to a much higher degree then, compared to the reconstruction loss. In order to balance the two loss terms, we use a reconstruction\_loss\_scale multiplier hyper-parameter, which is multiplied with the reconstruction loss. We set its value to 100.
+		\item After a hyper-parameter search, we found that a 4 dimensional latent space, provides the best results for this task. 
+	\end{itemize}
+\begin {table}[H]
+\caption {Task 4 model configurations} \label{tab:configs_options_task4} 
+\begin{center}
+\begin{tabular}{ | m{10em} | m{20em}| } 
+\hline
+Argument & Value \\ 
+\hline \hline
+latent\_vector\_size & 4 \\ 
+\hline
+print\_output & False \\
+\hline
+batch\_size & 1024\\
+\hline
+learning\_rate & 0.0001 \\
+\hline
+epochs & 1000 \\
+\hline
+train\_dataloader & FireEvac training set loader object \\
+\hline
+test\_dataloader & FireEvac test set loader object  \\
+\hline
+dataset\_dims & 2 \\
+\hline
+test\_count & 1000 \\
+\hline
+kl\_annealing & True \\
+\hline
+beta\_limit & 1 \\
+\hline
+reconstruction\_loss\_scale & 100 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
 \begin{enumerate}
-	\item The training and test datasets reflect the positions of the students and employees in the campus hallways.
+	\item The training and test datasets reflect the positions of the students and employees in the campus hallways. The data has been normalized using max normalization.
 \begin{figure}[H]
 \caption{The scatter plot of the training and test sets}
 \label{fig:training-test-set} 
@@ -313,20 +409,23 @@ The mnist images generated using 32 dimensional latent space are more sharper. [
 	\includegraphics[width=0.45\textwidth]{../plots/task4/training_set_scatter.png} &   \includegraphics[width=0.45\textwidth]{../plots/task4/test_set_scatter.png} 
 \end{tabular}
 \end{figure}
-	\item The same VAE implementation is used for training a VAE on the FireEvac data. The 'mode' argument is set to mi and the 'dataset\_dims' argument is set to 2, as the FireEvac dataset is 2 dimensional. A number of modifications have to be made to train the FireEvac dataset:
-	\begin{itemize}
-		\item The VAE is trained for 1000 epochs. 
-		\item The learning rate of the adam optimizer is set to 0.0001 because the higher learning rate of 0.001 used in the previous task proves to be too high for training the FireEvac data. It results in a jittery model training.
-		\item Mean Squared Error is used for calculating the reconstruction loss. The predicted data is the output of the decoder and the target is the input data.
-		\item Relu activation function is used for the last layer of decoder, as the FireEvac data consists of positive unbounded coordinates.
-	\end{itemize}
-	
-	\item The distribution of the data reconstructed from test set, is similar to test set distribution. [\ref{fig:reconstructed-data}]
+	\item The same VAE implementation is used for training a VAE on the FireEvac data as in task 3 with the modifications discussed above. 
+	\item The scatter plot of the reconstructed data from the test set. [\ref{fig:testing-reconstruction-generated}]
+	\item The scatter plot of the generated data. [\ref{fig:testing-reconstruction-generated}]
+
 	\begin{figure}[H]
-		\caption{ELBO loss}
-		\label{fig:reconstructed-data}
+	\caption{The scatter plot of the reconstructed and generated sets}
+	\label{fig:testing-reconstruction-generated} 
+	\begin{tabular}{cc}
+	\includegraphics[width=0.45\textwidth]{../plots/task4/reconstructed_set_scatter.png} &   \includegraphics[width=0.45\textwidth]{../plots/task4/generated_set_scatter.png} 
+	\end{tabular}
+	\end{figure}
+	\item Approximately 861 samples are needed to reach the critical number at the main entrance. This value is approximated by repeatedly sampling from the approximated posterior distribution, after training of VAE is complete until the critical limit is reached \ref{fig:sampled-test-set}. This process was repeated 10 times and the mean of the number of samples is noted.
+	\begin{figure}[H]
+		\caption{Scatter plot of samples drawn, until critical limit is reached}
+		\label{fig:sampled-test-set}
 		\centering
-		\includegraphics[width=0.45\textwidth]{../plots/task4/reconstructed_set_scatter.png}
+		\includegraphics[width=0.45\textwidth]{../plots/task4/sampled_set_scatter.png}
 	\end{figure}
 \end{enumerate}
 \end{task}
