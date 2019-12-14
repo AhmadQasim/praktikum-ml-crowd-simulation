@@ -30,7 +30,7 @@ class NonlinearApproximator:
         return self.fit(x, y).predict(x)
 
     def _create_radial_basis_functions(self, x) -> np.ndarray:
-        radial_basis_functions = np.empty(x.shape[0], self.L)
+        radial_basis_functions = np.empty((x.shape[0], self.L))
         for l in range(self.L):
             square_norm = np.linalg.norm(x - self.center_points[l, :], axis=1) ** 2
             radial_basis_functions[:, l] = np.exp(-square_norm / self.epsilon_square)
