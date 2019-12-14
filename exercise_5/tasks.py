@@ -90,6 +90,18 @@ def task3():
         plt.plot(x_hat_pred[i, 0, :], x_hat_pred[i, 1, :], c='blue', lw=0.2, alpha=0.5)
     plt.show()
 
+def task4():
+    data_f = "./data/takens_1.txt"
+    data = pd.read_csv(data_f, header=None, delimiter=" ").values
+    fig = plt.figure()
+    plt.plot(np.arange(0, data.shape[0]), data[:, 0])
+    plt.show()
+
+    fig2 = plt.figure()
+    plt.plot(data[70:, 0], data[:-70, 0])
+    plt.show()
+
+
 
 if __name__ == "__main__":
-    task3()
+    task4()
