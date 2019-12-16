@@ -3,13 +3,16 @@ sys.path.append('../..')
 
 import numpy as np
 import pandas as pd
+from exercise_3.task5.utils import parse_trajectories
 from exercise_3.task4.task4_lorenz import lorenz_attractor
+from exercise_4.pca import PCA
 from exercise_5.linear_approximator import LinearApproximator
 from exercise_5.nonlinear_approximator import NonlinearApproximator
 from exercise_5.utils import mean_squared_error
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 from mpl_toolkits.mplot3d import Axes3D
+
 
 
 def task2():
@@ -132,7 +135,47 @@ def task4():
     ax.set_zlabel('z')
     plt.show()
 
+    # Part three
+def part3():
+    # Read trajectories from exercise 3
+    trajectory_path = '../exercise_3/outputs/4.5/Bottleneck bifurcation_2019-11-21_13-19-34.177/postvis.trajectories'
+    coordinates = parse_trajectories(trajectory_path)
+    # Take x coordinates from first pedestrian (Shape of 3751)
+    xs = coordinates[1][0, :]
+    p_matrix = []
+    #index_matrix = []
+    delta_t = np.arange(start= 0, stop=18.84, step=0.01)
+    for delta in delta_t:
+        p_vector = []
+        #indizes = []
+        for i in range(200):
+            p_vector.append(xs[int(i*delta)])
+            #indizes.append(int(i*delta))
+        p_matrix.append(p_vector)
+        #index_matrix.append(indizes)
+    p = np.array(p_matrix)
+    #index_matrix = np.array(index_matrix)
+    pca = PCA().fit(p)
+    pcs = pca.V[:2, :]
+    # Plot first two principal components
+    plt.figure()
+    plt.quiver([0], [0], *pcs, scale=5, color='red')
+    #plt.quiver([0], [0], *pca.V[:2][:], scale=5, color='red')
+    plt.title('Principal Components of Dataset 1')
+    plt.show()
+    print(pca.V.shape)
+    print(p.shape)
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
-    task4()
+    part3()
+    #task4()
