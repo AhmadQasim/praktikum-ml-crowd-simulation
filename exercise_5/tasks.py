@@ -11,8 +11,6 @@ from exercise_5.nonlinear_approximator import NonlinearApproximator
 from exercise_5.utils import mean_squared_error
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
-from mpl_toolkits.mplot3d import Axes3D
-
 
 
 def task2():
@@ -52,6 +50,7 @@ def task2():
     plt.xlim((-10, 10))
     plt.ylim((-10, 10))
     plt.show()
+
 
 def task3():
     x0_f = "./data/nonlinear_vectorfield_data_x0.txt"
@@ -96,6 +95,7 @@ def task3():
         plt.plot(x_hat_pred[i, 0, :], x_hat_pred[i, 1, :], c='blue', lw=0.2, alpha=0.5)
     plt.show()
 
+
 def task4():
     data_f = "./data/takens_1.txt"
     data = pd.read_csv(data_f, header=None, delimiter=" ").values
@@ -135,17 +135,15 @@ def task4():
     ax.set_zlabel('z')
     plt.show()
 
-    # Part three
-def part3():
-    # Read trajectories from exercise 3
-    trajectory_path = '../exercise_3/outputs/4.5/Bottleneck bifurcation_2019-11-21_13-19-34.177/postvis.trajectories'
+    # third part
+    trajectory_path = './data/postvis.trajectories'
     coordinates = parse_trajectories(trajectory_path)
     # Take x coordinates from first pedestrian (Shape of 3751)
     xs = coordinates[1][0, :]
     p_matrix = []
     delta_t = 1
 
-    for t in range(xs.shape[0]-200):
+    for t in range(xs.shape[0] - 200):
         p_vector = []
         for i in range(200):
             p_vector.append(xs[t + i * delta_t])
@@ -155,7 +153,7 @@ def part3():
 
     pca = PCA().fit(p_matrix)
     transformed = pca.transform(p_matrix)[:, :2]
-    
+
     # Plot first two principal components
     plt.figure()
     plt.plot(*transformed.T)
@@ -163,15 +161,5 @@ def part3():
     plt.show()
 
 
-
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
-    part3()
-    #task4()
+    task4()
