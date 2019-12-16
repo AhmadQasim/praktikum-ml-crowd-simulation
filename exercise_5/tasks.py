@@ -143,28 +143,24 @@ def part3():
     # Take x coordinates from first pedestrian (Shape of 3751)
     xs = coordinates[1][0, :]
     p_matrix = []
-    #index_matrix = []
-    delta_t = np.arange(start= 0, stop=18.84, step=0.01)
-    for delta in delta_t:
+    delta_t = 1
+
+    for t in range(xs.shape[0]-200):
         p_vector = []
-        #indizes = []
         for i in range(200):
-            p_vector.append(xs[int(i*delta)])
-            #indizes.append(int(i*delta))
+            p_vector.append(xs[t + i * delta_t])
         p_matrix.append(p_vector)
-        #index_matrix.append(indizes)
-    p = np.array(p_matrix)
-    #index_matrix = np.array(index_matrix)
-    pca = PCA().fit(p)
-    pcs = pca.V[:2, :]
+
+    p_matrix = np.array(p_matrix)
+
+    pca = PCA().fit(p_matrix)
+    transformed = pca.transform(p_matrix)[:, :2]
+    
     # Plot first two principal components
     plt.figure()
-    plt.quiver([0], [0], *pcs, scale=5, color='red')
-    #plt.quiver([0], [0], *pca.V[:2][:], scale=5, color='red')
-    plt.title('Principal Components of Dataset 1')
+    plt.plot(*transformed.T)
+    plt.title('First 2 Principal Components')
     plt.show()
-    print(pca.V.shape)
-    print(p.shape)
 
 
 
