@@ -8,7 +8,7 @@ from exercise_3.task4.task4_lorenz import lorenz_attractor
 from exercise_4.pca import PCA
 from exercise_5.linear_approximator import LinearApproximator
 from exercise_5.nonlinear_approximator import NonlinearApproximator
-from exercise_5.utils import mean_squared_error
+from exercise_5.utils import mean_squared_error, time_delay_embedding
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
@@ -138,18 +138,10 @@ def task4():
     # third part
     trajectory_path = './data/postvis.trajectories'
     coordinates = parse_trajectories(trajectory_path)
+
     # Take x coordinates from first pedestrian (Shape of 3751)
     xs = coordinates[1][0, :]
-    p_matrix = []
-    delta_t = 1
-
-    for t in range(xs.shape[0] - 200):
-        p_vector = []
-        for i in range(200):
-            p_vector.append(xs[t + i * delta_t])
-        p_matrix.append(p_vector)
-
-    p_matrix = np.array(p_matrix)
+    p_matrix = time_delay_embedding(xs, delta_t=1, delays=200)
 
     pca = PCA().fit(p_matrix)
     transformed = pca.transform(p_matrix)[:, :2]
@@ -158,6 +150,27 @@ def task4():
     plt.figure()
     plt.plot(*transformed.T)
     plt.title('First 2 Principal Components')
+    plt.show()
+
+
+def task5():
+    data = pd.read_csv("./data/MI_timesteps.txt", sep=' ').astype(np.float64)
+    data = data.iloc[1000:, :].values  # ignore first 1000 time steps
+
+    embedding_area_1 = time_delay_embedding(data[:, 1], delta_t=1, delays=350)
+    embedding_area_2 = time_delay_embedding(data[:, 2], delta_t=1, delays=350)
+    embedding_area_3 = time_delay_embedding(data[:, 3], delta_t=1, delays=350)
+
+    embedding = np.vstack([embedding_area_1, embedding_area_2, embedding_area_3])
+
+    pca = PCA().fit(embedding)
+    transformed = pca.transform(embedding)[:, :2]
+
+    row_count = data.shape[0] // 3
+    plt.figure()
+    plt.scatter(*transformed[:row_count].T, alpha=0.5, s=0.5)
+    plt.scatter(*transformed[row_count:2*row_count].T, alpha=0.5, s=0.5)
+    plt.scatter(*transformed[2*row_count:].T, alpha=0.5, s=0.5)
     plt.show()
 
 

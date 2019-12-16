@@ -15,6 +15,8 @@ class NonlinearApproximator:
     def fit(self, x, y) -> 'NonlinearApproximator':
         if self.fitted:
             raise RuntimeError
+        if not (len(x.shape) == len(y.shape) == 2):
+            raise ValueError
 
         indices = np.random.choice(x.shape[0], size=self.L, replace=False)
         self.center_points = x[indices].copy()
