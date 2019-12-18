@@ -10,6 +10,7 @@ from exercise_5.linear_approximator import LinearApproximator
 from exercise_5.nonlinear_approximator import NonlinearApproximator
 from exercise_5.utils import mean_squared_error, time_delay_embedding
 import matplotlib.pyplot as plt
+from matplotlib import colors
 from scipy.integrate import solve_ivp
 
 
@@ -189,24 +190,37 @@ def task4():
 
 def task5():
     data = pd.read_csv("./data/MI_timesteps.txt", sep=' ').astype(np.float64)
-    data = data.iloc[1000:, :].values  # ignore first 1000 time steps
+    data = data.iloc[1000:, 1:].values  # ignore first 1000 time steps
+    delay = 350
 
-    embedding_area_1 = time_delay_embedding(data[:, 1], delta_t=1, delays=350)
-    embedding_area_2 = time_delay_embedding(data[:, 2], delta_t=1, delays=350)
-    embedding_area_3 = time_delay_embedding(data[:, 3], delta_t=1, delays=350)
+    embedding_area_1 = time_delay_embedding(data[:, 1], delta_t=1, delay=delay)
+    embedding_area_2 = time_delay_embedding(data[:, 2], delta_t=1, delay=delay)
+    embedding_area_3 = time_delay_embedding(data[:, 3], delta_t=1, delay=delay)
 
-    embedding = np.vstack([embedding_area_1, embedding_area_2, embedding_area_3])
+    embedding = np.hstack([embedding_area_1, embedding_area_2, embedding_area_3])
 
     pca = PCA().fit(embedding)
-    transformed = pca.transform(embedding)[:, :2]
+    embedding_transformed_2pc = pca.transform(embedding)[:, :2]
 
-    row_count = data.shape[0] // 3
-    plt.figure()
-    plt.scatter(*transformed[:row_count].T, alpha=0.5, s=0.5)
-    plt.scatter(*transformed[row_count:2*row_count].T, alpha=0.5, s=0.5)
-    plt.scatter(*transformed[2*row_count:].T, alpha=0.5, s=0.5)
-    plt.show()
+
+    fig, axes = plt.subplots(3, 3, sharex='all', sharey='all')  # create 9 subplots
+    fig.suptitle('Colouring of the PCA Space by the Values of 9 Measurement Areas')
+
+    plots = []
+    for i, ax in enumerate(axes.flat):  # plot the same principal component space but colour them for each measurement area
+        ax.set_title(f'Measurement Area {i+1}')
+        p = ax.scatter(*embedding_transformed_2pc.T, c=data[:-delay, i], cmap='viridis', alpha=0.7, s=1.)
+        plots.append(p)
+
+    vmin = min(plot.get_array().min() for plot in plots)
+    vmax = max(plot.get_array().max() for plot in plots)
+    norm = colors.Normalize(vmin=vmin, vmax=vmax)
+    for plot in plots:  # make the colour map same for all subplots
+        plot.set_norm(norm)
+    fig.colorbar(plots[0], ax=axes, fraction=0.1)  # put a colour bar
+
+    fig.show()
 
 
 if __name__ == "__main__":
-    task4()
+    task5()
