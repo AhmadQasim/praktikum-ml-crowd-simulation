@@ -176,7 +176,7 @@ def task4():
 
     # Take x coordinates from first pedestrian (Shape of 3751)
     xs = coordinates[1][0, :]
-    p_matrix = time_delay_embedding(xs, delta_t=1, delays=200)
+    p_matrix = time_delay_embedding(xs, delta_t=1, delay=200)
 
     pca = PCA().fit(p_matrix)
     transformed = pca.transform(p_matrix)[:, :2]
@@ -189,34 +189,36 @@ def task4():
 
 
 def task5():
-    data = pd.read_csv("./data/MI_timesteps.txt", sep=' ').astype(np.float64)
-    data = data.iloc[1000:, 1:].values  # ignore first 1000 time steps
+    # Part 1
+    data = pd.read_csv("./data/MI_timesteps.txt", sep=' ', dtype=np.float64)
+    data = data.iloc[1000:, 1:].values  # ignore the first 1000 time steps, do not include the time step column
     delay = 350
 
-    embedding_area_1 = time_delay_embedding(data[:, 1], delta_t=1, delay=delay)
-    embedding_area_2 = time_delay_embedding(data[:, 2], delta_t=1, delay=delay)
-    embedding_area_3 = time_delay_embedding(data[:, 3], delta_t=1, delay=delay)
+    embedding_area_1 = time_delay_embedding(data[:, 0], delta_t=1, delay=delay)
+    embedding_area_2 = time_delay_embedding(data[:, 1], delta_t=1, delay=delay)
+    embedding_area_3 = time_delay_embedding(data[:, 2], delta_t=1, delay=delay)
 
     embedding = np.hstack([embedding_area_1, embedding_area_2, embedding_area_3])
 
     pca = PCA().fit(embedding)
     embedding_transformed_2pc = pca.transform(embedding)[:, :2]
+    print(f'Energy of the first 2 PC is {pca.energy(2) * 100}%')
 
-
+    # Part 2
     fig, axes = plt.subplots(3, 3, sharex='all', sharey='all')  # create 9 subplots
     fig.suptitle('Colouring of the PCA Space by the Values of 9 Measurement Areas')
 
     plots = []
-    for i, ax in enumerate(axes.flat):  # plot the same principal component space but colour them for each measurement area
+    for i, ax in enumerate(axes.flat):  # plot the same principal component space but colour it for each measurement area
         ax.set_title(f'Measurement Area {i+1}')
         p = ax.scatter(*embedding_transformed_2pc.T, c=data[:-delay, i], cmap='viridis', alpha=0.7, s=1.)
         plots.append(p)
 
-    vmin = min(plot.get_array().min() for plot in plots)
-    vmax = max(plot.get_array().max() for plot in plots)
-    norm = colors.Normalize(vmin=vmin, vmax=vmax)
-    for plot in plots:  # make the colour map same for all subplots
-        plot.set_norm(norm)
+    vmin = min(plot.get_array().min() for plot in plots)  # get min value
+    vmax = max(plot.get_array().max() for plot in plots)  # get max value
+    norm = colors.Normalize(vmin=vmin, vmax=vmax)  # set up a normalizer
+    for plot in plots:
+        plot.set_norm(norm)  # make the colour map same for all subplots
     fig.colorbar(plots[0], ax=axes, fraction=0.1)  # put a colour bar
 
     fig.show()
