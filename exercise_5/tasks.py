@@ -12,6 +12,7 @@ from exercise_5.utils import mean_squared_error, time_delay_embedding
 import matplotlib.pyplot as plt
 from matplotlib import colors
 from scipy.integrate import solve_ivp
+from sklearn.preprocessing import MinMaxScaler
 
 
 def task2():
@@ -196,6 +197,10 @@ def task5():
     data = data.iloc[1000:, 1:].values  # ignore the first 1000 time steps, do not include the time step column
     delay = 350
     delta_t = 1
+
+    scaler = MinMaxScaler()
+    scaler.fit(data)
+    data = scaler.transform(data)
 
     embedding_area_1 = time_delay_embedding(data[:, 0], delta_t=delta_t, delay=delay)
     embedding_area_2 = time_delay_embedding(data[:, 1], delta_t=delta_t, delay=delay)
