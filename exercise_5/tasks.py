@@ -142,17 +142,19 @@ def task4():
 
     # second part bonus task
     dx, dy, dz = lorenz_attractor(ts=None, point=(x1, x2, x3))
+    print("Lorenz Attractor")
     vector = np.hstack([dx.reshape(-1, 1), dy.reshape(-1, 1), dz.reshape(-1, 1)])
-
-    epsilon = max(np.linalg.norm(x1[i] - x1[j]) for i in range(x1.shape[0]) for j in range(i, x1.shape[0]))
-    l = 10
+    print("X1: ", x1.shape)
+    epsilon = 10 # max(np.linalg.norm(x1[i] - x1[j]) for i in range(x1.shape[0]) for j in range(i, x1.shape[0]))
+    print("Epsilon")
+    l = 15
     nonlinear_approximator = NonlinearApproximator(l, epsilon)
-    v_hat = nonlinear_approximator.fit_predict(x1, vector)
+    v_hat = nonlinear_approximator.fit_predict(np.hstack([x1.reshape(-1, 1), x2.reshape(-1, 1), x3.reshape(-1, 1)]), vector)
     error = mean_squared_error(vector, v_hat)
     print("Mean Squared Error: ", error)
 
     def derivative_func(t, point):
-        return nonlinear_approximator.predict(point)
+        return nonlinear_approximator.predict(point.reshape(-1, 1)).reshape(-1)
 
     predicted_trajectory = solve_ivp(derivative_func, [0, 1000],
                                      y0=np.array([x1[0], x2[0], x3[0]]),
@@ -193,10 +195,11 @@ def task5():
     data = pd.read_csv("./data/MI_timesteps.txt", sep=' ', dtype=np.float64)
     data = data.iloc[1000:, 1:].values  # ignore the first 1000 time steps, do not include the time step column
     delay = 350
+    delta_t = 1
 
-    embedding_area_1 = time_delay_embedding(data[:, 0], delta_t=1, delay=delay)
-    embedding_area_2 = time_delay_embedding(data[:, 1], delta_t=1, delay=delay)
-    embedding_area_3 = time_delay_embedding(data[:, 2], delta_t=1, delay=delay)
+    embedding_area_1 = time_delay_embedding(data[:, 0], delta_t=delta_t, delay=delay)
+    embedding_area_2 = time_delay_embedding(data[:, 1], delta_t=delta_t, delay=delay)
+    embedding_area_3 = time_delay_embedding(data[:, 2], delta_t=delta_t, delay=delay)
 
     embedding = np.hstack([embedding_area_1, embedding_area_2, embedding_area_3])
 
@@ -222,6 +225,66 @@ def task5():
     fig.colorbar(plots[0], ax=axes, fraction=0.1)  # put a colour bar
 
     fig.show()
+
+    """
+
+    # Part 3
+    epsilon = 50
+
+    # print("e: ", epsilon)
+
+    l = 1000
+    v = np.linalg.norm(embedding_transformed_2pc[1:] - embedding_transformed_2pc[:-1], axis=1).reshape(-1, 1) / delta_t
+    nonlinearapprox = NonlinearApproximator(l, epsilon)
+    nonlinearapprox.fit_predict(embedding_transformed_2pc[:-1], v)
+
+    x_hats = [embedding_transformed_2pc[0, :].reshape(1, -1)]
+    arc_length = 0
+
+    for _ in embedding_transformed_2pc:
+        v_hat = nonlinearapprox.predict(x_hats[-1])
+        x_hat = v_hat * delta_t + x_hats[-1]
+        x_hats.append(x_hat)
+        arc_length += v_hat * delta_t
+
+    x_hats = np.array(x_hats).reshape(-1, 2)
+    fig = plt.figure()
+    plt.plot(x_hats[:, 0], x_hats[:, 1])
+    plt.show()
+    plt.close(fig)
+    print("True Arc Length: ", np.sum(v) * delta_t)
+    print("Predicted Arc length: ", arc_length)
+    
+    """
+
+    # Part 4
+    l = 50
+    epsilon = 10
+
+    timesteps_prediction = 28000
+
+    v = np.abs(data[delay+1:, 0] - data[delay:-1, 0]).reshape(-1, 1) / delta_t
+    nonlinearapprox = NonlinearApproximator(l, epsilon)
+    nonlinearapprox.fit(embedding_area_1[:-1], v)
+
+    x_hats = [embedding_area_1[0, :].reshape(1, -1)]
+
+    for _ in range(timesteps_prediction):
+        v_hat = nonlinearapprox.predict(x_hats[-1])
+        x_hat = v_hat * delta_t + x_hats[-1][0, -1]
+        x_hats.append(np.hstack([x_hats[-1][0, 1:].reshape(1, -1), x_hat]))
+
+    x_hats = np.array(x_hats).reshape(-1, delay)
+
+    fig = plt.figure()
+    plt.plot(data[:, 0])
+    plt.show()
+    plt.close(fig)
+
+    fig = plt.figure()
+    plt.plot(x_hats[:, -1])
+    plt.show()
+    plt.close(fig)
 
 
 if __name__ == "__main__":
