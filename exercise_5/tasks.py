@@ -197,11 +197,11 @@ def task5():
     data = data.iloc[1000:, 1:].values  # ignore the first 1000 time steps, do not include the time step column
     delay = 350
     delta_t = 1
-
+    """
     scaler = MinMaxScaler()
     scaler.fit(data)
     data = scaler.transform(data)
-
+    """
     embedding_area_1 = time_delay_embedding(data[:, 0], delta_t=delta_t, delay=delay)
     embedding_area_2 = time_delay_embedding(data[:, 1], delta_t=delta_t, delay=delay)
     embedding_area_3 = time_delay_embedding(data[:, 2], delta_t=delta_t, delay=delay)
@@ -231,40 +231,46 @@ def task5():
 
     fig.show()
 
-    """
 
     # Part 3
-    epsilon = 50
+    epsilon = 1000
 
     # print("e: ", epsilon)
 
-    l = 1000
-    v = np.linalg.norm(embedding_transformed_2pc[1:] - embedding_transformed_2pc[:-1], axis=1).reshape(-1, 1) / delta_t
+    l = 100
+    v = (embedding_transformed_2pc[1:] - embedding_transformed_2pc[:-1]) / delta_t
     nonlinearapprox = NonlinearApproximator(l, epsilon)
     nonlinearapprox.fit_predict(embedding_transformed_2pc[:-1], v)
 
     x_hats = [embedding_transformed_2pc[0, :].reshape(1, -1)]
     arc_length = 0
 
-    for _ in embedding_transformed_2pc:
+    for _ in range(len(embedding_transformed_2pc)):
         v_hat = nonlinearapprox.predict(x_hats[-1])
         x_hat = v_hat * delta_t + x_hats[-1]
         x_hats.append(x_hat)
-        arc_length += v_hat * delta_t
+        arc_length += np.linalg.norm(v_hat) * delta_t
 
     x_hats = np.array(x_hats).reshape(-1, 2)
     fig = plt.figure()
     plt.plot(x_hats[:, 0], x_hats[:, 1])
     plt.show()
     plt.close(fig)
-    print("True Arc Length: ", np.sum(v) * delta_t)
+    print("True Arc Length: ", np.sum(np.linalg.norm(v, axis=1)) * delta_t)
     print("Predicted Arc length: ", arc_length)
-    
-    """
+
 
     # Part 4
-    l = 50
-    epsilon = 10
+    generated_embedding = pca.inverse_transform(x_hats)
+    x = generated_embedding[:, 0]  # the first measurement area, without time delay
+    plt.figure()
+    plt.title('Students at measurement area 1 over time')
+    plt.xlabel('Time steps')
+    plt.ylabel('Number of students')
+    plt.plot(x)
+    plt.show()
+    """l = 500
+    epsilon = 15
 
     timesteps_prediction = 28000
 
@@ -289,7 +295,7 @@ def task5():
     fig = plt.figure()
     plt.plot(x_hats[:, -1])
     plt.show()
-    plt.close(fig)
+    plt.close(fig)"""
 
 
 if __name__ == "__main__":
