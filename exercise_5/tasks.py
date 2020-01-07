@@ -53,12 +53,12 @@ def task1():
 
 
     # Part 3
-    epsilon = max(np.linalg.norm(nonlinear[i, 0] - nonlinear[j, 0]) for i in range(nonlinear.shape[0]) for j in range(i, nonlinear.shape[0]))
+    epsilon = 0.05 * max(np.linalg.norm(nonlinear[i, 0] - nonlinear[j, 0])
+                         for i in range(nonlinear.shape[0]) for j in range(i, nonlinear.shape[0]))
     l = 15
     y = np.expand_dims(nonlinear[:, 1], axis=1)
     nonlinear_approximator = NonlinearApproximator(l, epsilon)
     nonlinear_predictions_B = nonlinear_approximator.fit_predict(x_nonlinear, y)
-
     fig = plt.figure()
     plt.plot(nonlinear[:, 0], nonlinear[:, 1], ' o', label='Original data')
     plt.plot(nonlinear[:, 0], nonlinear_predictions_B, 'o', label='Nonlinear approximation of nonlinear data')
@@ -146,7 +146,7 @@ def task3():
 
     x_hat_pred = np.dstack(x_hat_pred)
 
-    plt.figure(figsize=(15, 15))
+    plt.figure(figsize=(5, 5))
     for i in range(x_hat_pred.shape[0]):
         plt.plot(x_hat_pred[i, 0, :], x_hat_pred[i, 1, :], c='blue', lw=0.2, alpha=0.5)
     plt.show()
@@ -353,4 +353,4 @@ def task5():
 
 
 if __name__ == "__main__":
-    task1()
+    task3()
