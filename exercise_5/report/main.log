@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.3.23)  7 JAN 2020 17:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.3.23)  7 JAN 2020 22:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -520,52 +520,65 @@ Package pdftex.def Info: ../plots/task1_part2.png  used on input line 60.
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.64 P
-      art 3: <../plots/task1_part1.png>]
-<../plots/task1_part3.png, id=28, 462.528pt x 346.896pt>
-File: ../plots/task1_part3.png Graphic file (type png)
-<use ../plots/task1_part3.png>
-Package pdftex.def Info: ../plots/task1_part3.png  used on input line 73.
+      art 3: \\ <../plots/task1_part1.png>]
+<../plots/task1_part3_eps.png, id=28, 462.528pt x 346.896pt>
+File: ../plots/task1_part3_eps.png Graphic file (type png)
+<use ../plots/task1_part3_eps.png>
+Package pdftex.def Info: ../plots/task1_part3_eps.png  used on input line 74.
 (pdftex.def)             Requested size: 338.58632pt x 253.95184pt.
  [3pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.77 \end{task}
-                <../plots/task1_part2.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 103.
- [4pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
+l.78 I
+      t is not a good idea to use radial basis functions to approximate a li...
+ <../plots/task1_part2.png>] [4pdfTeX warning (ext4): destination with the same
+ identifier (name{figure.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.98 ...re at the following coordinates: \bigbreak
+                                                   <../plots/task1_part3_eps.pn
+g>]
+<../plots/task3_part3.png, id=41, 361.35pt x 361.35pt>
+File: ../plots/task3_part3.png Graphic file (type png)
+<use ../plots/task3_part3.png>
+Package pdftex.def Info: ../plots/task3_part3.png  used on input line 107.
+(pdftex.def)             Requested size: 338.58632pt x 338.58835pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 130.
+ [5pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.103 \end{document}
-                     <../plots/task1_part3.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 103.
+l.130 \end{document}
+                     <../plots/task3_part3.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 130.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 103.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 103.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 130.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 130.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 7945 strings out of 492649
- 113578 string characters out of 6129622
- 238432 words of memory out of 5000000
- 11707 multiletter control sequences out of 15000+600000
+ 7953 strings out of 492649
+ 113759 string characters out of 6129622
+ 238519 words of memory out of 5000000
+ 11712 multiletter control sequences out of 15000+600000
  5647 words of font info for 23 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,11n,43p,1041b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,11n,43p,1041b,355s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></
 usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
 r/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/l
 ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (4 pages, 231425 bytes).
+Output written on main.pdf (5 pages, 671865 bytes).
 PDF statistics:
- 64 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
- 8 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 72 PDF objects out of 1000 (max. 8388607)
+ 50 compressed objects within 1 object stream
+ 10 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
