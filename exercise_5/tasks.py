@@ -15,6 +15,68 @@ from scipy.integrate import solve_ivp
 from sklearn.preprocessing import MinMaxScaler
 
 
+def task1():
+    # Part 1
+    linear_f = "./data/linear_function_data.txt"
+    nonlinear_f = "./data/nonlinear_function_data.txt"
+
+    linear = pd.read_csv(linear_f, header=None, delimiter=" ").values
+    nonlinear = pd.read_csv(nonlinear_f, header=None, delimiter=" ").values
+
+    linear_approximator = LinearApproximator()
+    # Add ones for bias
+    x_linear = np.vstack([linear[:, 0], np.ones(len(linear[:, 0]))]).T
+    linear_predictions_A = linear_approximator.fit_predict(x_linear, linear[:, 1])
+
+    f, (ax1, ax2) = plt.subplots(2, 1)
+    ax1.plot(linear[:, 0], linear[:, 1])
+    ax1.set_ylabel('y')
+    ax1.set_xlabel('x')
+    ax1.set_title('Plot of the original linear data')
+    ax2.plot(linear[:, 0], linear_predictions_A)
+    ax2.set_title('Linear Approximation of the original linear data')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.show()
+    plt.close()
+
+    # Part 2
+    linear_approximator = LinearApproximator()
+    # Add ones for bias
+    x_nonlinear = np.vstack([nonlinear[:, 0], np.ones(len(nonlinear[:, 0]))]).T
+    linear_predictions_B = linear_approximator.fit_predict(x_nonlinear, nonlinear[:, 1])
+
+    f, (ax3, ax4) = plt.subplots(2, 1)
+    ax3.plot(nonlinear[:, 0], nonlinear[:, 1])
+    ax3.set_xlabel('x')
+    ax3.set_ylabel('y')
+    ax3.set_title('Plot of the original nonlinear data')
+    ax4.plot(nonlinear[:, 0], linear_predictions_B)
+    ax4.set_xlabel('x')
+    ax4.set_ylabel('y')
+    ax4.set_title('Linear Approximation of the nonlinear data')
+    plt.show()
+    plt.close()
+
+    # Part 3
+    epsilon = max(np.linalg.norm(nonlinear[i, 0] - nonlinear[j, 0]) for i in range(nonlinear.shape[0]) for j in range(i, nonlinear.shape[0]))
+    l = 10
+    nonlinear_approximator = NonlinearApproximator(l, epsilon)
+    nonlinear_predictions_B = nonlinear_approximator.fit_predict(x_nonlinear, nonlinear[:, 1])
+
+    f, (ax5, ax6) = plt.subplots(2,1)
+    ax5.plot(nonlinear[:, 0], nonlinear[:, 1])
+    ax5.set_ylabel('y')
+    ax5.set_xlabel('x')
+    ax5.set_title('Plot of the original nonlinear data')
+    ax6.plot(nonlinear[:, 0], nonlinear_predictions_B)
+    ax6.set_xlabel('x')
+    ax6.set_ylabel('y')
+    ax6.set_title('Nonlinear Approximation of nonlinear data')
+    plt.show()
+    plt.close()
+
+
 def task2():
     delta_t = 0.1
 
@@ -299,4 +361,4 @@ def task5():
 
 
 if __name__ == "__main__":
-    task5()
+    task1()
