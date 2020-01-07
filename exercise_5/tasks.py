@@ -36,7 +36,6 @@ def task1():
     plt.title('Plot of linear data and its linear approximation')
     plt.legend()
     plt.show()
-    plt.close()
 
     # Part 2
     linear_approximator = LinearApproximator()
@@ -51,8 +50,9 @@ def task1():
     plt.title("Plot of nonlinear data and its linear approximation")
     plt.legend()
     plt.show()
-    plt.close()
 
+
+    """
     # Part 3
     epsilon = max(np.linalg.norm(nonlinear[i, 0] - nonlinear[j, 0]) for i in range(nonlinear.shape[0]) for j in range(i, nonlinear.shape[0]))
     l = 10
@@ -60,7 +60,7 @@ def task1():
     nonlinear_predictions_B = nonlinear_approximator.fit_predict(x_nonlinear, nonlinear[:, 1])
 
     fig = plt.figure()
-    plt.plot(nonlinear[:, 0], nonlinear[:, 1],' o', label='Original data')
+    plt.plot(nonlinear[:, 0], nonlinear[:, 1], ' o', label='Original data')
     plt.plot(nonlinear[:, 0], nonlinear_predictions_B, label='Nonlinear approximation of nonlinear data')
     plt.xlabel('x')
     plt.ylabel('y')
@@ -69,6 +69,7 @@ def task1():
     plt.show()
     plt.close()
 
+"""
 
 def task2():
     delta_t = 0.1
