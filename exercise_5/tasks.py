@@ -52,24 +52,22 @@ def task1():
     plt.show()
 
 
-    """
     # Part 3
     epsilon = max(np.linalg.norm(nonlinear[i, 0] - nonlinear[j, 0]) for i in range(nonlinear.shape[0]) for j in range(i, nonlinear.shape[0]))
-    l = 10
+    l = 15
+    y = np.expand_dims(nonlinear[:, 1], axis=1)
     nonlinear_approximator = NonlinearApproximator(l, epsilon)
-    nonlinear_predictions_B = nonlinear_approximator.fit_predict(x_nonlinear, nonlinear[:, 1])
+    nonlinear_predictions_B = nonlinear_approximator.fit_predict(x_nonlinear, y)
 
     fig = plt.figure()
     plt.plot(nonlinear[:, 0], nonlinear[:, 1], ' o', label='Original data')
-    plt.plot(nonlinear[:, 0], nonlinear_predictions_B, label='Nonlinear approximation of nonlinear data')
+    plt.plot(nonlinear[:, 0], nonlinear_predictions_B, 'o', label='Nonlinear approximation of nonlinear data')
     plt.xlabel('x')
     plt.ylabel('y')
     plt.title('Nonlinear data and its nonlinear approximation')
     plt.legend()
     plt.show()
-    plt.close()
 
-"""
 
 def task2():
     delta_t = 0.1
