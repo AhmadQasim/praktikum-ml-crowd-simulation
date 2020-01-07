@@ -83,4 +83,5 @@ class PCA:
         if L > self.max_dimensions:
             raise ValueError(f'L={L} is too large. The condition L\u2264{self.max_dimensions} has to be satisfied.')
 
-        return self.S[:L].sum() / self.S.sum()
+        S_sqrt: np.ndarray = np.sqrt(self.S)
+        return S_sqrt[:L].sum() / S_sqrt.sum()
