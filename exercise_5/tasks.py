@@ -186,10 +186,11 @@ def task4():
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
+    ax.set_title('trajectory only from x')
     ax.plot(x1, x2, x3, c='darkcyan', lw=0.2, alpha=0.75)
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.set_zlabel('z')
+    ax.set_xlabel('x0')
+    ax.set_ylabel('x1')
+    ax.set_zlabel('x2')
     plt.show()
 
     z = trajectory[2, :]
@@ -201,26 +202,26 @@ def task4():
     ax = fig.gca(projection='3d')
     ax.set_title('trajectory only from z')
     ax.plot(z1, z2, z3, c='darkcyan', lw=0.2, alpha=0.75)
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.set_zlabel('z')
+    ax.set_xlabel('z1')
+    ax.set_ylabel('z2')
+    ax.set_zlabel('z3')
     plt.show()
 
+    '''
     # second part bonus task
     dx, dy, dz = lorenz_attractor(ts=None, point=(x1, x2, x3))
-    print("Lorenz Attractor")
     vector = np.hstack([dx.reshape(-1, 1), dy.reshape(-1, 1), dz.reshape(-1, 1)])
-    print("X1: ", x1.shape)
-    epsilon = 10 # max(np.linalg.norm(x1[i] - x1[j]) for i in range(x1.shape[0]) for j in range(i, x1.shape[0]))
-    print("Epsilon")
-    l = 15
+    epsilon = 200
+    l = 50
     nonlinear_approximator = NonlinearApproximator(l, epsilon)
     v_hat = nonlinear_approximator.fit_predict(np.hstack([x1.reshape(-1, 1), x2.reshape(-1, 1), x3.reshape(-1, 1)]), vector)
     error = mean_squared_error(vector, v_hat)
     print("Mean Squared Error: ", error)
 
     def derivative_func(t, point):
-        return nonlinear_approximator.predict(point.reshape(-1, 1)).reshape(-1)
+        return nonlinear_approximator.predict(point.reshape(1, -1)).reshape(-1)
+
+    # print(np.array([x1[0], x2[0], x3[0]]).shape)
 
     predicted_trajectory = solve_ivp(derivative_func, [0, 1000],
                                      y0=np.array([x1[0], x2[0], x3[0]]),
@@ -229,14 +230,19 @@ def task4():
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
-    ax.plot(*training_trajectory.T, label="training")
-    ax.plot(*predicted_trajectory.T, label='predicted')
+    ax.plot(training_trajectory[:, 0],
+            training_trajectory[:, 1],
+            training_trajectory[:, 2], label="training")
+    ax.plot(predicted_trajectory[:, 0],
+            predicted_trajectory[:, 1],
+            predicted_trajectory[:, 2], label='predicted')
+    ax.legend()
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
     fig.show()
 
-    exit(1)
+    '''
 
     # third part
     trajectory_path = './data/postvis.trajectories'
@@ -244,6 +250,7 @@ def task4():
 
     # Take x coordinates from first pedestrian (Shape of 3751)
     xs = coordinates[1][0, :]
+
     p_matrix = time_delay_embedding(xs, delta_t=1, delay=200)
 
     pca = PCA().fit(p_matrix)
@@ -364,4 +371,4 @@ def task5():
 
 
 if __name__ == "__main__":
-    task2()
+    task4()

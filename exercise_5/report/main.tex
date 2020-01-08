@@ -107,7 +107,7 @@ As seen in the figure \ref{fig:task2_3}, the motion stops at (0,0). We think tha
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{../plots/task2_part3.png}
+\includegraphics[width=0.6\textwidth]{../plots/task2_part3.png}
 \caption{Trajectory of the motion}
 \label{fig:task2_3}
 \end{figure}
@@ -115,7 +115,7 @@ As seen in the figure \ref{fig:task2_3}, the motion stops at (0,0). We think tha
 The phase portrait is given hereby:
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{../plots/task2_part3_phase.png}
+\includegraphics[width=0.6\textwidth]{../plots/task2_part3_phase.png}
 \caption{The phase portrait}
 \label{fig:task2_3_phase}
 \end{figure}
@@ -152,9 +152,93 @@ y- coordinate of steady state& 3.13&1.85&-1.27&-3.65\\
 \end{figure}
 
 \end{task}
+
 \begin{task}{4, Obstacle avoidance}
-Pedestrians can avoid obstacles, using Dijkstras algorithm. See figure.
+Part 1: \\
+We read the takens.txt file using the read\_csv function from pandas library. We plot the first coordinate (column) of the data against time t. \ref{fig:task4_part1_1}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task4_part1_1.png}
+\caption{The plot of first coordinate against time t}
+\label{fig:task4_part1_1}
+\end{figure}
+
+Then we plot a time delayed version of the first coordinate against itself. The first coordinate is delayed by $\Delta n = 70$, because we observe the first plot and measure the time it takes for the first coordinate to complete a fourth of the periodic cycle. \ref{fig:task4_part1_2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task4_part1_2.png}
+\caption{The plot of the first coordinate against the time delayed version of the first coordinate}
+\label{fig:task4_part1_2}
+\end{figure}
+
+We know that Takens has shown that embeddings with $d^{e} > 2n$ will be faithful generically so that there is a smooth map:
+\begin{equation*}
+f : \mathbb{R}^{d^{e}} \rightarrow \mathbb{R}
+\end{equation*}
+
+where $d^{e}$ is the embedding coordinates and n is the number of coordinates of the data. Hence, as the data has two coordinates, so according to Takens, atleast 5 time delayed embedding coordinates will be needed to make sure that the periodic manifold is embedded correctly. \\\\
+
+Part 2: \\
+We use the lorenz attractor implementation from Exercise 3 in this part. Using the solve\_ivp function from the Sklearn library we calculate the x, y and z coordinates of the trajectory, after setting the initial position as (10, 10, 10). \ref{fig:task4_part2_1}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task4_part2_1.png}
+\caption{Plot of the lorenz attractor trajectory}
+\label{fig:task4_part2_1}
+\end{figure}
+
+Then we obtain the x-coordinate as $x0 = x(t)$ then we plot x0 against $x1 = x(t + \Delta t)$ and $x2 = x(t + 2\Delta t)$. We set $\Delta t = 18$. \ref{fig:task4_part1_2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task4_part2_2.png}
+\caption{Plot of x0, x1 and x2 in a 3 dimensional space}
+\label{fig:task4_part2_2}
+\end{figure}
+
+Lastly, we obtain the z-coordinate from the solve\_ivp result that we obtained earlier, as $z0 = z(t)$ then we plot z0 against $z1 = z(t + \Delta t)$ and $z2 = z(t + 2\Delta t)$. We set $\Delta t = 20$. \ref{fig:task4_part2_3}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task4_part2_3.png}
+\caption{Plot of z0, z1 and z2 in a 3 dimensional space}
+\label{fig:task4_part2_3}
+\end{figure}
+
+Plotting z0, z1 and z2 does not result in a representative visualization of the original data, compared to the plot of x0, x1 and x2. The reason for this is that, lorenz attractor system consists of three ordinary differential equations. The differential equation responsible for the z-coordinate has the z-coordinate term in it but when using time delayed embedding, the subsequent time delayed coordinates z1 and z2 do not account for this. It results in the error propagating through the embedding. \\\\
+
+Part 2, Bonus task: \\
+Using the x0, x1 and x2 coordinates obtained in the previous task, we approximate the vector fields $v^{(k)}$ at each timestep using the finite-difference formula. Then we fit the non-linear approximator to predict the $\hat{v}^{(k)}$ given the embedding coordinates.
+
+The next step is to use the fitted linear approximator as the vector field predictor and using the solve\_ivp function from Sklearn library to generate the trajectories. The starting point is set as the first point of the embedding coordinates. The results obtained are not good. Even though the resulting trajectory loops, it does not resemble the trajectory of the training data.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task4_part2_bonus.png}
+\caption{Comparison of the training and predicted data}
+\label{fig:task4_part2_bonus}
+\end{figure}
+
+Part 3: \\
+We used the old implementation of pedestrian trajectory parser from exercise 3 to get the coordinates of pedestrians in the case when the path is not blocked by the object. As mentioned in the exercise we concatenate 200 time delay embedding into one data point and then using $\Delta t = 1$, we generate several data points. We obtain, 3551 data points from this process as the total number of data points in the original data was 3751. 
+We use the PCA implementation from exercise 4 to obtain the first two principal components of the resulting data. \ref{fig:task4_part3}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task4_part3.png}
+\caption{Plotting the first two principal components}
+\label{fig:task4_part3}
+\end{figure}
+
+\begin{itemize}
+ \item 
+ \item as mentioned in the exercise
+\end{itemize}
 \end{task}
+
 \begin{task}{5, Tests}
 \begin{enumerate}
 \item[TEST1:] RiMEA scenario 1 (straight line, ignore premovement time)\\

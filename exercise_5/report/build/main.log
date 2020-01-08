@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.6.29)  8 JAN 2020 16:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.6.29)  8 JAN 2020 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -549,70 +549,183 @@ l.107
 File: ../plots/task2_part3.png Graphic file (type png)
 <use ../plots/task2_part3.png>
 Package pdftex.def Info: ../plots/task2_part3.png  used on input line 110.
-(pdftex.def)             Requested size: 338.58632pt x 253.94861pt.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
 <../plots/task2_part3_phase.png, id=42, 642.4pt x 481.8pt>
 File: ../plots/task2_part3_phase.png Graphic file (type png)
 <use ../plots/task2_part3_phase.png>
 Package pdftex.def Info: ../plots/task2_part3_phase.png  used on input line 118
 .
-(pdftex.def)             Requested size: 338.58632pt x 253.94861pt.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
  [5pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.122 
-       <../plots/task2_part3.png (PNG copy)>]
-<../plots/task3_part3.png, id=50, 361.35pt x 361.35pt>
+l.128 \begin{equation*}
+                       pdfTeX warning (ext4): destination with the same identif
+ier (name{figure.5}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.128 \begin{equation*}
+                        <../plots/task2_part3.png (PNG copy)> <../plots/task2_p
+art3_phase.png (PNG copy)>]
+<../plots/task3_part3.png, id=51, 361.35pt x 361.35pt>
 File: ../plots/task3_part3.png Graphic file (type png)
 <use ../plots/task3_part3.png>
 Package pdftex.def Info: ../plots/task3_part3.png  used on input line 149.
 (pdftex.def)             Requested size: 338.58632pt x 338.58835pt.
- [6pdfTeX warning (ext4): destination with the same identifier (name{figure.5})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.153 
-       <../plots/task2_part3_phase.png (PNG copy)>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 173.
+ [6]
+<../plots/task4_part1_1.png, id=58, 642.4pt x 481.8pt>
+File: ../plots/task4_part1_1.png Graphic file (type png)
+<use ../plots/task4_part1_1.png>
+Package pdftex.def Info: ../plots/task4_part1_1.png  used on input line 162.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
  [7pdfTeX warning (ext4): destination with the same identifier (name{figure.6})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.173 \end{document}
-                     <../plots/task3_part3.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 173.
+l.166 
+       <../plots/task3_part3.png>]
+<../plots/task4_part1_2.png, id=67, 642.4pt x 481.8pt>
+File: ../plots/task4_part1_2.png Graphic file (type png)
+<use ../plots/task4_part1_2.png>
+Package pdftex.def Info: ../plots/task4_part1_2.png  used on input line 171.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
+
+ []
+
+[8pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.185 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+8}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.185 
+       <../plots/task4_part1_1.png (PNG copy)> <../plots/task4_part1_2.png (PNG
+ copy)>]
+<../plots/task4_part2_1.png, id=76, 1387.584pt x 717.6411pt>
+File: ../plots/task4_part2_1.png Graphic file (type png)
+<use ../plots/task4_part2_1.png>
+Package pdftex.def Info: ../plots/task4_part2_1.png  used on input line 188.
+(pdftex.def)             Requested size: 338.58632pt x 175.10635pt.
+<../plots/task4_part2_2.png, id=78, 642.4pt x 481.8pt>
+File: ../plots/task4_part2_2.png Graphic file (type png)
+<use ../plots/task4_part2_2.png>
+Package pdftex.def Info: ../plots/task4_part2_2.png  used on input line 197.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
+<../plots/task4_part2_3.png, id=80, 642.4pt x 481.8pt>
+File: ../plots/task4_part2_3.png Graphic file (type png)
+<use ../plots/task4_part2_3.png>
+Package pdftex.def Info: ../plots/task4_part2_3.png  used on input line 206.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
+ [9pdfTeX warning (ext4): destination with the same identifier (name{figure.9})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.210 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+10}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.210 
+       <../plots/task4_part2_1.png> <../plots/task4_part2_2.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
+
+ []
+
+<../plots/task4_part2_bonus.png, id=89, 642.4pt x 481.8pt>
+File: ../plots/task4_part2_bonus.png Graphic file (type png)
+<use ../plots/task4_part2_bonus.png>
+Package pdftex.def Info: ../plots/task4_part2_bonus.png  used on input line 220
+.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
+[10pdfTeX warning (ext4): destination with the same identifier (name{figure.11}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.224 
+       <../plots/task4_part2_3.png (PNG copy)>]
+<../plots/task4_part3.png, id=95, 642.4pt x 481.8pt>
+File: ../plots/task4_part3.png Graphic file (type png)
+<use ../plots/task4_part3.png>
+Package pdftex.def Info: ../plots/task4_part3.png  used on input line 231.
+(pdftex.def)             Requested size: 290.22107pt x 217.66814pt.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 238.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 238.
+ [11pdfTeX warning (ext4): destination with the same identifier (name{figure.12
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.246 \item[TEST2:]
+                    RiMEA scenario 4 (fundamental diagram, be careful with p...
+pdfTeX warning (ext4): destination with the same identifier (name{figure.13}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.246 \item[TEST2:]
+                    RiMEA scenario 4 (fundamental diagram, be careful with p...
+ <../plots/task4_part2_bonus.png (PNG copy)> <../plots/task4_part3.png (PNG cop
+y)>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 257.
+ [12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 257.
  (build/main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 173.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 173.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 257.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 257.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 7971 strings out of 494468
- 113564 string characters out of 6175060
- 234351 words of memory out of 5000000
- 11493 multiletter control sequences out of 15000+600000
+ 8042 strings out of 494468
+ 115074 string characters out of 6175060
+ 234907 words of memory out of 5000000
+ 11542 multiletter control sequences out of 15000+600000
  5647 words of font info for 23 fonts, out of 8000000 for 9000
  81 hyphenation exceptions out of 8191
- 37i,11n,43p,1041b,355s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,11n,43p,1041b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy7.pfb>
-Output written on build/main.pdf (7 pages, 790789 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/symbols/msbm10.pfb>
+Output written on build/main.pdf (12 pages, 1772244 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
- 14 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 144 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
+ 66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
