@@ -107,6 +107,17 @@ def task2():
     plt.ylim((-10, 10))
     plt.show()
 
+    x, y = np.linspace(-10, 10, 100), np.linspace(-10, 10, 100)
+    combinations = np.array(np.meshgrid(x, y)).T.reshape(-1, 2)
+
+    v_hat_combinations = linear_approximator.predict(combinations)
+
+    fig0, ax0 = plt.subplots()
+
+    ax0.streamplot(x, y, v_hat_combinations[:, 1].reshape(y.shape[0], x.shape[0])
+                   , v_hat_combinations[:, 0].reshape(y.shape[0], x.shape[0]))
+    plt.show()
+
 
 def task3():
     x0_f = "./data/nonlinear_vectorfield_data_x0.txt"
@@ -353,4 +364,4 @@ def task5():
 
 
 if __name__ == "__main__":
-    task3()
+    task2()

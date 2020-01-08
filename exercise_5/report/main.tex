@@ -40,8 +40,8 @@
 
 \begin{task}{1, Approximating functions}
 Part 1: \bigbreak
-For part 1 we loaded the linear data from the "linear\_function.txt" file and tried to approximate the function linearly. We used a linear regression model to minimize the least square error. For this problem there exists a closed form solution to compute the matrix A which contains the parameters to map the input to the output with a minimal least square error to the original function, we want to approximate. 
-The least squares error problem is defined by following equation:
+For part 1 we loaded the linear data from the "linear\_function.txt" file and tried to approximate the function linearly. We used a linear regression model to minimize the mean square error. For this problem there exists a closed form solution to compute the matrix A which contains the parameters to map the input to the output with a minimal mean square error to the original function, we want to approximate. 
+The mean squares error problem is defined by following equation:
 \begin{equation*}
 \min_{\hat{f}}e(\hat{f}) = \min_{\hat{f}}||F-\hat{f}(X)||^2 = \min_{A}||F-XA^T||^2
 \end{equation*}
@@ -77,9 +77,51 @@ We chose $\epsilon$ according to the $\epsilon$ in the diffusion maps task of th
 \end{figure}
 It is not a good idea to use radial basis functions to approximate a linear function such as the linear data set of A. You can use the radial basis functions to approximate a linear data set, but you should use a linear approximator, because the computational cost of the radial basis function is higher due to the fact that the distance matrix for all x has to be computed to determinate $\epsilon$. Besides the parameters of L and $\epsilon$ have to be chosen appropiately to obtain a good approximation.
 \end{task}
+
 \begin{task}{2, First step of a single pedestrian}
-They stepped successfully (see figure).
+Part 1: \\
+We use the pandas read\_csv function to read the text files containing two dimensional x0 and x1 data. We estimate the vector fields $v^{(k)}$ for each x0, using the finite-difference formula, given hereby:
+\begin{equation*}
+\hat{v}^{(k)} = \frac{x_1^{(k)} - x_0^{(k)}}{\Delta t}
+\end{equation*}
+Then we approximate the matrix $A$ such that:
+\begin{equation*}
+v(x_0^{(k)}) = v^{(k)} = Ax_0^{(k)}
+\end{equation*}
+An interesting thing to note is that, bias b is not added in this equation. This will have implications to the prediction later on. It will be mentioned in part 3.
+
+For this purpose, we use the linear approximator implementation from task 1. As mentioned before the goal is to estimate the matrix $A$, such that the mean square error is minimized. This can be represented through the following equation:
+\begin{equation*}
+\min_{\hat{f}}e(\hat{f}) = \min_{\hat{f}}||F-\hat{f}(X)||^2 = \min_{A}||F-XA^T||^2
+\end{equation*} \\
+
+Part 2: \\
+After fitting the linear approximator, we predict the vector fields, $\hat{v}^{(k)}$ for each x0. Then we use $\hat{v}^{(k)}$ with $\Delta t = 0.1$ to calculate $\hat{x1}^{(k)}$ using the formula.
+\begin{equation*}
+\hat{x1}^{(k)} = \hat{v}^{(k)}\Delta t + x0^{(k)}
+\end{equation*}
+We compare $x1^{(k)}$ and $\hat{x1}^{(k)}$ using the mean squared error formula and obtain the value of: 1.0532185339804091e-13 \\\\
+Part 3: \\
+We set $x0=(10, 10)^{(0)}$ and then estimate $\hat{v}^{(0)}$. We calculate $\hat{x1}^{(0)}$ using the equation given in part 2. Then using the corresponding $\hat{x1}^{(k-1)}$, we calculate the vector field $\hat{v}^{(k)}$ for it. We repeat this process for $T = 100$. We use steps of $\Delta t = 0.1$, so the total number of iterations are $\frac{T}{\Delta t} = 1000$. 
+As seen in the figure \ref{fig:task2_3}, the motion stops at (0,0). We think that reason for this is that, we do not add bias term b to the linear approximator equation. Hence when $x=0$, then the matrix A has no effect on $\hat{x}$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task2_part3.png}
+\caption{Trajectory of the motion}
+\label{fig:task2_3}
+\end{figure}
+
+The phase portrait is given hereby:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{../plots/task2_part3_phase.png}
+\caption{The phase portrait}
+\label{fig:task2_3_phase}
+\end{figure}
+
 \end{task}
+
 \begin{task}{3, Approximating nonlinear vector fields}
 Part 1: \\
 At first we compute a vector $\hat{v}^{(k)}$ for every intial point $x_0^{(k)}$ with the equation:
