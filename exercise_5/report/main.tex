@@ -84,14 +84,14 @@ Here the matrix C contains as the matrix A for the linear case the coefficients 
 \end{equation*}
 \\ We have to choose how many basis functions L  we use to approximate the nonlinear function. Besides, we have to choose $\epsilon$ appropriately.
 Figure \ref{fig:task1_3} shows the original data in blue and the approximated function which makes use of radial basis functions in orange. It can be easily seen that the approximation is by far better than the linear approximation of part 2. \\ In general the approximation fits the original function quite well.
-We chose $\epsilon$ according to the $\epsilon$ in the diffusion maps task of the previous exercise sheet. This means we computed the distance matrix among all the x values and took the maximum value for $\epsilon$. This meaximum value is multiplied by 0.05. Besides, we use $L=15$ radial basis functions for the nonlinear approximation.
+We chose $\epsilon$ according to the $\epsilon$ in the diffusion maps task of the previous exercise sheet. This means we computed the distance matrix among all the x values and took the maximum value for $\epsilon$. This maximum value is multiplied by 0.05. Besides, we use $L=15$ radial basis functions for the nonlinear approximation.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{../plots/task1_part3_eps.png}
 \caption{Nonlinear data and its nonlinear approximation with radial basis functions}
 \label{fig:task1_3}
 \end{figure}
-It is not a good idea to use radial basis functions to approximate a linear function such as the linear data set of A. You can use the radial basis functions to approximate a linear data set, but you should use a linear approximator, because the computational cost of the radial basis function is higher due to the fact that the distance matrix for all x has to be computed to determinate $\epsilon$. Besides the parameters of L and $\epsilon$ have to be chosen appropiately to obtain a good approximation.
+It is not a good idea to use radial basis functions to approximate a linear function such as the linear data set of A. You can use the radial basis functions to approximate a linear data set, but you should use a linear approximator, because the computational cost of the radial basis function is higher due to the fact that the distance matrix for all x has to be computed to determinate $\epsilon$. Besides the parameters of L and $\epsilon$ have to be chosen appropriately to obtain a good approximation.
 \end{task}
 
 \begin{task}{2, First step of a single pedestrian}
@@ -140,7 +140,7 @@ The phase portrait is given hereby:
 
 \begin{task}{3, Approximating nonlinear vector fields}
 Part 1: \\
-At first we approximate the vector field $\hat{v}^{(k)}$ for every intial point $x_0^{(k)}$ with the equation:
+At first we approximate the vector field $\hat{v}^{(k)}$ for every initial point $x_0^{(k)}$ with the equation:
 \begin{equation*}
 \hat{v}^{(k)} = \frac{x_1^{(k)} -x_0^{(k)}}{\Delta t}
 \end{equation*}
@@ -161,10 +161,10 @@ Part 2 is similar to part 1, but this time we approximate the vector field using
 \end{equation*}
  We choose $L=10$ and take  for $\epsilon$ the biggest value of a distance matrix between all initial points $x_0$.
 The mean squared error is 0.24. \\
-The mean squarred error is extremely low, so the performance of the nonlinear approximator is very good. Consequently you can see that the vector field is nonlinear. Otherwise the mean squared error of the linear approximation would be lower.
+The mean squared error is extremely low, so the performance of the nonlinear approximator is very good. Consequently you can see that the vector field is nonlinear. Otherwise the mean squared error of the linear approximation would be lower.
 You can see that the difference between both mean squared errors is high, because the mean squared error of the nonlinear approximated vector field is very low. \bigbreak
 Part 3: \\
-For this part we use the nonlinear approximator, because in our opinion the vector field is nonlinear and therefore the nonlinear approximator shows better performance in comparison to the lineaer approximator. We use the approximated vector field to solve  the system for a larger time with all intitial points $x_0$.\\
+For this part we use the nonlinear approximator, because in our opinion the vector field is nonlinear and therefore the nonlinear approximator shows better performance in comparison to the lineaer approximator. We use the approximated vector field to solve  the system for a larger time with all intiial points $x_0$.\\
 Figure \ref{fig:task3_part3} shows the trajectories for the system at the end state. You can see several steady states. The steady states are at the following coordinates: \bigbreak
 \begin{tabular}{|l|c|c|c|c|}
 \hline
@@ -206,7 +206,7 @@ We know that Takens has shown that embeddings with $d^{e} > 2n$ will be faithful
 f : \mathbb{R}^{d^{e}} \rightarrow \mathbb{R}
 \end{equation*}
 
-where $d^{e}$ is the embedding coordinates and n is the number of coordinates of the data. Hence, as the data has two coordinates, so according to Takens, atleast 5 time delayed embedding coordinates will be needed to make sure that the periodic manifold is embedded correctly. \\\\
+where $d^{e}$ is the embedding coordinates and n is the number of coordinates of the data. Hence, as the data has two coordinates, so according to Takens, at least 5 time delayed embedding coordinates will be needed to make sure that the periodic manifold is embedded correctly. \\\\
 
 Part 2: \\
 We use the lorenz attractor implementation from Exercise 3 in this part. Using the solve\_ivp function from the Sklearn library we calculate the x, y and z coordinates of the trajectory, after setting the initial position as (10, 10, 10). \ref{fig:task4_part2_1}
@@ -267,19 +267,53 @@ We use the PCA implementation from exercise 4 to obtain the first two principal 
 \end{itemize}
 \end{task}
 
-\begin{task}{5, Tests}
+\begin{task}{5, Learning Crowd Dynamics}
+
 \begin{enumerate}
-\item[TEST1:] RiMEA scenario 1 (straight line, ignore premovement time)\\
-- not done, but citing RiMEA guidelines -
-\item[TEST2:] RiMEA scenario 4 (fundamental diagram, be careful with periodic boundary conditions).\\
-- test successful - 
-\item[TEST3:] RiMEA scenario 6 (movement around a corner).\\
-- test successful - 
-\item[TEST4:] RiMEA scenario\\
-- test successful - 
+\item[1.] Since there are 9 measurement areas and each measurement area logs a single value (number of pedestrian at that moment), the data can be seen as 9 dimensional. Takens theorem states that there needs to be at least $2*9+1=19$ dimensional embedding suffices. \\
+A delay embedding was created by creating delay embedding of the first 3 measurement areas each with 350 delays. The resulting matrices were stacked horizontally, so the resulting embedding has 1050 dimensions. According to Takens theorem, 7 dimensions should suffice for the first 3 measurement areas; thus, the first 7 principal components were taken. The first 7 principal components cover $74.43\%$ of the data.
+
+\item[2.] For ease of plotting, the first 2 principal components were plotted. For each measurement area, the points of the PCA space were coloured in accordance with their values in the original data as seen in Figure \ref{fig:task5_2}. Considerable changes of pedestrians can be observed in the measurement areas 1, 2, 3, and 9.
+
+\item[3.] Since using the first 7 principal components resulted in a convergence problem, we decided to use the first 2 principal components. A nonlinear approximator was fitted using the vector field of the trajectory in the PCA space. The vector space was inferred by taking the difference of each consecutive point pairs. Then the trajectory steps were taken using the initial point and the vector space defined by the approximator. The arc length of the predicted curve (see Figure \ref{fig:task5_3}) had a 12\% percentage error. The arc lengths are as follows:\\
+
+\begin{tabular}{c|c}
+    True Arc Length & 139657.68 \\
+    Arc Length of Prediction & 121897.18
+\end{tabular}\\
+
+\item[4.] The recursively predicted trajectory in the PCA space was inverse transformed to its delay embedding matrix form. The number of pedestrians measured in the first measurement area for the next 14 followed days were plotted. Roughly 2 types of plots could be created by trying out various hyperparameters of the nonlinear approximator. In Figure \ref{fig:task5_4_1}, there is a periodic change; however, the values go down to negative values, which is practically impossible. On the other hand, Figure \ref{fig:task5_4_2} has somewhat more realistic numbers, but it converges to a certain value after the first wave. 
+
 \end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task5_2.png}
+\caption{PCA space coloured by each measurement area's values.}
+\label{fig:task5_2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task5_3.png}
+\caption{Trajectory taken using the predicted vector space in the PCA space.}
+\label{fig:task5_3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task5_4_alternative.png}
+\caption{Prediction of number of pedestrians in measurement area 1 for the next 14 days.}
+\label{fig:task5_4_1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../plots/task5_4.png}
+\caption{Prediction of number of pedestrians in measurement area 1 for the next 14 days using different hyperparameters.}
+\label{fig:task5_4_2}
+\end{figure}
+
 \end{task}
-
-
 
 \end{document}
