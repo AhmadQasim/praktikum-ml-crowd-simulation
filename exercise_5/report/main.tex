@@ -41,7 +41,10 @@
 \begin{task}{1, Approximating functions}
 Part 1: \bigbreak
 For part 1 we loaded the linear data from the "linear\_function.txt" file and tried to approximate the function linearly. We used a linear regression model to minimize the mean square error. For this problem there exists a closed form solution to compute the matrix A which contains the parameters to map the input to the output with a minimal mean square error to the original function, we want to approximate. 
-The mean squares error problem is defined by following equation:
+\begin{equation*}
+f_{linear}(x) = Ax \in \mathbb{R}^d
+\end{equation*}
+The minimal mean squares error problem is defined by following equation:
 \begin{equation*}
 \min_{\hat{f}}e(\hat{f}) = \min_{\hat{f}}||F-\hat{f}(X)||^2 = \min_{A}||F-XA^T||^2
 \end{equation*}
@@ -62,11 +65,24 @@ Figure \ref{fig:task1_2} shows then original data in blue again. The linear appr
 \label{fig:task1_2}
 \end{figure}
 Part 3: \\
-After we tried to approximate the nonlinear dataset with a linear function in part 2, we now try to approximate the unknown nonlinear function with a combination of radial basis function:
+After we tried to approximate the nonlinear dataset with a linear function in part 2, we now try to approximate the unknown nonlinear function f with a combination of radial basis function:
+\begin{equation*}
+	f(x)=\sum_{l=1}^Lc_l\phi_l(x), c_l \in \mathbb{R}^d
+\end{equation*}
+A radial basis function $\phi$ is defined as follows:
 \begin{equation*}
 	\phi_l(x) = \exp(-||x_l -x||^2/\epsilon^2)
 \end{equation*}
-$x_l$ is the center of the basis function and usually just a randon point of the data set. There is one $x_l$ for each radial basis function. We have to choose how many basis functions L  we use to approximate the nonlinear function. Besides, we have to choose $\epsilon$ appropriately.
+where $x_l$ is the center of the basis function and usually just a random point of the data set. There is one $x_l$ for each radial basis function. \\
+The minimal least square error problem looks similar to the linear case:
+\begin{equation*}
+\min_{\hat{f}} e(\hat{f}) =  \min_{\hat{f}} ||F-\hat{f}(X)||^2  =\min_C||F-\phi(X)C^T||^2
+\end{equation*}
+Here the matrix C contains as the matrix A for the linear case the coefficients $c_l$ and 
+\begin{equation*}
+\phi(X):= (\phi_1(X),\phi_2(X), \dots, \phi_L(X))
+\end{equation*}
+\\ We have to choose how many basis functions L  we use to approximate the nonlinear function. Besides, we have to choose $\epsilon$ appropriately.
 Figure \ref{fig:task1_3} shows the original data in blue and the approximated function which makes use of radial basis functions in orange. It can be easily seen that the approximation is by far better than the linear approximation of part 2. \\ In general the approximation fits the original function quite well.
 We chose $\epsilon$ according to the $\epsilon$ in the diffusion maps task of the previous exercise sheet. This means we computed the distance matrix among all the x values and took the maximum value for $\epsilon$. This meaximum value is multiplied by 0.05. Besides, we use $L=15$ radial basis functions for the nonlinear approximation.
 \begin{figure}[H]
@@ -124,20 +140,32 @@ The phase portrait is given hereby:
 
 \begin{task}{3, Approximating nonlinear vector fields}
 Part 1: \\
-At first we compute a vector $\hat{v}^{(k)}$ for every intial point $x_0^{(k)}$ with the equation:
+At first we approximate the vector field $\hat{v}^{(k)}$ for every intial point $x_0^{(k)}$ with the equation:
 \begin{equation*}
 \hat{v}^{(k)} = \frac{x_1^{(k)} -x_0^{(k)}}{\Delta t}
 \end{equation*}
-We use the linear approximator to approximate the vector field and obtain A. After getting A we approximate $\hat{x_1^{(k)}}$ and compute the mean squarred error between the aproximated and the known end points for a chosen $\Delta t = 0.5$.
+Afterwards we try to estimate the vector field describing $\psi$ with a linear operator $A \in \mathbb{R}^{2\times2}$ such that
+\begin{equation*}
+\frac{\partial}{\partial t} \psi(t,x) \approx \hat{f}_{linear}(x) = Ax
+\end{equation*}
+After getting A we approximate $\hat{x}_1^{(k)}$ and compute the mean squarred error between the approximated and the known end points for a chosen $\Delta t = 0.5$.
+The mean squared  error is defined as follows:
+\begin{equation*}
+\sum_{k=1}^N ||\hat{x}_1^{(k)} - x_{1}^{(k)}||^2
+\end{equation*}
 The mean squared error is 75.54.\bigbreak
 Part 2: \\
-Part 2 is similar to part 1, but this time we approximate the vector field with radial basis functions. We choose $L=10$ and take  for $\epsilon$ the biggest value of a distance matrix between all initial points $x_0$.
+Part 2 is similar to part 1, but this time we approximate the vector field using radial basis functions such that
+\begin{equation*}
+\frac{\partial}{\partial t}\psi(t,x) \approx \hat{f}_{rbf}(x) = C \phi(X)
+\end{equation*}
+ We choose $L=10$ and take  for $\epsilon$ the biggest value of a distance matrix between all initial points $x_0$.
 The mean squared error is 0.24. \\
 The mean squarred error is extremely low, so the performance of the nonlinear approximator is very good. Consequently you can see that the vector field is nonlinear. Otherwise the mean squared error of the linear approximation would be lower.
 You can see that the difference between both mean squared errors is high, because the mean squared error of the nonlinear approximated vector field is very low. \bigbreak
 Part 3: \\
-We use for this part the nonlinear approximator, because in our opinion the vector field is nonlinear. The nonlinear approximator shows better performance in comparison to the lineaer approximator. We use the approximated vector field to solve  the system for a larger time with all intitial points $x_0$.\\
-Figure \ref{fig:task3_part3} shows the end state of the system. You can see several steady states. The steady states are at the following coordinates: \bigbreak
+For this part we use the nonlinear approximator, because in our opinion the vector field is nonlinear and therefore the nonlinear approximator shows better performance in comparison to the lineaer approximator. We use the approximated vector field to solve  the system for a larger time with all intitial points $x_0$.\\
+Figure \ref{fig:task3_part3} shows the trajectories for the system at the end state. You can see several steady states. The steady states are at the following coordinates: \bigbreak
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 x-coordinate of steady state& -2.92&3.22&3.65&-4.26\\
@@ -146,11 +174,11 @@ y- coordinate of steady state& 3.13&1.85&-1.27&-3.65\\
 \end{tabular}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{../plots/task3_part3.png}
-\caption{Predictions of $x_1$ for a larger time given initial points $x_0$}
+\includegraphics[width=0.7\textwidth]{../plots/task3_part32.png}
+\caption{Trajectories of the system at the end state starting at the intial points $x_0$}
 \label{fig:task3_part3}
 \end{figure}
-
+The system can be topologically equivalent to a linear system.
 \end{task}
 \begin{task}{4, Obstacle avoidance}
 Pedestrians can avoid obstacles, using Dijkstras algorithm. See figure.
