@@ -1,6 +1,8 @@
 import torch.nn as nn
-from networks.Encoder import Encoder
-from networks.PoolingModule import PoolingModule
+import os
+os.chdir("../..")
+from final_project.networks.Encoder import Encoder
+from final_project.networks.PoolingModule import PoolingModule
 
 
 class Discriminator(nn.Module):
