@@ -1,10 +1,8 @@
 import torch
 import torch.nn as nn
-from networks.discriminator import create_mlp
-
-Encoder = None
-Decoder = None
-PoolHiddenNet = None
+from networks.Encoder import Encoder
+from networks.Decoder import Decoder
+from networks.PoolingModule import PoolingModule
 
 
 def get_noise(shape, noise_type):
@@ -41,16 +39,13 @@ class TrajectoryGenerator(nn.Module):
 
         self.encoder = Encoder(
             embedding_dim=embedding_dim,
-            h_dim=encoder_h_dim,
-            mlp_dim=mlp_dim,
-            num_layers=num_layers,
-            dropout=dropout
+            hidden_dim=encoder_h_dim,
         )
 
         self.decoder = Decoder(
             pred_len,
             embedding_dim=embedding_dim,
-            h_dim=decoder_h_dim,
+            hidden_dim=decoder_h_dim,
             mlp_dim=mlp_dim,
             num_layers=num_layers,
             pool_every_timestep=pool_every_timestep,
@@ -63,13 +58,9 @@ class TrajectoryGenerator(nn.Module):
             neighborhood_size=neighborhood_size
         )
 
-        self.pool_net = PoolHiddenNet(
+        self.pool_net = PoolingModule(
             embedding_dim=self.embedding_dim,
-            h_dim=encoder_h_dim,
-            mlp_dim=mlp_dim,
-            bottleneck_dim=bottleneck_dim,
-            activation=activation,
-            batch_norm=batch_norm
+            hidden_dim=encoder_h_dim
         )
 
         if self.noise_dim[0] == 0:
@@ -82,7 +73,12 @@ class TrajectoryGenerator(nn.Module):
 
 
         if self.mlp_decoder_needed():
-            self.mlp_decoder_context = create_mlp(input_dim, mlp_dim, decoder_h_dim - self.noise_first_dim, use_batch_norm=True)
+            self.mlp_decoder_context = nn.Sequential(nn.Linear(input_dim, mlp_dim),
+                                                     nn.BatchNorm1d(mlp_dim),
+                                                     nn.ReLU(),
+                                                     nn.Linear(mlp_dim, decoder_h_dim - self.noise_first_dim),
+                                                     nn.BatchNorm1d(decoder_h_dim - self.noise_first_dim),
+                                                     nn.ReLU())
 
     def add_noise(self, _input, seq_start_end, user_noise=None):
         """
