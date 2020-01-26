@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import os
 os.chdir("../..")
-from final_project.networks.Encoder import Encoder
-from final_project.networks.Decoder import Decoder
-from final_project.networks.PoolingModule import PoolingModule
+from networks.Encoder import Encoder
+from networks.Decoder import Decoder
+from networks.PoolingModule import PoolingModule
 
 
 def get_noise(shape, noise_type):
@@ -15,7 +15,7 @@ def get_noise(shape, noise_type):
     raise ValueError('Unrecognized noise type "%s"' % noise_type)
 
 
-class TrajectoryGenerator(nn.Module):
+class Generator(nn.Module):
     def __init__(
         self, pred_len, embedding_dim=64, encoder_h_dim=64,
         decoder_h_dim=128, mlp_dim=1024, num_layers=1, noise_dim=(0, ),

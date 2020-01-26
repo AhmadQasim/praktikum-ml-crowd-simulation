@@ -261,7 +261,7 @@ class TrajectoryDataset(Dataset):
     def __getitem__(self, index):
         # pytorch sends the index as argument
         start, end = self.seq_start_end[index]
-        print("here")
+
 
         # get the start and finish of the current sequence from the array that we saved before
         # remember [all pedestrians in all different sequences, coordinates, sequence length]

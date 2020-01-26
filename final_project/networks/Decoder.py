@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import os
 os.chdir("../..")
-from final_project.networks.PoolingModule import PoolingModule
+from networks.PoolingModule import PoolingModule
 
 
 class Decoder(nn.Module):

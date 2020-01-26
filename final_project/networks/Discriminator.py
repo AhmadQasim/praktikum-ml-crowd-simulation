@@ -1,8 +1,8 @@
 import torch.nn as nn
 import os
 os.chdir("../..")
-from final_project.networks.Encoder import Encoder
-from final_project.networks.PoolingModule import PoolingModule
+from networks.Encoder import Encoder
+from networks.PoolingModule import PoolingModule
 
 
 class Discriminator(nn.Module):
@@ -21,7 +21,10 @@ class Discriminator(nn.Module):
 
         self.encoder = Encoder(in_dim, latent_dim, activation=activation_encoder)
 
-        self.fake_real_discriminator = nn.Sequential(nn.Linear(latent_dim, 1),
+        self.fake_real_discriminator = nn.Sequential(nn.Linear(latent_dim, 1024),
+                                                     nn.BatchNorm1d(1024),
+                                                     nn.ReLU(),
+                                                     nn.Linear(1024, 1),
                                                      nn.BatchNorm1d(1),
                                                      nn.ReLU())
 
@@ -37,7 +40,7 @@ class Discriminator(nn.Module):
         """
         encoded_relative_trajectory = self.encoder(relative_trajectory)
 
-        pooled = self.pool_net(encoded_relative_trajectory.squeeze(), seq_start_end, trajectory[0])
+        #pooled = self.pool_net(encoded_relative_trajectory.squeeze(), seq_start_end, trajectory[0])
 
-        scores = self.fake_real_discriminator(pooled)
+        scores = self.fake_real_discriminator(encoded_relative_trajectory.squeeze())
         return scores
