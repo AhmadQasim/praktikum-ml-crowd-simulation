@@ -5,7 +5,7 @@ from networks.PoolingModule import PoolingModule
 
 class Discriminator(nn.Module):
 
-    def __init__(self, in_dim, latent_dim, activation_encoder=None):
+    def __init__(self, in_dim, latent_dim, activation_encoder=False):
         """
 
         :param in_dim:
