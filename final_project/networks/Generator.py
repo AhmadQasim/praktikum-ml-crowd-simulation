@@ -48,21 +48,12 @@ class TrajectoryGenerator(nn.Module):
             pred_len,
             embedding_dim=embedding_dim,
             hidden_dim=decoder_h_dim,
-            mlp_dim=mlp_dim,
             num_layers=num_layers,
-            pool_every_timestep=pool_every_timestep,
-            dropout=dropout,
-            bottleneck_dim=bottleneck_dim,
-            activation=activation,
-            batch_norm=batch_norm,
-            pooling_type=pooling_type,
-            grid_size=grid_size,
-            neighborhood_size=neighborhood_size
         )
 
         self.pool_net = PoolingModule(
             embedding_dim=self.embedding_dim,
-            hidden_dim=encoder_h_dim
+            hidden_dim=self.encoder_h_dim
         )
 
         if self.noise_dim[0] == 0:

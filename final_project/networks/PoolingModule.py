@@ -16,11 +16,11 @@ class PoolingModule(nn.Module):
         self.bottleneck_dim = 1024
         self.embedding_dim = embedding_dim
 
-        self.fc_0 = nn.Linear(embedding_dim + hidden_dim, 512)
+        self.fc_0 = nn.Linear(self.embedding_dim + self.hidden_dim, 512)
         self.bn_0 = nn.BatchNorm1d(512)
         self.relu_0 = nn.ReLU()
-        self.fc_1 = nn.Linear(512, 1024)
-        self.bn_1 = nn.BatchNorm1d(1024)
+        self.fc_1 = nn.Linear(512, self.bottleneck_dim)
+        self.bn_1 = nn.BatchNorm1d(self.bottleneck_dim)
         self.relu_1 = nn.ReLU()
 
         self.embedding_0 = nn.Linear(2, embedding_dim)

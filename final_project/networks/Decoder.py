@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import os
 os.chdir("../..")
-from sgan.networks.PoolingModule import PoolingModule
+from final_project.networks.PoolingModule import PoolingModule
 
 
 class Decoder(nn.Module):
@@ -11,31 +11,27 @@ class Decoder(nn.Module):
         seq_len,
         embedding_dim=64,
         hidden_dim=128,
-        ffnn_dim=1024,
         num_layers=1,
-        dropout=0.0,
-        bottleneck_dim=1024
     ):
         super(Decoder, self).__init__()
 
         self.seq_len = seq_len
-        self.ffnn_dim = ffnn_dim
+        self.ffnn_dim = 1024
+        self.bottleneck_dim = 1024
         self.hidden_dim = hidden_dim
         self.embedding_dim = embedding_dim
 
-        self.decoder = nn.LSTM(embedding_dim, hidden_dim, num_layers, dropout=dropout)
+        self.decoder = nn.LSTM(embedding_dim, hidden_dim, num_layers)
 
         self.pool_net = PoolingModule(
             embedding_dim=self.embedding_dim,
-            hidden_dim=self.hidden_dim,
-            ffnn_dim=ffnn_dim,
-            bottleneck_dim=bottleneck_dim
+            hidden_dim=self.hidden_dim
         )
 
-        self.fc_0 = nn.Linear(hidden_dim + bottleneck_dim, ffnn_dim)
-        self.bn_0 = nn.BatchNorm1d(ffnn_dim)
+        self.fc_0 = nn.Linear(hidden_dim + self.bottleneck_dim, self.ffnn_dim)
+        self.bn_0 = nn.BatchNorm1d(self.ffnn_dim)
         self.relu_0 = nn.ReLU()
-        self.fc_1 = nn.Linear(ffnn_dim, hidden_dim)
+        self.fc_1 = nn.Linear(self.ffnn_dim, hidden_dim)
         self.bn_1 = nn.BatchNorm1d(hidden_dim)
         self.relu_1 = nn.ReLU()
 
