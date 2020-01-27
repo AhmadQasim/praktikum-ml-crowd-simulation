@@ -5,6 +5,8 @@ import numpy as np
 import inspect
 from contextlib import contextmanager
 import subprocess
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 
 def int_tuple(s):
@@ -93,3 +95,45 @@ def relative_to_abs(rel_traj, start_pos):
     start_pos = torch.unsqueeze(start_pos, dim=1)
     abs_traj = displacement + start_pos
     return abs_traj.permute(1, 0, 2)
+
+
+def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence, path=None):
+    start, end = seq_start_end[sequence]
+
+    seq_data_real = seq_data_real[start:end]
+    seq_data = seq_data[start:end]
+
+    num_pedestrians = seq_data.shape[0]
+
+    fig, axes = plt.subplots(1, 2, sharex='all', sharey='all')
+
+    scatter_real = [axes[0].scatter([], []) for _ in range(num_pedestrians)]
+    scatter_model = [axes[1].scatter([], []) for _ in range(num_pedestrians)]
+
+    def animate(i):
+        i = i+4
+        title = "Observed" if i <= 8 else "Predicted"
+
+        axes[0].set_title(f'Ground Truth - {title}')
+        axes[1].set_title(f'GAN Model - {title}')
+
+        for pedestrian_id in range(num_pedestrians):
+            scatter_real[pedestrian_id].set_data(seq_data_real[pedestrian_id, :i, 0],
+                                                 seq_data_real[pedestrian_id, :i, 1],
+                                                 s=[4, 4, 4, 8])
+            scatter_model[pedestrian_id].set_data(seq_data[pedestrian_id, :i, 0],
+                                                  seq_data[pedestrian_id, :i, 1],
+                                                  s=[4, 4, 4, 8])
+
+    anim = FuncAnimation(fig, animate, frames=8)
+    anim.save(f'{path}Sequence {sequence}.gif')
+
+
+
+
+
+
+
+
+
+
