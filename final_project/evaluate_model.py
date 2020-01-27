@@ -19,7 +19,6 @@ parser.add_argument('--dset_type', default='test', type=str)
 def get_generator(checkpoint):
     args = AttrDict(checkpoint['args'])
     generator = Generator(
-        #obs_len=args.obs_len,
         pred_len=args.pred_len,
         embedding_dim=args.embedding_dim,
         encoder_h_dim=args.encoder_h_dim_g,
