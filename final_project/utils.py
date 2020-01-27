@@ -97,7 +97,7 @@ def relative_to_abs(rel_traj, start_pos):
     return abs_traj.permute(1, 0, 2)
 
 
-def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, prefix_path: str):
+def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, prefix_path: str, observed_count=12):
     start, end = seq_start_end[sequence]
 
     seq_data_real = seq_data_real[:, start:end].cpu().numpy()
@@ -107,10 +107,12 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
 
     fig, axes = plt.subplots(1, 2, sharex='all', sharey='all')
 
-    axes[0].set_xlim(-10, 10)
-    axes[0].set_ylim(-10, 10)
-    axes[1].set_xlim(-10, 10)
-    axes[1].set_ylim(-10, 10)
+    min_x, max_x = min(seq_data_real[:, :, 0].min(), seq_data[:, :, 0].min()), max(seq_data_real[:, :, 0].max(), seq_data[:, :, 0].max())
+    min_y, max_y = min(seq_data_real[:, :, 1].min(), seq_data[:, :, 1].min()), max(seq_data_real[:, :, 1].max(), seq_data[:, :, 1].max())
+    axes[0].set_xlim(min_x - 0.5, max_x + 0.5)
+    axes[0].set_ylim(min_y - 0.5, max_y + 0.5)
+    axes[1].set_xlim(min_x - 0.5, max_x + 0.5)
+    axes[1].set_ylim(min_y - 0.5, max_y + 0.5)
 
     scatter_real = [axes[0].plot([], []) for _ in range(num_pedestrians)]
     scatter_model = [axes[1].plot([], []) for _ in range(num_pedestrians)]
@@ -124,7 +126,7 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
 
     def animate(i):
         i = i+4
-        title = "Observed" if i <= 8 else "Predicted"
+        title = "Observed" if i <= observed_count else "Predicted"
 
         axes[0].set_title(f'Ground Truth - {title}')
         axes[1].set_title(f'GAN Model - {title}')
@@ -141,7 +143,7 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
     plt.close()
 
 
-def evaluate(loader, generator, pred_len=8, num_samples=20):
+def animate_trajectories(loader, generator, pred_len=8, num_samples=20):
     ade_outer, fde_outer = [], []
     total_traj = 0
     with torch.no_grad():
