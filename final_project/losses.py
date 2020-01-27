@@ -1,5 +1,12 @@
 import torch
 import random
+import torch.nn as nn
+
+
+def sigmoid_bce_loss(input, target):
+    m = nn.Sigmoid()
+    loss = nn.BCELoss()
+    return loss(m(input), target)
 
 
 def bce_loss(input, target):
