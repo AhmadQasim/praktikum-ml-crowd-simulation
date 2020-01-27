@@ -100,15 +100,27 @@ def relative_to_abs(rel_traj, start_pos):
 def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, prefix_path: str):
     start, end = seq_start_end[sequence]
 
-    seq_data_real = seq_data_real[start:end]
-    seq_data = seq_data[start:end]
+    seq_data_real = seq_data_real[:, start:end].cpu().numpy()
+    seq_data = seq_data[:, start:end].cpu().numpy()
 
-    num_pedestrians = seq_data.shape[0]
+    num_pedestrians = seq_data.shape[1]
 
     fig, axes = plt.subplots(1, 2, sharex='all', sharey='all')
 
-    scatter_real = [axes[0].scatter([], []) for _ in range(num_pedestrians)]
-    scatter_model = [axes[1].scatter([], []) for _ in range(num_pedestrians)]
+    axes[0].set_xlim(-10, 10)
+    axes[0].set_ylim(-10, 10)
+    axes[1].set_xlim(-10, 10)
+    axes[1].set_ylim(-10, 10)
+
+    scatter_real = [axes[0].plot([], []) for _ in range(num_pedestrians)]
+    scatter_model = [axes[1].plot([], []) for _ in range(num_pedestrians)]
+
+    def init():
+        for pedestrian_id in range(num_pedestrians):
+            sct, = scatter_real[pedestrian_id]
+            sct.set_data([], [])
+            sct, = scatter_model[pedestrian_id]
+            sct.set_data([], [])
 
     def animate(i):
         i = i+4
@@ -118,15 +130,15 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
         axes[1].set_title(f'GAN Model - {title}')
 
         for pedestrian_id in range(num_pedestrians):
-            scatter_real[pedestrian_id].set_data(seq_data_real[pedestrian_id, :i, 0],
-                                                 seq_data_real[pedestrian_id, :i, 1],
-                                                 s=[4, 4, 4, 8])
-            scatter_model[pedestrian_id].set_data(seq_data[pedestrian_id, :i, 0],
-                                                  seq_data[pedestrian_id, :i, 1],
-                                                  s=[4, 4, 4, 8])
+            sct, = scatter_real[pedestrian_id]
+            sct.set_data(seq_data_real[i-4:i,pedestrian_id,  0], seq_data_real[i-4:i,pedestrian_id, 1])
+            sct, = scatter_model[pedestrian_id]
+            sct.set_data(seq_data[i-4:i,pedestrian_id,  0], seq_data[i-4:i,pedestrian_id, 1])
 
-    anim = FuncAnimation(fig, animate, frames=8)
-    anim.save(f'{prefix_path}sequence_{sequence}.gif')
+
+    anim = FuncAnimation(fig, animate, frames=8, init_func=init)
+    anim.save(f'{prefix_path}sequence_{sequence}.gif', writer='imagemagick')
+    plt.close()
 
 
 def evaluate(loader, generator, pred_len=8, num_samples=20):
@@ -149,9 +161,17 @@ def evaluate(loader, generator, pred_len=8, num_samples=20):
                     pred_traj_fake_rel, obs_traj[-1]
                 )
 
-                trajectory_animation(pred_traj_gt, pred_traj_fake, seq_start_end, 0, prefix_path=f'./animations/batch_{batch_number}_sample_{_}_')
+                pred_traj_full = torch.cat([obs_traj, pred_traj_fake], dim=0)
+                gt_traj_full = torch.cat([obs_traj, pred_traj_gt[:pred_len, :, :]], dim=0)
 
-        ade = sum(ade_outer) / (total_traj * pred_len)
-        fde = sum(fde_outer) / (total_traj)
+                for seq in range(len(seq_start_end)):
+                    trajectory_animation(gt_traj_full,
+                                         pred_traj_full,
+                                         seq_start_end,
+                                         seq,
+                                         prefix_path=f'/home/ahmad/praktikum/praktikum_ml_crowd/final_project/animations/batch_{batch_number}_sample_{_}_seq{seq}')
+
+        # ade = sum(ade_outer) / (total_traj * pred_len)
+        # fde = sum(fde_outer) / (total_traj)
         return ade, fde
 
