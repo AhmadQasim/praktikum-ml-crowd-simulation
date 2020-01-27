@@ -97,7 +97,7 @@ def relative_to_abs(rel_traj, start_pos):
     return abs_traj.permute(1, 0, 2)
 
 
-def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence, path=None):
+def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, prefix_path: str):
     start, end = seq_start_end[sequence]
 
     seq_data_real = seq_data_real[start:end]
@@ -126,14 +126,32 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence, path=
                                                   s=[4, 4, 4, 8])
 
     anim = FuncAnimation(fig, animate, frames=8)
-    anim.save(f'{path}Sequence {sequence}.gif')
+    anim.save(f'{prefix_path}sequence_{sequence}.gif')
 
 
+def evaluate(loader, generator, pred_len=8, num_samples=20):
+    ade_outer, fde_outer = [], []
+    total_traj = 0
+    with torch.no_grad():
+        for batch_number, batch in enumerate(loader):
+            batch = [tensor.cuda() for tensor in batch]
+            (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel,
+             non_linear_ped, loss_mask, seq_start_end) = batch
 
+            ade, fde = [], []
+            total_traj += pred_traj_gt.size(1)
 
+            for _ in range(num_samples):
+                pred_traj_fake_rel = generator(
+                    obs_traj, obs_traj_rel, seq_start_end
+                )
+                pred_traj_fake = relative_to_abs(
+                    pred_traj_fake_rel, obs_traj[-1]
+                )
 
+                trajectory_animation(pred_traj_gt, pred_traj_fake, seq_start_end, 0, prefix_path=f'./animations/batch_{batch_number}_sample_{_}_')
 
-
-
-
+        ade = sum(ade_outer) / (total_traj * pred_len)
+        fde = sum(fde_outer) / (total_traj)
+        return ade, fde
 
