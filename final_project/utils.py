@@ -133,12 +133,12 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
 
         for pedestrian_id in range(num_pedestrians):
             sct, = scatter_real[pedestrian_id]
-            sct.set_data(seq_data_real[i-4:i,pedestrian_id,  0], seq_data_real[i-4:i,pedestrian_id, 1])
+            sct.set_data(seq_data_real[i-4:i,pedestrian_id,  0], seq_data_real[i-4:i, pedestrian_id, 1])
             sct, = scatter_model[pedestrian_id]
-            sct.set_data(seq_data[i-4:i,pedestrian_id,  0], seq_data[i-4:i,pedestrian_id, 1])
+            sct.set_data(seq_data[i-4:i,pedestrian_id,  0], seq_data[i-4:i, pedestrian_id, 1])
 
 
-    anim = FuncAnimation(fig, animate, frames=8, init_func=init)
+    anim = FuncAnimation(fig, animate, frames=8, init_func=init, interval=400)
     anim.save(f'{prefix_path}sequence_{sequence}.gif', writer='imagemagick')
     plt.close()
 

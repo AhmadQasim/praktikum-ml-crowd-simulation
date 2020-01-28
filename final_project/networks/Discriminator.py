@@ -28,8 +28,6 @@ class Discriminator(nn.Module):
                                                      nn.BatchNorm1d(1),
                                                      nn.ReLU())
 
-        self.pool_net = PoolingModule(in_dim, latent_dim)
-
     def forward(self, trajectory, relative_trajectory, seq_start_end):
         """
 
@@ -39,8 +37,6 @@ class Discriminator(nn.Module):
         :return:
         """
         encoded_relative_trajectory = self.encoder(relative_trajectory)
-
-        #pooled = self.pool_net(encoded_relative_trajectory.squeeze(), seq_start_end, trajectory[0])
 
         scores = self.fake_real_discriminator(encoded_relative_trajectory.squeeze())
         return scores
