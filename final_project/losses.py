@@ -37,7 +37,9 @@ def gan_g_loss(scores_fake):
     - loss: Tensor of shape (,) giving GAN generator loss
     """
     y_fake = torch.ones_like(scores_fake) * random.uniform(0.7, 1.2)
-    return bce_loss(scores_fake, y_fake)
+    # Make use of our own sigmoid BCE loss
+    return sigmoid_bce_loss(scores_fake, y_fake)
+    # return bce_loss(scores_fake, y_fake)
 
 
 def gan_d_loss(scores_real, scores_fake):
@@ -51,8 +53,11 @@ def gan_d_loss(scores_real, scores_fake):
     """
     y_real = torch.ones_like(scores_real) * random.uniform(0.7, 1.2)
     y_fake = torch.zeros_like(scores_fake) * random.uniform(0, 0.3)
-    loss_real = bce_loss(scores_real, y_real)
-    loss_fake = bce_loss(scores_fake, y_fake)
+    # Usage of our own BCE loss
+    loss_real = sigmoid_bce_loss(scores_real, y_real)
+    loss_fake = sigmoid_bce_loss(scores_fake, y_fake)
+    #loss_real = bce_loss(scores_real, y_real)
+    #loss_fake = bce_loss(scores_fake, y_fake)
     return loss_real + loss_fake
 
 

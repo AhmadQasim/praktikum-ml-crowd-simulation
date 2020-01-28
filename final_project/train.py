@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 parser.add_argument('--dataset_name', default='zara1', type=str)
 parser.add_argument('--delim', default=' ')
 parser.add_argument('--loader_num_workers', default=4, type=int)
-parser.add_argument('--obs_len', default=12, type=int)
+parser.add_argument('--obs_len', default=16, type=int)
 parser.add_argument('--pred_len', default=8, type=int)
 parser.add_argument('--skip', default=1, type=int)
 
@@ -76,7 +76,7 @@ parser.add_argument('--d_steps', default=2, type=int)
 parser.add_argument('--clipping_threshold_d', default=0, type=float)
 
 # Loss Options
-parser.add_argument('--l2_loss_weight', default=1, type=float)
+parser.add_argument('--l2_loss_weight', default=0.1, type=float)
 parser.add_argument('--best_k', default=5, type=int)
 
 # Output
