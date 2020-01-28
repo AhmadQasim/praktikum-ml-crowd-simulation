@@ -22,7 +22,6 @@ def data_loader(args, path):
     # hence 64 and then sends a list of the outputs to seq_collate function
     # read the details of seq_collate function
     loader = DataLoader(
-        
         dset,
         batch_size=args.batch_size,
         shuffle=True,
