@@ -228,7 +228,7 @@ class TrajectoryDataset(Dataset):
         # remember the seq_list is a list of all sequences data of shape [pedestrians num, coordinates, sequence length]
         # so in the end the shape of seq_list after concatenation is:
         # [all pedestrians in all different sequences, coordinates, sequence length]
-        # really important point, and a really shitty way to parse the data imo from the authors
+        # really important point, and a really bad way to parse the data imo from the authors
         seq_list = np.concatenate(seq_list, axis=0)
         seq_list_rel = np.concatenate(seq_list_rel, axis=0)
         loss_mask_list = np.concatenate(loss_mask_list, axis=0)
