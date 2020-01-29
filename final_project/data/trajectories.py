@@ -9,6 +9,12 @@ from torch.utils.data import Dataset
 
 logger = logging.getLogger(__name__)
 
+"""
+The trajectories.py file is a slightly modified version of the
+original trajectories.py file from GitHub.
+https://github.com/agrimgupta92/sgan
+"""
+
 
 # this function creates a batch from the list of TrajectoryDataset outputs
 # the length of the list is batch_size i.e. 64

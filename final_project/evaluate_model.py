@@ -10,6 +10,12 @@ from networks.Generator import Generator
 from losses import displacement_error, final_displacement_error
 from utils import relative_to_abs, get_dset_path
 
+"""
+The evaluate_model.py file is a slightly modified version of the original version from
+GitHub.
+https://github.com/agrimgupta92/sgan
+"""
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_path', type=str)
 parser.add_argument('--num_samples', default=20, type=int)
