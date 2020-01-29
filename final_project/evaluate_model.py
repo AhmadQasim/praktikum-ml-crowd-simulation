@@ -2,8 +2,6 @@ import argparse
 import os
 import torch
 
-#torch.set_default_tensor_type(torch.FloatTensor)
-
 from attrdict import AttrDict
 from data.loader import data_loader
 from networks.Generator import Generator
@@ -42,7 +40,6 @@ def get_generator(checkpoint):
         grid_size=args.grid_size,
         batch_norm=args.batch_norm)
     generator.load_state_dict(checkpoint['g_state'])
-    #generator.cpu()
     generator.cuda()
     generator.train()
     return generator
@@ -110,8 +107,6 @@ def main(args):
         paths = [args.model_path]
 
     for path in paths:
-        #device = torch.device('cpu')
-        #checkpoint = torch.load(path,map_location=device)
         checkpoint = torch.load(path)
         generator = get_generator(checkpoint)
         _args = AttrDict(checkpoint['args'])
