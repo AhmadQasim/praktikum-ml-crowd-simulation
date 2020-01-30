@@ -20,6 +20,13 @@ from networks.Discriminator import Discriminator
 from utils import int_tuple, bool_flag, get_total_norm
 from utils import relative_to_abs, get_dset_path
 
+
+"""
+The train.py file is a slightly modified version of the train.py file 
+of the original implementation on GitHub
+https://github.com/agrimgupta92/sgan
+"""
+
 torch.backends.cudnn.benchmark = True
 
 parser = argparse.ArgumentParser()

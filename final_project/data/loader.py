@@ -1,7 +1,10 @@
 from torch.utils.data import DataLoader
-
 from data.trajectories import TrajectoryDataset, seq_collate
 
+"""
+The dataloader is a slightly modified version of the original implementation on GitHub
+https://github.com/agrimgupta92/sgan
+"""
 
 def data_loader(args, path):
     # get the actual dataset
@@ -22,6 +25,7 @@ def data_loader(args, path):
     # hence 64 and then sends a list of the outputs to seq_collate function
     # read the details of seq_collate function
     loader = DataLoader(
+
         dset,
         batch_size=args.batch_size,
         shuffle=True,

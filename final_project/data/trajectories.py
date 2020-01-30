@@ -9,6 +9,12 @@ from torch.utils.data import Dataset
 
 logger = logging.getLogger(__name__)
 
+"""
+The trajectories.py file is a slightly modified version of the
+original trajectories.py file from GitHub.
+https://github.com/agrimgupta92/sgan
+"""
+
 
 # this function creates a batch from the list of TrajectoryDataset outputs
 # the length of the list is batch_size i.e. 64
@@ -222,7 +228,7 @@ class TrajectoryDataset(Dataset):
         # remember the seq_list is a list of all sequences data of shape [pedestrians num, coordinates, sequence length]
         # so in the end the shape of seq_list after concatenation is:
         # [all pedestrians in all different sequences, coordinates, sequence length]
-        # really important point, and a really shitty way to parse the data imo from the authors
+        # really important point, and a really bad way to parse the data imo from the authors
         seq_list = np.concatenate(seq_list, axis=0)
         seq_list_rel = np.concatenate(seq_list_rel, axis=0)
         loss_mask_list = np.concatenate(loss_mask_list, axis=0)

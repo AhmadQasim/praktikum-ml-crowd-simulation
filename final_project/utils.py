@@ -8,6 +8,11 @@ import subprocess
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+"""
+The utils.py file is a slightly modified version of the original utils.py file
+from GitHub
+https://github.com/agrimgupta92/sgan
+"""
 
 def int_tuple(s):
     return tuple(int(i) for i in s.split(','))
