@@ -103,19 +103,28 @@ def relative_to_abs(rel_traj, start_pos):
 
 
 def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, prefix_path: str, args):
+    """
+    animates a single sequence
+    :param seq_data_real: ground truth for all trajectories
+    :param seq_data: predicted trajectories with ground truth before
+    :param seq_start_end: list of start and end indices of sequences in sequence data matrices
+    :param sequence: sequence id to be animated
+    :param prefix_path: path of the folder and optionally with a prefix for files
+    :param args: arguments class needed to access hyperparameters
+    """
     start, end = seq_start_end[sequence]
 
     seq_data_real = seq_data_real[:, start:end].cpu().numpy()
     seq_data = seq_data[:, start:end].cpu().numpy()
 
     num_pedestrians = seq_data.shape[1]
-    if num_pedestrians < 3:
+    if num_pedestrians < 3: # do not plot if there are fewer than 3 pedestrians
         return
-
-    boundary = 1
 
     fig, axes = plt.subplots(1, 2, sharex='all', sharey='all')
 
+    # set the boundaries of the graphs
+    boundary = 1
     min_x, max_x = min(seq_data_real[:, :, 0].min(), seq_data[:, :, 0].min()), max(seq_data_real[:, :, 0].max(), seq_data[:, :, 0].max())
     min_y, max_y = min(seq_data_real[:, :, 1].min(), seq_data[:, :, 1].min()), max(seq_data_real[:, :, 1].max(), seq_data[:, :, 1].max())
     axes[0].set_xlim(min_x - boundary, max_x + boundary)
@@ -123,6 +132,7 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
     axes[1].set_xlim(min_x - boundary, max_x + boundary)
     axes[1].set_ylim(min_y - boundary, max_y + boundary)
 
+    # create line object for each pedestrian
     scatter_real = [axes[0].plot([], []) for _ in range(num_pedestrians)]
     scatter_model = [axes[1].plot([], []) for _ in range(num_pedestrians)]
 
@@ -133,6 +143,7 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
             sct, = scatter_model[pedestrian_id]
             sct.set_data([], [])
 
+    # update function for each frame
     def animate(i):
         i = i+4
         title = "Observed" if i < args.obs_len else "Predicted"
@@ -149,14 +160,20 @@ def trajectory_animation(seq_data_real, seq_data, seq_start_end, sequence: int, 
             sct.set_data(seq_data[i-4:i,pedestrian_id,  0], seq_data[i-4:i, pedestrian_id, 1])
             sct.set_linestyle("--" if i >= args.obs_len else "-")
 
-
+    # animate and save
     anim = FuncAnimation(fig, animate, frames=args.obs_len+args.pred_len-4, init_func=init, interval=350)
     anim.save(f'{prefix_path}sequence_{sequence}.gif', writer='imagemagick')
     plt.close()
 
 
-def animate_trajectories(loader, generator, args):
-    num_samples = args.obs_len + args.pred_len
+def animate_trajectories(loader, generator, args, path='/home/ahmad/praktikum/praktikum_ml_crowd/final_project/animations'):
+    """
+    animates every sequence of every batch and saves them as separate gif files
+    :param loader: instance of data loader class
+    :param generator: a generator object to generate trajectories
+    :param args: arguments class needed to access hyperparameters
+    :param path: path of the folder where the GIFs should be saved
+    """
     total_traj = 0
     with torch.no_grad():
         for batch_number, batch in enumerate(loader):
@@ -164,26 +181,20 @@ def animate_trajectories(loader, generator, args):
             (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel,
              non_linear_ped, loss_mask, seq_start_end) = batch
 
-            ade, fde = [], []
             total_traj += pred_traj_gt.size(1)
 
-            pred_traj_fake_rel = generator(
-                obs_traj, obs_traj_rel, seq_start_end
-            )
-            pred_traj_fake = relative_to_abs(
-                pred_traj_fake_rel, obs_traj[-1]
-            )
+            pred_traj_fake_rel = generator(obs_traj, obs_traj_rel, seq_start_end) # generate relative trajectory
+            pred_traj_fake = relative_to_abs(pred_traj_fake_rel, obs_traj[-1]) # get the trajectory from relative trajectory
 
+            # concatenate observed and predicted trajectories into a single matrix
             pred_traj_full = torch.cat([obs_traj, pred_traj_fake], dim=0)
             gt_traj_full = torch.cat([obs_traj, pred_traj_gt[:args.pred_len, :, :]], dim=0)
 
             for seq in range(len(seq_start_end)):
+                # animate for every sequence in every batch
                 trajectory_animation(gt_traj_full,
                                      pred_traj_full,
                                      seq_start_end,
                                      seq,
-                                     prefix_path=f'/home/ahmad/praktikum/praktikum_ml_crowd/final_project/animations/batch_{batch_number}',
+                                     prefix_path=f'{path}/batch_{batch_number}_',
                                      args=args)
-
-        return ade, fde
-
